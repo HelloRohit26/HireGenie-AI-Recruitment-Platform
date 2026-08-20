@@ -1,0 +1,360 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>HireGenie - Rohit Sharma Dossier</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary": "#d6c4aa",
+                        "background": "#131312",
+                        "on-primary-fixed": "#1c1b1b",
+                        "surface-container-low": "#1b1c1a",
+                        "inverse-primary": "#5f5e5e",
+                        "surface-dim": "#131312",
+                        "surface-tint": "#c8c6c5",
+                        "on-secondary": "#30312d",
+                        "on-surface-variant": "#c4c7c7",
+                        "primary": "#c8c6c5",
+                        "secondary": "#c8c6c2",
+                        "on-primary": "#313030",
+                        "error-container": "#93000a",
+                        "on-tertiary": "#3a2f1c",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#2a2a28",
+                        "surface-bright": "#393937",
+                        "on-tertiary-fixed": "#241a09",
+                        "surface-container": "#20201e",
+                        "outline-variant": "#444748",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#514531",
+                        "on-background": "#e5e2df",
+                        "surface-variant": "#353533",
+                        "surface-container-lowest": "#0e0e0d",
+                        "on-tertiary-container": "#908169",
+                        "on-secondary-fixed-variant": "#474743",
+                        "tertiary-fixed": "#f3e0c4",
+                        "secondary-fixed-dim": "#c8c6c2",
+                        "surface": "#131312",
+                        "primary-container": "#1a1a1a",
+                        "on-secondary-fixed": "#1b1c19",
+                        "on-surface": "#e5e2df",
+                        "primary-fixed": "#e5e2e1",
+                        "secondary-container": "#474743",
+                        "tertiary-container": "#221908",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-primary-container": "#848282",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "inverse-surface": "#e5e2df",
+                        "outline": "#8e9192",
+                        "tertiary-fixed-dim": "#d6c4aa",
+                        "surface-container-highest": "#353533",
+                        "secondary-fixed": "#e4e2dd",
+                        "inverse-on-surface": "#30302e",
+                        "on-secondary-container": "#b6b5b0"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "drawer-width": "480px",
+                        "table-row-height": "48px",
+                        "container-padding": "32px",
+                        "sidebar-width": "240px",
+                        "element-gap": "16px"
+                    },
+                    fontFamily: {
+                        "body-sm": ["Hanken Grotesk"],
+                        "mono-data": ["JetBrains Mono"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "title-sm": ["Hanken Grotesk"],
+                        "label-caps": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "display-sm": ["Hanken Grotesk"]
+                    },
+                    fontSize: {
+                        "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+                        "mono-data": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "500" }],
+                        "title-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }],
+                        "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.08em", fontWeight: "700" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "display-sm": ["30px", { lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
+<!-- Persistent Header -->
+<header class="sticky top-0 z-40 bg-surface/90 backdrop-blur-md border-b border-outline-variant px-container-padding h-[64px] flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+<span class="font-title-sm text-title-sm">Back to Candidates</span>
+</button>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<h1 class="font-headline-md text-headline-md text-on-surface">Rohit Sharma</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant text-body-sm font-body-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                Final Review
+            </span>
+</div>
+<!-- Secondary Navigation (Immersive) -->
+<nav class="hidden lg:flex items-center gap-6">
+<a class="font-title-sm text-title-sm text-tertiary border-b-2 border-tertiary pb-5 mt-5" href="#overview">Overview</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant hover:text-on-surface transition-colors pb-5 mt-5" href="#resume">Resume</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant hover:text-on-surface transition-colors pb-5 mt-5" href="#analysis">AI Analysis</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant hover:text-on-surface transition-colors pb-5 mt-5" href="#interview">Interview</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant hover:text-on-surface transition-colors pb-5 mt-5" href="#evaluation">Evaluation</a>
+<a class="font-title-sm text-title-sm text-on-surface-variant hover:text-on-surface transition-colors pb-5 mt-5" href="#timeline">Timeline</a>
+</nav>
+</header>
+<main class="flex-1 pb-[100px] max-w-[1400px] mx-auto w-full px-container-padding py-8 space-y-12">
+<!-- HERO SIGNALS -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-surface-container rounded-xl p-8 border border-outline-variant relative overflow-hidden flex flex-col justify-center">
+<div class="absolute right-0 top-0 w-64 h-full bg-gradient-to-l from-tertiary/10 to-transparent pointer-events-none"></div>
+<div class="flex items-start gap-8 z-10">
+<div class="flex flex-col items-center">
+<div class="w-32 h-32 rounded-full border-4 border-tertiary flex items-center justify-center bg-surface relative">
+<svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
+<circle class="text-surface-variant" cx="50" cy="50" fill="none" r="46" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-tertiary" cx="50" cy="50" fill="none" r="46" stroke="currentColor" stroke-dasharray="289" stroke-dashoffset="17" stroke-width="4"></circle>
+</svg>
+<span class="font-display-sm text-display-sm text-tertiary z-10">94<span class="text-xl">%</span></span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant mt-2">Overall Match</span>
+</div>
+<div class="space-y-4">
+<div>
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-tertiary/20 text-tertiary rounded font-label-caps text-label-caps tracking-wider border border-tertiary/30">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+                                STRONGLY RECOMMEND
+                            </div>
+<h2 class="font-headline-md text-headline-md mt-2">AI Engineer Candidate</h2>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">info</span>
+                                Human decision required. AI assessment based on provided data.
+                            </p>
+</div>
+<div class="flex gap-6 mt-4">
+<div>
+<div class="font-mono-data text-mono-data text-on-surface-variant">Experience</div>
+<div class="font-title-sm text-title-sm">4.2 Years</div>
+</div>
+<div class="w-px h-8 bg-outline-variant"></div>
+<div>
+<div class="font-mono-data text-mono-data text-on-surface-variant">Education</div>
+<div class="font-title-sm text-title-sm">B.Tech (CS)</div>
+</div>
+<div class="w-px h-8 bg-outline-variant"></div>
+<div>
+<div class="font-mono-data text-mono-data text-on-surface-variant">History</div>
+<div class="font-title-sm text-title-sm">3 Companies</div>
+</div>
+<div class="w-px h-8 bg-outline-variant"></div>
+<div>
+<div class="font-mono-data text-mono-data text-on-surface-variant">Portfolio</div>
+<div class="font-title-sm text-title-sm">6 Projects</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-6 border border-outline-variant flex flex-col">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4">Quick Actions</h3>
+<div class="space-y-3 flex-1">
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-surface hover:bg-surface-container-high border border-outline-variant transition-colors group">
+<span class="font-body-sm text-body-sm text-on-surface">View Application</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary">arrow_forward</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-surface hover:bg-surface-container-high border border-outline-variant transition-colors group">
+<span class="font-body-sm text-body-sm text-on-surface">Schedule Follow-up</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary">calendar_month</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-surface hover:bg-surface-container-high border border-outline-variant transition-colors group">
+<span class="font-body-sm text-body-sm text-on-surface">Share Dossier</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary">share</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 1. OVERVIEW -->
+<section class="scroll-mt-24 space-y-6" id="overview">
+<h2 class="font-headline-md text-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">dashboard</span>
+                Intelligence Overview
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-surface-container p-5 rounded-lg border border-outline-variant">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">Technical Skills</div>
+<div class="flex items-end justify-between">
+<div class="font-display-sm text-display-sm">96%</div>
+<div class="w-16 h-8 bg-surface border border-outline-variant flex items-center gap-1 justify-center rounded text-tertiary font-mono-data text-mono-data">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +4
+                        </div>
+</div>
+</div>
+<div class="bg-surface-container p-5 rounded-lg border border-outline-variant">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">Experience Level</div>
+<div class="flex items-end justify-between">
+<div class="font-display-sm text-display-sm">91%</div>
+<div class="w-16 h-8 bg-surface border border-outline-variant flex items-center gap-1 justify-center rounded text-tertiary font-mono-data text-mono-data">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +2
+                        </div>
+</div>
+</div>
+<div class="bg-surface-container p-5 rounded-lg border border-outline-variant">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">Cultural Fit</div>
+<div class="flex items-end justify-between">
+<div class="font-display-sm text-display-sm">88%</div>
+<div class="w-16 h-8 bg-surface border border-outline-variant flex items-center gap-1 justify-center rounded text-on-surface-variant font-mono-data text-mono-data">
+<span class="material-symbols-outlined text-[14px]">horizontal_rule</span> 0
+                        </div>
+</div>
+</div>
+<div class="bg-surface-container p-5 rounded-lg border border-outline-variant">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">Communication</div>
+<div class="flex items-end justify-between">
+<div class="font-display-sm text-display-sm">94%</div>
+<div class="w-16 h-8 bg-surface border border-outline-variant flex items-center gap-1 justify-center rounded text-tertiary font-mono-data text-mono-data">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +5
+                        </div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-container rounded-lg border border-outline-variant p-6">
+<h3 class="font-title-sm text-title-sm mb-4 flex items-center gap-2 text-tertiary">
+<span class="material-symbols-outlined">check_circle</span> Strong Signals
+                    </h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary mt-0.5 text-[18px]">psychology</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Deep expertise in LLM fine-tuning</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Evidenced by 3 major production deployments</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary mt-0.5 text-[18px]">code</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Exceptional Python &amp; PyTorch proficiency</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Top 5% in technical assessment</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-tertiary mt-0.5 text-[18px]">communication</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Clear technical communication</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Effectively explained complex architectures during interview</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="bg-surface-container rounded-lg border border-outline-variant p-6">
+<h3 class="font-title-sm text-title-sm mb-4 flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined">warning</span> Potential Review Areas
+                    </h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5 text-[18px]">schema</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Kubernetes / Deployment experience</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mostly focused on model side, limited infrastructure hands-on</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-surface-variant mt-0.5 text-[18px]">groups</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface">Formal Leadership</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Has mentored juniors but no formal management roles</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- 3. AI ANALYSIS -->
+<section class="scroll-mt-24 space-y-6" id="analysis">
+<h2 class="font-headline-md text-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">memory</span>
+                AI Analysis &amp; Evidence Mapping
+            </h2>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[400px]">
+<div class="bg-surface-container rounded-lg border border-outline-variant p-6 flex flex-col">
+<h3 class="font-title-sm text-title-sm mb-4">Why HireGenie Ranked This Candidate</h3>
+<div class="flex-1 overflow-y-auto pr-2 space-y-4">
+<div class="p-3 bg-surface rounded border border-outline-variant/50">
+<div class="flex justify-between items-center mb-1">
+<span class="font-mono-data text-mono-data text-tertiary">Python</span>
+<span class="font-label-caps text-label-caps">Strong</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Found 4+ years applied experience across 3 roles. Verified via technical screen.</p>
+</div>
+<div class="p-3 bg-surface rounded border border-outline-variant/50">
+<div class="flex justify-between items-center mb-1">
+<span class="font-mono-data text-mono-data text-tertiary">Machine Learning</span>
+<span class="font-label-caps text-label-caps">Exceptional</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Multiple NLP projects detailed in resume. High fidelity answers during interview.</p>
+</div>
+<div class="p-3 bg-surface rounded border border-outline-variant/50">
+<div class="flex justify-between items-center mb-1">
+<span class="font-mono-data text-mono-data text-tertiary">Cloud Native (AWS)</span>
+<span class="font-label-caps text-label-caps">Moderate</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mentions AWS SageMaker, but lacks deeper infrastructure evidence.</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg border border-outline-variant overflow-hidden relative">
+<div class="absolute inset-0 z-0">
+
+</div>
+<div class="absolute bottom-4 left-4 z-10 bg-surface/80 backdrop-blur px-3 py-1.5 rounded text-body-sm font-mono-data border border-outline-variant/50">
+                        Neural Mapping Visualization
+                    </div>
+</div>
+</div>
+</section>
+</main>
+<!-- STICKY DECISION BAR -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-high border-t border-outline-variant shadow-[0_-4px_24px_rgba(0,0,0,0.4)] z-50">
+<div class="max-w-[1400px] mx-auto w-full px-container-padding h-20 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full border-2 border-tertiary flex items-center justify-center bg-surface font-title-sm text-title-sm text-tertiary">
+                    94%
+                </div>
+<div>
+<div class="font-title-sm text-title-sm text-on-surface">Candidate Summary</div>
+<div class="font-body-sm text-body-sm text-tertiary font-medium">Strongly Recommend for Hire</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-6 h-10 rounded border border-outline-variant bg-surface hover:bg-surface-variant text-on-surface transition-colors font-body-sm text-body-sm">
+                    Reject
+                </button>
+<button class="px-6 h-10 rounded border border-outline-variant bg-surface hover:bg-surface-variant text-on-surface transition-colors font-body-sm text-body-sm">
+                    Manual Review
+                </button>
+<button class="px-6 h-10 rounded bg-tertiary hover:bg-tertiary-fixed text-on-tertiary transition-colors font-title-sm text-title-sm font-bold shadow-[0_0_15px_rgba(214,196,170,0.2)]">
+                    Approve for Offer
+                </button>
+</div>
+</div>
+</div>
+</body></html>

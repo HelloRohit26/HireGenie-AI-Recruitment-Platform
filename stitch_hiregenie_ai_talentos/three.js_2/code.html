@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_40 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_40" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_40');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  (function() {
+  const container = document.getElementById('threejs-container-ANIMATION_19');
+  if (!container) return;
+  
+  const width = container.clientWidth || window.innerWidth;
+  const height = container.clientHeight || window.innerHeight;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  camera.position.z = 8;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  // Colors from HireGenie Palette
+  const accentColor = 0xd6a85f; // Muted Brass
+  const nodeColor = 0x383938;   // Surface Bright
+
+  // Create Clusters for Pipeline Stages
+  const stages = [
+    { name: 'Applicants', pos: new THREE.Vector3(-6, 2, 0), count: 20 },
+    { name: 'Screening', pos: new THREE.Vector3(-3, 0, 0), count: 15 },
+    { name: 'Shortlist', pos: new THREE.Vector3(0, -1, 0), count: 10 },
+    { name: 'Interview', pos: new THREE.Vector3(3, 0, 0), count: 8 },
+    { name: 'Finalist', pos: new THREE.Vector3(6, 2, 0), count: 5 }
+  ];
+
+  const nodes = [];
+  const group = new THREE.Group();
+
+  stages.forEach((stage, sIdx) => {
+    // Stage Label Anchor (Invisible)
+    const stageAnchor = new THREE.Mesh(
+      new THREE.SphereGeometry(0.1),
+      new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 })
+    );
+    stageAnchor.position.copy(stage.pos);
+    scene.add(stageAnchor);
+
+    for (let i = 0; i < stage.count; i++) {
+      const geometry = new THREE.SphereGeometry(0.08, 16, 16);
+      const material = new THREE.MeshPhongMaterial({
+        color: nodeColor,
+        emissive: accentColor,
+        emissiveIntensity: 0.2
+      });
+      const node = new THREE.Mesh(geometry, material);
+      
+      // Random spread around stage center
+      const spread = 1.5;
+      node.position.set(
+        stage.pos.x + (Math.random() - 0.5) * spread,
+        stage.pos.y + (Math.random() - 0.5) * spread,
+        stage.pos.z + (Math.random() - 0.5) * spread
+      );
+      
+      node.userData = {
+        origin: node.position.clone(),
+        stage: sIdx,
+        offset: Math.random() * Math.PI * 2
+      };
+      
+      group.add(node);
+      nodes.push(node);
+    }
+  });
+
+  // Connecting Lines (Web-like)
+  const lineMaterial = new THREE.LineBasicMaterial({
+    color: accentColor,
+    transparent: true,
+    opacity: 0.1
+  });
+
+  scene.add(group);
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+
+  const pointLight = new THREE.PointLight(accentColor, 1, 20);
+  pointLight.position.set(0, 0, 5);
+  scene.add(pointLight);
+
+  // Animation Loop
+  function animate(time) {
+    const t = time * 0.001;
+    
+    nodes.forEach(node => {
+      // Gentle floating motion
+      node.position.x = node.userData.origin.x + Math.sin(t + node.userData.offset) * 0.1;
+      node.position.y = node.userData.origin.y + Math.cos(t * 0.8 + node.userData.offset) * 0.1;
+      
+      // Pulse intensity
+      node.material.emissiveIntensity = 0.2 + Math.sin(t * 2 + node.userData.offset) * 0.1;
+    });
+
+    group.rotation.y = Math.sin(t * 0.1) * 0.1;
+    group.rotation.x = Math.cos(t * 0.05) * 0.05;
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+
+  animate(0);
+})();
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_40 -->
+
+
+</body></html>

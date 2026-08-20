@@ -1,0 +1,456 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Job Details - HireGenie AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#efbf73",
+                      "primary-container": "#d6a85f",
+                      "outline-variant": "#4f4538",
+                      "surface-container-high": "#292a29",
+                      "on-tertiary-container": "#1e446e",
+                      "on-error-container": "#ffdad6",
+                      "secondary-fixed": "#e5e2de",
+                      "tertiary-fixed": "#d3e4ff",
+                      "outline": "#9b8f7f",
+                      "on-tertiary": "#02315a",
+                      "on-secondary-container": "#b7b5b1",
+                      "secondary": "#c9c6c2",
+                      "primary": "#f4c377",
+                      "on-tertiary-fixed": "#001c38",
+                      "tertiary-container": "#8fb2e2",
+                      "background": "#121412",
+                      "on-secondary-fixed": "#1c1c19",
+                      "on-primary-container": "#5b3d00",
+                      "on-primary-fixed": "#281800",
+                      "surface-container-lowest": "#0d0f0d",
+                      "inverse-on-surface": "#2f312f",
+                      "error-container": "#93000a",
+                      "inverse-surface": "#e3e2df",
+                      "on-secondary-fixed-variant": "#474744",
+                      "on-secondary": "#31302e",
+                      "error": "#ffb4ab",
+                      "tertiary": "#aaceff",
+                      "on-primary-fixed-variant": "#604100",
+                      "on-error": "#690005",
+                      "secondary-container": "#474744",
+                      "surface-dim": "#121412",
+                      "surface-container-low": "#1a1c1a",
+                      "on-tertiary-fixed-variant": "#234872",
+                      "surface-tint": "#efbf73",
+                      "surface": "#121412",
+                      "surface-container": "#1f201e",
+                      "surface-bright": "#383938",
+                      "on-background": "#e3e2df",
+                      "inverse-primary": "#7c5816",
+                      "on-surface": "#e3e2df",
+                      "tertiary-fixed-dim": "#a6c9fa",
+                      "surface-container-highest": "#343533",
+                      "on-surface-variant": "#d2c4b3",
+                      "secondary-fixed-dim": "#c9c6c2",
+                      "surface-variant": "#343533",
+                      "on-primary": "#432c00",
+                      "primary-fixed": "#ffdeae"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "48px",
+                      "sm": "12px",
+                      "md": "24px",
+                      "container_max": "1120px",
+                      "gutter": "24px",
+                      "base": "8px",
+                      "xs": "4px",
+                      "xl": "80px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "display": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-lg-mobile": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .shadow-ambient {
+            box-shadow: 0 24px 48px -12px rgba(18, 20, 18, 0.5), 0 0 0 1px rgba(155, 143, 127, 0.1);
+        }
+
+        /* Modal transitions */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+        .modal-exit {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .modal-exit-active {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 200ms ease-in, transform 200ms ease-in;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-lg h-20 bg-background/80 backdrop-blur-md border-b border-outline-variant/30 transition-all duration-300">
+<div class="flex items-center gap-lg">
+<div class="text-headline-md font-headline-md font-semibold text-primary tracking-tight">HireGenie AI</div>
+<div class="hidden md:flex gap-md items-center h-full pt-1">
+<a class="text-on-surface-variant font-medium hover:text-on-surface hover:text-primary transition-colors duration-200 h-full flex items-center" href="#">Home</a>
+<a class="text-primary font-semibold border-b-2 border-primary pb-1 hover:text-primary transition-colors duration-200 h-full flex items-center" href="#">Jobs</a>
+<a class="text-on-surface-variant font-medium hover:text-on-surface hover:text-primary transition-colors duration-200 h-full flex items-center" href="#">Applications</a>
+<a class="text-on-surface-variant font-medium hover:text-on-surface hover:text-primary transition-colors duration-200 h-full flex items-center" href="#">Interviews</a>
+<a class="text-on-surface-variant font-medium hover:text-on-surface hover:text-primary transition-colors duration-200 h-full flex items-center" href="#">Profile</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200 flex items-center justify-center p-2 rounded-full hover:bg-surface-variant/50">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200 flex items-center justify-center p-2 rounded-full hover:bg-surface-variant/50">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-surface-variant overflow-hidden border border-outline-variant">
+<img alt="Candidate profile avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a candidate against a warm, minimalist background. The lighting is soft and studio-quality, emphasizing a modern, premium aesthetic consistent with a high-end AI platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdPHcQQjnAA1XH6Is5-bSWddhm61lo51pa2UFNXais2mDgX9VqcdLjMs2NpSayqOAp_cz1fp_eKRAD0zUV5aY7Snt12H5w61ccOyGp0bzp9fPenKi_9AFK2wfjV9RcYPD1rBriFLp8Gbd93zcnq4rlmiW6m_GcYjRErhjZZA1yzjF5YDG8y6JHs8yUjq5HqAMVM-kV2Bh8MxNKmwTzRSv74CLEaFWBlbuFyz4XoiKdNOiFngo2bJ66">
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-24 pb-xl px-4 md:px-lg flex justify-center">
+<div class="w-full max-w-[1120px] grid grid-cols-1 lg:grid-cols-12 gap-lg lg:gap-xl">
+<!-- Header Section -->
+<div class="lg:col-span-12 flex flex-col md:flex-row md:items-end justify-between gap-md mb-lg">
+<div>
+<div class="flex items-center gap-3 mb-4">
+<div class="h-12 w-12 rounded-lg bg-surface-bright border border-outline-variant flex items-center justify-center overflow-hidden">
+<img alt="Acme AI Logo" class="w-full h-full object-cover" data-alt="A minimalist, abstract corporate logo for a tech company named 'Acme AI'. The logo features sharp geometric shapes in gold and charcoal tones, set against a dark graphite background, conveying innovation and high-end AI solutions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC19t-B02aWAInXcJdr9yCzkiBwa9H3PrXgYHI5FdCDDulRis-vBDXp2wVFbb6VJtsNG4gW4zZmvpT5SGLoLrCLR3ifjofINJI5rMFKn9iNdmDMlpgzq6iEBGW8vypZhbKMX0dmdLlgNzfvi_WCGwupr1hCLIgJI7yhaOCcaJ-gKgydAKJoqK80EDMBlyTRtrAdSD6gVnpDaFJP_qcwyK_FiUmbi-OhgfvfDNmkn07vHXatFePr-ehS">
+</div>
+<div>
+<h2 class="text-body-lg text-on-surface-variant">Acme AI</h2>
+<div class="flex items-center gap-2 text-label-md text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>San Francisco, CA (Hybrid)</span>
+</div>
+</div>
+</div>
+<h1 class="text-display font-display text-on-surface mb-2">AI Engineer</h1>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="px-3 py-1 rounded-full bg-primary-container/10 text-primary border border-primary/20 text-label-md">Full-Time</span>
+<span class="px-3 py-1 rounded-full bg-surface-bright text-on-surface border border-outline-variant text-label-md">Senior Level</span>
+<span class="px-3 py-1 rounded-full bg-surface-bright text-on-surface border border-outline-variant text-label-md">$180k - $240k</span>
+</div>
+</div>
+<div class="flex flex-col items-stretch md:items-end gap-4 mt-6 md:mt-0">
+<button class="bg-primary-container text-on-primary-container px-8 py-3 rounded-full font-label-md hover:bg-primary transition-colors duration-300 shadow-ambient w-full md:w-auto" id="applyBtn">
+                        Apply Now
+                    </button>
+<p class="text-label-md text-on-surface-variant text-center md:text-right">Posted 2 days ago</p>
+</div>
+</div>
+<!-- Left Column: Job Details -->
+<div class="lg:col-span-8 space-y-xl">
+<section>
+<h3 class="text-headline-lg font-headline-lg text-on-surface mb-md">About the Role</h3>
+<p class="text-body-lg text-on-surface-variant mb-4">
+                        Acme AI is seeking a highly skilled AI Engineer to join our core research and development team. You will be instrumental in designing, training, and deploying next-generation foundation models that power our enterprise solutions.
+                    </p>
+<p class="text-body-lg text-on-surface-variant">
+                        We operate at the bleeding edge of machine learning, prioritizing efficiency, safety, and scalable architectures. You will collaborate closely with researchers and platform engineers to transition state-of-the-art research into robust, production-ready systems.
+                    </p>
+</section>
+<section>
+<h3 class="text-headline-lg font-headline-lg text-on-surface mb-md">Key Responsibilities</h3>
+<ul class="space-y-4">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<span class="text-body-lg text-on-surface-variant">Design and implement scalable training pipelines for large language models.</span>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<span class="text-body-lg text-on-surface-variant">Optimize model inference for high-throughput, low-latency API endpoints.</span>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+<span class="text-body-lg text-on-surface-variant">Collaborate with cross-functional teams to integrate AI capabilities into core products.</span>
+</li>
+</ul>
+</section>
+<section>
+<h3 class="text-headline-lg font-headline-lg text-on-surface mb-md">Required Skills</h3>
+<div class="flex flex-wrap gap-3">
+<span class="px-4 py-2 rounded-full bg-surface-bright border border-outline text-on-surface text-body-md">Python</span>
+<span class="px-4 py-2 rounded-full bg-surface-bright border border-outline text-on-surface text-body-md">PyTorch</span>
+<span class="px-4 py-2 rounded-full bg-surface-bright border border-outline text-on-surface text-body-md">AWS</span>
+<span class="px-4 py-2 rounded-full bg-surface-bright border border-outline text-on-surface text-body-md">Kubernetes</span>
+<span class="px-4 py-2 rounded-full bg-surface-bright border border-outline text-on-surface text-body-md">Distributed Training</span>
+</div>
+</section>
+</div>
+<!-- Right Column: AI Match -->
+<div class="lg:col-span-4">
+<div class="bg-surface-bright rounded-xl p-md border border-outline-variant shadow-ambient sticky top-32">
+<div class="flex items-center gap-3 mb-md pb-4 border-b border-outline-variant/50">
+<span class="material-symbols-outlined text-primary text-[28px]">smart_toy</span>
+<h3 class="text-headline-md font-headline-md text-on-surface">Your Fit</h3>
+</div>
+<div class="mb-6">
+<div class="flex justify-between items-end mb-2">
+<span class="text-body-lg text-on-surface-variant">Overall Match</span>
+<span class="text-headline-md text-primary">85%</span>
+</div>
+<div class="h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[85%]"></div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary fill-icon">check_circle</span>
+<span class="text-body-md text-on-surface">Python</span>
+</div>
+<span class="text-label-md text-primary">Strong</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span class="text-body-md text-on-surface">AWS</span>
+</div>
+<span class="text-label-md text-on-surface-variant">Good</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error">error</span>
+<span class="text-body-md text-on-surface">Kubernetes</span>
+</div>
+<span class="text-label-md text-error">Not Found</span>
+</div>
+</div>
+<div class="mt-md pt-md border-t border-outline-variant/50">
+<p class="text-body-md text-on-surface-variant italic">
+                            "Your background in PyTorch and Python aligns perfectly with the core requirements. While Kubernetes experience isn't evident in your profile, your strong distributed systems background suggests you could ramp up quickly."
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Application Modal Overlay (Hidden by default) -->
+<div class="fixed inset-0 z-[100] hidden items-center justify-center bg-background/90 backdrop-blur-sm p-4" id="applicationModal">
+<!-- Modal Container -->
+<div class="bg-surface-bright w-full max-w-[800px] rounded-xl shadow-ambient border border-outline-variant overflow-hidden flex flex-col max-h-[921px]">
+<!-- Modal Header / Stepper -->
+<div class="p-md border-b border-outline-variant bg-surface-container-low flex justify-between items-center sticky top-0 z-10">
+<h3 class="text-headline-md font-headline-md text-on-surface">Apply for AI Engineer</h3>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors p-2 rounded-full hover:bg-surface-variant/50" id="closeModalBtn">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="px-md pt-md pb-0 bg-surface-container-low">
+<!-- Stepper -->
+<div class="flex items-center justify-between mb-2">
+<div class="flex flex-col items-center flex-1">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary-container flex items-center justify-center font-label-md mb-2">1</div>
+<span class="text-label-md text-primary">Resume</span>
+</div>
+<div class="h-[1px] bg-outline-variant flex-1 mx-2 mt-[-24px]"></div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant border border-outline-variant flex items-center justify-center font-label-md mb-2">2</div>
+<span class="text-label-md text-on-surface-variant">Screening</span>
+</div>
+<div class="h-[1px] bg-outline-variant flex-1 mx-2 mt-[-24px]"></div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant border border-outline-variant flex items-center justify-center font-label-md mb-2">3</div>
+<span class="text-label-md text-on-surface-variant">Review</span>
+</div>
+<div class="h-[1px] bg-outline-variant flex-1 mx-2 mt-[-24px]"></div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant border border-outline-variant flex items-center justify-center font-label-md mb-2">4</div>
+<span class="text-label-md text-on-surface-variant">Submit</span>
+</div>
+</div>
+</div>
+<!-- Modal Content Area -->
+<div class="p-lg overflow-y-auto flex-grow">
+<!-- Step 01: Resume -->
+<div id="step1">
+<h4 class="text-headline-md font-headline-md text-on-surface mb-2">Confirm your Resume</h4>
+<p class="text-body-md text-on-surface-variant mb-lg">We'll use this to pre-fill your application and assess your fit.</p>
+<div class="bg-surface-container p-md rounded-lg border border-outline-variant flex items-center justify-between mb-md hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-variant rounded-md flex items-center justify-center text-primary group-hover:bg-primary-container/10 transition-colors">
+<span class="material-symbols-outlined text-[28px]">description</span>
+</div>
+<div>
+<h5 class="text-body-lg text-on-surface font-medium">Rohit_Maurya_Resume_2023.pdf</h5>
+<p class="text-label-md text-on-surface-variant">Last updated: 2 weeks ago • 1.2 MB</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary fill-icon">check_circle</span>
+</div>
+<div class="flex items-center justify-center w-full">
+<label class="flex flex-col items-center justify-center w-full h-32 border-2 border-outline-variant border-dashed rounded-lg cursor-pointer bg-surface hover:bg-surface-variant/30 transition-colors">
+<div class="flex flex-col items-center justify-center pt-5 pb-6">
+<span class="material-symbols-outlined text-on-surface-variant mb-2">upload_file</span>
+<p class="mb-1 text-body-md text-on-surface"><span class="font-medium text-primary">Click to upload</span> or drag and drop</p>
+<p class="text-label-md text-on-surface-variant">PDF, DOCX (Max 5MB)</p>
+</div>
+<input class="hidden" type="file">
+</label>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-md border-t border-outline-variant bg-surface-container-low flex justify-end gap-4 sticky bottom-0">
+<button class="px-6 py-2 rounded-full border border-outline-variant text-on-surface hover:bg-surface-variant transition-colors font-label-md">
+                    Cancel
+                </button>
+<button class="px-8 py-2 rounded-full bg-primary-container text-on-primary-container hover:bg-primary transition-colors font-label-md">
+                    Continue to Screening
+                </button>
+</div>
+</div>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const applyBtn = document.getElementById('applyBtn');
+            const modal = document.getElementById('applicationModal');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            function openModal() {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                // Simple animation hook
+                const container = modal.querySelector('div');
+                container.style.opacity = '0';
+                container.style.transform = 'translateY(10px)';
+                
+                requestAnimationFrame(() => {
+                    container.style.transition = 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)';
+                    container.style.opacity = '1';
+                    container.style.transform = 'translateY(0)';
+                });
+            }
+
+            function closeModal() {
+                const container = modal.querySelector('div');
+                container.style.opacity = '0';
+                container.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300);
+            }
+
+            applyBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            
+            // Close on backdrop click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>AI Configuration - HireGenie TalentOS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#3a2f1c",
+                      "surface-container": "#20201e",
+                      "on-primary-container": "#848282",
+                      "on-secondary": "#30312d",
+                      "inverse-primary": "#5f5e5e",
+                      "on-primary-fixed": "#1c1b1b",
+                      "secondary-container": "#474743",
+                      "surface-variant": "#353533",
+                      "surface-bright": "#393937",
+                      "on-tertiary-container": "#908169",
+                      "on-surface-variant": "#c4c7c7",
+                      "on-primary-fixed-variant": "#474746",
+                      "on-primary": "#313030",
+                      "tertiary-fixed-dim": "#d6c4aa",
+                      "surface-container-lowest": "#0e0e0d",
+                      "surface": "#131312",
+                      "on-surface": "#e5e2df",
+                      "on-tertiary-fixed-variant": "#514531",
+                      "tertiary-container": "#221908",
+                      "on-secondary-fixed-variant": "#474743",
+                      "on-error": "#690005",
+                      "on-background": "#e5e2df",
+                      "error-container": "#93000a",
+                      "inverse-surface": "#e5e2df",
+                      "tertiary": "#d6c4aa",
+                      "background": "#131312",
+                      "primary-fixed": "#e5e2e1",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-low": "#1b1c1a",
+                      "surface-dim": "#131312",
+                      "secondary-fixed-dim": "#c8c6c2",
+                      "surface-container-highest": "#353533",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "secondary": "#c8c6c2",
+                      "primary-container": "#1a1a1a",
+                      "surface-tint": "#c8c6c5",
+                      "tertiary-fixed": "#f3e0c4",
+                      "surface-container-high": "#2a2a28",
+                      "outline-variant": "#444748",
+                      "primary": "#c8c6c5",
+                      "inverse-on-surface": "#30302e",
+                      "secondary-fixed": "#e4e2dd",
+                      "error": "#ffb4ab",
+                      "on-tertiary-fixed": "#241a09",
+                      "on-secondary-fixed": "#1b1c19",
+                      "outline": "#8e9192",
+                      "on-secondary-container": "#b6b5b0"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "container-padding": "32px",
+                      "drawer-width": "480px",
+                      "sidebar-width": "240px",
+                      "element-gap": "16px",
+                      "unit": "4px",
+                      "table-row-height": "48px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "display-sm": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-sm": [
+                              "Hanken Grotesk"
+                      ],
+                      "title-sm": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "mono-data": [
+                              "JetBrains Mono"
+                      ],
+                      "label-caps": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-sm": [
+                              "30px",
+                              {
+                                      "lineHeight": "38px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "title-sm": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "mono-data": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.08em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #131312; /* surface */
+            color: #e5e2df; /* on-surface */
+        }
+        
+        /* Custom Scrollbar for minimalistic look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1b1c1a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #353533; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #474743; 
+        }
+
+        /* Custom Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 12px;
+            width: 12px;
+            background: #d6c4aa; /* Muted Brass */
+            cursor: pointer;
+            border: 1px solid #e5e2df; /* Pearl border */
+            border-radius: 0;
+            margin-top: -5px;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 2px;
+            cursor: pointer;
+            background: #444748; /* outline-variant */
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+        
+        /* Custom Toggle */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #d6c4aa;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #d6c4aa;
+        }
+        .toggle-checkbox:checked + .toggle-label:after {
+            transform: translateX(100%);
+            border-color: white;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md bg-surface text-on-surface antialiased flex">
+<!-- SideNavBar (Shared Component) -->
+<nav class="w-[sidebar-width] h-screen fixed left-0 top-0 bg-surface dark:bg-surface border-r border-outline-variant dark:border-outline-variant flex flex-col h-full py-element-gap z-30">
+<div class="px-container-padding mb-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-DEFAULT bg-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-surface font-bold text-[20px]" data-icon="work" data-weight="fill" style="font-variation-settings: 'FILL' 1;">work</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface tracking-tight">TalentOS</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Enterprise Suite</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1 px-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="pipeline">maps_ar</span>
+<span>Talent Pipeline</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+<span>Active Sourcing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span>Intelligence Hub</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-DEFAULT text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Analytics</span>
+</a>
+<!-- Active State Navigation -->
+<a class="flex items-center gap-3 px-4 py-3 text-tertiary border-l-2 border-tertiary font-bold bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<div class="mt-auto px-container-padding">
+<div class="flex items-center gap-3 py-4 border-t border-outline-variant">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A small, professional headshot of an administrative user in a corporate setting. The lighting is studio quality, dark and moody to fit the UI theme, highlighting the user's focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0vgSEbGTZauWJ1BxP0HENWD7keddRhl9l5KiLHG17WRDeBYnuRoEIhxqPXghBNZaTQVNriaN4YbnJ4PHcNJu5KrPHMGpbDED5sQravMT6pEtBvoGO3gWEka1enNftkP-kqcXTlfoODE1ARlQaBCHcgKMbw_YB2BD084irgD5xumx-nYnfRZIU28-uPuNGAMpEF_i-ce_4G0xtmw3bD_xMJYNAVIuwYe1zu4r8rwJmukTeBTgcPMWi">
+<div class="flex flex-col">
+<span class="font-title-sm text-[14px] text-on-surface">Admin User</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">System Admin</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-[sidebar-width] w-full min-h-screen flex flex-col">
+<!-- TopAppBar (Shared Component) -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant docked full-width top-0 sticky z-40 flex justify-between items-center h-table-row-height px-container-padding">
+<div class="flex items-center gap-8 h-full">
+<span class="font-title-sm text-title-sm font-bold text-on-surface dark:text-on-surface border-r border-outline-variant pr-8 h-full flex items-center">Settings &amp; Administration</span>
+<nav class="flex h-full gap-6">
+<a class="flex items-center text-on-surface-variant pb-2 mt-2 hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform" href="#">General</a>
+<a class="flex items-center text-on-surface-variant pb-2 mt-2 hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform" href="#">Team</a>
+<!-- Active State Nav -->
+<a class="flex items-center text-tertiary border-b-2 border-tertiary pb-2 mt-2 font-bold scale-95 active:opacity-80 transition-transform" href="#">AI Configuration</a>
+<a class="flex items-center text-on-surface-variant pb-2 mt-2 hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform" href="#">Integrations</a>
+<a class="flex items-center text-on-surface-variant pb-2 mt-2 hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform" href="#">Audit Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<button class="text-on-surface-variant hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-container-padding max-w-[1200px] w-full mx-auto grid grid-cols-12 gap-6">
+<!-- Header Section -->
+<div class="col-span-12 mb-4">
+<h2 class="font-display-sm text-display-sm text-on-surface mb-2">Agent Control Center</h2>
+<p class="text-on-surface-variant max-w-2xl">Tune the underlying weights, decision boundaries, and active modules for HireGenie's matching and evaluation AI. Changes apply globally to all active pipelines.</p>
+</div>
+<!-- Left Column: Weights & Tuning (Span 8) -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+<!-- Ranking Agent Matrix -->
+<section class="bg-surface-container-low border border-outline-variant rounded-DEFAULT overflow-hidden">
+<div class="p-4 border-b border-outline-variant bg-[#1A1A1A] flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary" data-icon="tune">tune</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Candidate Ranking Weights</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[12px] text-on-surface-variant font-mono-data">Total Weight: <span class="text-tertiary" id="total-weight">100%</span></span>
+</div>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- Weight Slider 1 -->
+<div class="grid grid-cols-12 gap-4 items-center">
+<div class="col-span-3">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider block">Hard Skills Match</label>
+<span class="text-[11px] text-outline">Keywords &amp; Tech</span>
+</div>
+<div class="col-span-7 flex items-center relative">
+<input class="w-full" id="w-skills" max="100" min="0" oninput="updateWeights()" type="range" value="50">
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-data text-mono-data text-tertiary bg-surface-container px-2 py-1 border border-outline-variant rounded-sm" id="val-skills">50%</span>
+</div>
+</div>
+<!-- Weight Slider 2 -->
+<div class="grid grid-cols-12 gap-4 items-center">
+<div class="col-span-3">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider block">Experience Depth</label>
+<span class="text-[11px] text-outline">Tenure &amp; Scale</span>
+</div>
+<div class="col-span-7 flex items-center relative">
+<input class="w-full" id="w-exp" max="100" min="0" oninput="updateWeights()" type="range" value="25">
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-data text-mono-data text-tertiary bg-surface-container px-2 py-1 border border-outline-variant rounded-sm" id="val-exp">25%</span>
+</div>
+</div>
+<!-- Weight Slider 3 -->
+<div class="grid grid-cols-12 gap-4 items-center">
+<div class="col-span-3">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider block">Domain Authority</label>
+<span class="text-[11px] text-outline">Industry Relevance</span>
+</div>
+<div class="col-span-7 flex items-center relative">
+<input class="w-full" id="w-domain" max="100" min="0" oninput="updateWeights()" type="range" value="15">
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-data text-mono-data text-tertiary bg-surface-container px-2 py-1 border border-outline-variant rounded-sm" id="val-domain">15%</span>
+</div>
+</div>
+<!-- Weight Slider 4 -->
+<div class="grid grid-cols-12 gap-4 items-center">
+<div class="col-span-3">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider block">Cultural Fit Signals</label>
+<span class="text-[11px] text-outline">Soft Skills Extraction</span>
+</div>
+<div class="col-span-7 flex items-center relative">
+<input class="w-full" id="w-culture" max="100" min="0" oninput="updateWeights()" type="range" value="10">
+</div>
+<div class="col-span-2 text-right">
+<span class="font-mono-data text-mono-data text-tertiary bg-surface-container px-2 py-1 border border-outline-variant rounded-sm" id="val-culture">10%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Agent Modules Toggle List -->
+<section class="bg-surface-container-low border border-outline-variant rounded-DEFAULT overflow-hidden">
+<div class="p-4 border-b border-outline-variant bg-[#1A1A1A]">
+<h3 class="font-title-sm text-title-sm text-on-surface">Active Parsing Modules</h3>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Module 1 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container transition-colors">
+<div>
+<h4 class="font-body-sm text-on-surface font-semibold mb-1">Deep Resume Parsing (LLM-based)</h4>
+<p class="text-[12px] text-on-surface-variant">Extracts nuanced context beyond standard keyword matching.</p>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer z-10" id="toggle1" name="toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-tertiary cursor-pointer" for="toggle1"></label>
+</div>
+</div>
+<!-- Module 2 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container transition-colors">
+<div>
+<h4 class="font-body-sm text-on-surface font-semibold mb-1">Social Footprint Analyzer</h4>
+<p class="text-[12px] text-on-surface-variant">Evaluates GitHub, LinkedIn, and portfolios for cross-referencing.</p>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer z-10" id="toggle2" name="toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-tertiary cursor-pointer" for="toggle2"></label>
+</div>
+</div>
+<!-- Module 3 -->
+<div class="p-4 flex items-center justify-between hover:bg-surface-container transition-colors opacity-60">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-body-sm text-on-surface font-semibold">Predictive Tenure Model</h4>
+<span class="text-[10px] bg-surface-variant px-1 rounded text-on-surface-variant">BETA</span>
+</div>
+<p class="text-[12px] text-on-surface-variant">Estimates retention likelihood based on historical job hops.</p>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-surface-variant border-4 appearance-none cursor-pointer z-10" id="toggle3" name="toggle" type="checkbox">
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-outline-variant cursor-pointer" for="toggle3"></label>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Governance & Review (Span 4) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<!-- Human Decision Authority -->
+<section class="bg-surface-container-high border-l-2 border-tertiary rounded-r-DEFAULT p-6 shadow-md relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-[64px]" data-icon="gavel">gavel</span>
+</div>
+<h3 class="font-title-sm text-title-sm text-tertiary mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="policy">policy</span>
+                        Human Decision Authority
+                    </h3>
+<p class="text-[13px] text-on-surface-variant mb-4 leading-relaxed">
+                        Enforce mandatory manual review for critical pipeline stages. The AI agent will queue recommendations but will not advance candidates without approval.
+                    </p>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-3 p-2 bg-surface border border-outline-variant rounded-sm cursor-pointer hover:border-tertiary transition-colors">
+<input checked="" class="form-checkbox bg-transparent border-outline text-tertiary focus:ring-tertiary focus:ring-offset-surface w-4 h-4 rounded-sm" type="checkbox">
+<span class="text-[13px] text-on-surface">Auto-Reject Validation</span>
+</label>
+<label class="flex items-center gap-3 p-2 bg-surface border border-outline-variant rounded-sm cursor-pointer hover:border-tertiary transition-colors">
+<input checked="" class="form-checkbox bg-transparent border-outline text-tertiary focus:ring-tertiary focus:ring-offset-surface w-4 h-4 rounded-sm" type="checkbox">
+<span class="text-[13px] text-on-surface">Offer Generation Approval</span>
+</label>
+<label class="flex items-center gap-3 p-2 bg-surface border border-outline-variant rounded-sm cursor-pointer hover:border-tertiary transition-colors opacity-70">
+<input class="form-checkbox bg-transparent border-outline text-tertiary focus:ring-tertiary focus:ring-offset-surface w-4 h-4 rounded-sm" type="checkbox">
+<span class="text-[13px] text-on-surface">Initial Screening Pass</span>
+</label>
+</div>
+</section>
+<!-- Fairness & Bias Monitoring -->
+<section class="bg-surface-container-low border border-outline-variant rounded-DEFAULT p-6">
+<h3 class="font-title-sm text-title-sm text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="health_and_safety">health_and_safety</span>
+                        Fairness Monitoring
+                    </h3>
+<div class="mb-5">
+<div class="flex justify-between items-end mb-1">
+<span class="text-[12px] text-on-surface-variant">Bias Deviation Index</span>
+<span class="font-mono-data text-tertiary">0.02</span>
+</div>
+<div class="w-full h-1.5 bg-surface rounded-full overflow-hidden flex">
+<div class="h-full bg-tertiary w-[10%]"></div>
+<div class="h-full bg-surface-variant w-[90%]"></div>
+</div>
+<p class="text-[10px] text-outline mt-1 text-right">Healthy range &lt; 0.05</p>
+</div>
+<div class="bg-surface p-3 border border-outline-variant rounded-sm border-l-2 border-l-secondary-container">
+<p class="text-[12px] text-on-surface-variant">
+<strong>Status:</strong> Active monitoring enabled. Demographic data is stripped during the initial evaluation agent pass to ensure equitable ranking.
+                        </p>
+</div>
+</section>
+<!-- Action Buttons -->
+<div class="mt-auto flex justify-end gap-3 pt-4 border-t border-outline-variant">
+<button class="px-4 py-2 border border-outline-variant rounded-DEFAULT text-on-surface text-[13px] hover:bg-surface-container transition-colors">Revert to Default</button>
+<button class="px-4 py-2 bg-tertiary text-on-tertiary rounded-DEFAULT text-[13px] font-bold hover:bg-tertiary-fixed transition-colors shadow-md">Apply Configuration</button>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple JS for updating weight totals for visual feedback
+        function updateWeights() {
+            const w1 = parseInt(document.getElementById('w-skills').value);
+            const w2 = parseInt(document.getElementById('w-exp').value);
+            const w3 = parseInt(document.getElementById('w-domain').value);
+            const w4 = parseInt(document.getElementById('w-culture').value);
+            
+            document.getElementById('val-skills').textContent = w1 + '%';
+            document.getElementById('val-exp').textContent = w2 + '%';
+            document.getElementById('val-domain').textContent = w3 + '%';
+            document.getElementById('val-culture').textContent = w4 + '%';
+            
+            const total = w1 + w2 + w3 + w4;
+            const totalEl = document.getElementById('total-weight');
+            totalEl.textContent = total + '%';
+            
+            if(total !== 100) {
+                totalEl.classList.remove('text-tertiary');
+                totalEl.classList.add('text-error');
+            } else {
+                totalEl.classList.remove('text-error');
+                totalEl.classList.add('text-tertiary');
+            }
+        }
+    </script>
+</body></html>

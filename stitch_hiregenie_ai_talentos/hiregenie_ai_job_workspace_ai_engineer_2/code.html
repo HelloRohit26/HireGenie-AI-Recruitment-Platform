@@ -1,0 +1,584 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>HireGenie AI - Job Workspace (AI Engineer)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Newsreader:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#121415",
+                      "primary": "#e6c183",
+                      "on-primary": "#422c00",
+                      "tertiary-fixed": "#e1e3e4",
+                      "secondary": "#bbcbba",
+                      "outline": "#9a8f81",
+                      "error-container": "#93000a",
+                      "surface-container-highest": "#333536",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-high": "#282a2b",
+                      "tertiary": "#c5c7c8",
+                      "surface-bright": "#38393a",
+                      "on-primary-container": "#503806",
+                      "primary-fixed": "#ffdeaa",
+                      "on-tertiary-container": "#3a3d3e",
+                      "tertiary-fixed-dim": "#c5c7c8",
+                      "surface-container-lowest": "#0c0e0f",
+                      "on-secondary-container": "#aab9a9",
+                      "on-secondary-fixed": "#121e14",
+                      "surface-tint": "#e6c183",
+                      "error": "#ffb4ab",
+                      "inverse-surface": "#e2e2e3",
+                      "on-primary-fixed": "#271900",
+                      "secondary-fixed-dim": "#bbcbba",
+                      "inverse-primary": "#765a26",
+                      "outline-variant": "#4e463a",
+                      "surface-container-low": "#1a1c1d",
+                      "secondary-fixed": "#d7e7d5",
+                      "surface": "#121415",
+                      "surface-container": "#1e2021",
+                      "inverse-on-surface": "#2f3132",
+                      "surface-dim": "#121415",
+                      "on-surface-variant": "#d1c5b5",
+                      "on-surface": "#e2e2e3",
+                      "on-tertiary-fixed": "#191c1d",
+                      "surface-variant": "#333536",
+                      "primary-container": "#c5a267",
+                      "on-tertiary-fixed-variant": "#444748",
+                      "on-tertiary": "#2e3132",
+                      "secondary-container": "#3c4a3d",
+                      "on-primary-fixed-variant": "#5c4210",
+                      "tertiary-container": "#a5a7a8",
+                      "on-error": "#690005",
+                      "on-secondary-fixed-variant": "#3c4a3d",
+                      "on-background": "#e2e2e3",
+                      "primary-fixed-dim": "#e6c183",
+                      "on-secondary": "#263428"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "workspace-header-height": "120px",
+                      "gutter": "24px",
+                      "margin-page": "48px",
+                      "unit": "4px",
+                      "tab-bar-height": "48px"
+              },
+              "fontFamily": {
+                      "label-caps": [
+                              "Hanken Grotesk"
+                      ],
+                      "headline-job": [
+                              "Newsreader"
+                      ],
+                      "display-lg": [
+                              "Newsreader"
+                      ],
+                      "headline-job-mobile": [
+                              "Newsreader"
+                      ],
+                      "body-ui": [
+                              "Hanken Grotesk"
+                      ],
+                      "tab-label": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "letterSpacing": "0.08em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-job": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-job-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-ui": [
+                              "15px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "tab-label": [
+                              "13px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: theme('colors.surface-variant'); border-radius: 20px; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-ui text-body-ui antialiased overflow-hidden flex">
+<!-- Three.js Background -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen">
+<!-- STITCH_THREEJS_START:ANIMATION_40 class="absolute inset-0 w-full h-full" -->
+<div class="absolute inset-0 w-full h-full" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_40" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_40');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  (function() {
+  const container = document.getElementById('threejs-container-ANIMATION_19');
+  if (!container) return;
+  
+  const width = container.clientWidth || window.innerWidth;
+  const height = container.clientHeight || window.innerHeight;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  camera.position.z = 8;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  // Colors from HireGenie Palette
+  const accentColor = 0xd6a85f; // Muted Brass
+  const nodeColor = 0x383938;   // Surface Bright
+
+  // Create Clusters for Pipeline Stages
+  const stages = [
+    { name: 'Applicants', pos: new THREE.Vector3(-6, 2, 0), count: 20 },
+    { name: 'Screening', pos: new THREE.Vector3(-3, 0, 0), count: 15 },
+    { name: 'Shortlist', pos: new THREE.Vector3(0, -1, 0), count: 10 },
+    { name: 'Interview', pos: new THREE.Vector3(3, 0, 0), count: 8 },
+    { name: 'Finalist', pos: new THREE.Vector3(6, 2, 0), count: 5 }
+  ];
+
+  const nodes = [];
+  const group = new THREE.Group();
+
+  stages.forEach((stage, sIdx) => {
+    // Stage Label Anchor (Invisible)
+    const stageAnchor = new THREE.Mesh(
+      new THREE.SphereGeometry(0.1),
+      new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 })
+    );
+    stageAnchor.position.copy(stage.pos);
+    scene.add(stageAnchor);
+
+    for (let i = 0; i < stage.count; i++) {
+      const geometry = new THREE.SphereGeometry(0.08, 16, 16);
+      const material = new THREE.MeshPhongMaterial({
+        color: nodeColor,
+        emissive: accentColor,
+        emissiveIntensity: 0.2
+      });
+      const node = new THREE.Mesh(geometry, material);
+      
+      // Random spread around stage center
+      const spread = 1.5;
+      node.position.set(
+        stage.pos.x + (Math.random() - 0.5) * spread,
+        stage.pos.y + (Math.random() - 0.5) * spread,
+        stage.pos.z + (Math.random() - 0.5) * spread
+      );
+      
+      node.userData = {
+        origin: node.position.clone(),
+        stage: sIdx,
+        offset: Math.random() * Math.PI * 2
+      };
+      
+      group.add(node);
+      nodes.push(node);
+    }
+  });
+
+  // Connecting Lines (Web-like)
+  const lineMaterial = new THREE.LineBasicMaterial({
+    color: accentColor,
+    transparent: true,
+    opacity: 0.1
+  });
+
+  scene.add(group);
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+
+  const pointLight = new THREE.PointLight(accentColor, 1, 20);
+  pointLight.position.set(0, 0, 5);
+  scene.add(pointLight);
+
+  // Animation Loop
+  function animate(time) {
+    const t = time * 0.001;
+    
+    nodes.forEach(node => {
+      // Gentle floating motion
+      node.position.x = node.userData.origin.x + Math.sin(t + node.userData.offset) * 0.1;
+      node.position.y = node.userData.origin.y + Math.cos(t * 0.8 + node.userData.offset) * 0.1;
+      
+      // Pulse intensity
+      node.material.emissiveIntensity = 0.2 + Math.sin(t * 2 + node.userData.offset) * 0.1;
+    });
+
+    group.rotation.y = Math.sin(t * 0.1) * 0.1;
+    group.rotation.x = Math.cos(t * 0.05) * 0.05;
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+
+  animate(0);
+})();
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_40 -->
+</div>
+<!-- Side Navigation -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col p-gutter z-30 hidden md:flex">
+<div class="mb-8">
+<h1 class="font-headline-job text-headline-job text-primary flex items-center gap-3">
+<img alt="HireGenie Logo" class="w-8 h-8 rounded" data-alt="Minimalist abstract logo for HireGenie AI featuring interlocking brass geometric shapes on a dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbsraG-GBFXwOthdU3NkBkDWnLZAdMysqK6HGiSx59ijzpK9rYRzZPHeQ4GmYTVOKYuPc_97r_RG6umTDg6pdM-2Cse12fxuBSYYJRYFnMERGgMHBzYzEFqOR3r-b1A04CZsc1KkBFbYH_qgcD8bn7zxL_iti8nXMkIkGZLBTjZBOgvmhMJAfuGbNJ8_20UKpUyA6mEXduhZwm46pcuIxZxTjk93bYQqPJmqADhhGniLiQqPoZ-Eji">
+                HireGenie
+            </h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-1">Recruitment Suite</p>
+</div>
+<nav class="flex flex-col gap-2 flex-grow">
+<!-- Jobs is active based on context -->
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-200 rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-primary font-bold bg-surface-container-high rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="work" data-weight="fill" style="font-variation-settings: 'FILL' 1;">work</span>
+<span class="font-label-caps text-label-caps">Jobs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-200 rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-caps text-label-caps">Talent Pool</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-200 rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+<span class="font-label-caps text-label-caps">Interviews</span>
+</a>
+</nav>
+<div class="mt-auto">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors duration-200 rounded-lg scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-caps text-label-caps">Settings</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-h-screen relative z-10 w-full md:ml-64 bg-surface max-w-[1440px] mx-auto border-x border-outline-variant border-opacity-20 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+<!-- Top App Bar (Workspace Header) -->
+<header class="w-full px-margin-page pt-unit bg-surface border-b border-outline-variant flex flex-col sticky top-0 z-20" style="min-height: var(--spacing-workspace-header-height);">
+<div class="flex justify-between items-start pt-6 mb-4">
+<div class="flex flex-col gap-2">
+<h1 class="font-headline-job text-headline-job-mobile md:text-headline-job text-on-surface tracking-tight">AI Engineer</h1>
+<div class="flex items-center gap-3 font-label-caps text-label-caps text-on-surface-variant">
+<span>Engineering</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Remote</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="flex items-center gap-1 text-primary">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                            Status: Hiring Active
+                        </span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center gap-6 font-label-caps text-label-caps text-on-surface mr-4 px-4 py-2 bg-surface-container-low rounded border border-outline-variant">
+<div class="flex flex-col"><span class="text-on-surface-variant">Applicants</span><span class="text-primary text-base">2,481</span></div>
+<div class="flex flex-col"><span class="text-on-surface-variant">Shortlisted</span><span class="text-on-surface text-base">84</span></div>
+<div class="flex flex-col"><span class="text-on-surface-variant">Interviews</span><span class="text-on-surface text-base">31</span></div>
+<div class="flex flex-col"><span class="text-on-surface-variant">Finalists</span><span class="text-on-surface text-base">12</span></div>
+<div class="flex flex-col"><span class="text-on-surface-variant">Offers</span><span class="text-primary text-base">6</span></div>
+</div>
+<button class="px-4 py-2 font-label-caps text-label-caps text-on-surface-variant border border-outline-variant rounded hover:text-on-surface hover:border-outline transition-colors hidden sm:block">Pause Hiring</button>
+<button class="px-4 py-2 font-label-caps text-label-caps text-on-surface-variant border border-outline-variant rounded hover:text-on-surface hover:border-outline transition-colors hidden sm:block">Edit Job</button>
+<button class="px-4 py-2 bg-primary text-on-primary font-label-caps text-label-caps rounded hover:bg-primary-fixed transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="person_add">person_add</span> Add Candidate
+                    </button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+<img alt="Recruiter Profile" class="w-8 h-8 rounded-full border border-outline-variant ml-2" data-alt="Professional headshot of a recruitment manager in a modern, dark-themed office setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOHZ6OwQBrqSEI0y3WlIVh2V2NEuH2nqOV1-4xXiCS0fVRfYQPeruK9A--6GLNBzrbiLUxM5Ym6AuoiATz9r80V5LrI5IuHTTovWZYw4-JNxfzuK-hDaUt_jVs8p-3H2d7-hNGAP6NOW51OQrLYJ5ajnhPMwUPQ7pivFsqnLccvykLlsNcgQCecw6y32o7LjXHR7VGSieTlo1KaXEqUC-6pk_CMR2_N1c92SCarbMZw5G3fNAKhXUh">
+</div>
+</div>
+<!-- Sub Navigation -->
+<nav class="flex items-end gap-8 mt-auto overflow-x-auto custom-scrollbar">
+<a class="font-tab-label text-tab-label text-primary border-b-2 border-primary pb-3 whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity" href="#">Overview</a>
+<a class="font-tab-label text-tab-label text-on-surface-variant hover:text-on-surface pb-3 whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity" href="#">Candidates</a>
+<a class="font-tab-label text-tab-label text-on-surface-variant hover:text-on-surface pb-3 whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity" href="#">Screening</a>
+<a class="font-tab-label text-tab-label text-on-surface-variant hover:text-on-surface pb-3 whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity" href="#">Interviews</a>
+<a class="font-tab-label text-tab-label text-on-surface-variant hover:text-on-surface pb-3 whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity" href="#">Evaluations</a>
+<a class="font-tab-label text-tab-label text-on-surface-variant hover:text-on-surface pb-3 whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity" href="#">Finalists</a>
+<a class="font-tab-label text-tab-label text-on-surface-variant hover:text-on-surface pb-3 whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity" href="#">Analytics</a>
+<a class="font-tab-label text-tab-label text-on-surface-variant hover:text-on-surface pb-3 whitespace-nowrap opacity-80 hover:opacity-100 transition-opacity" href="#">Settings</a>
+</nav>
+</header>
+<!-- Main Content Area -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-margin-page bg-surface-dim">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter max-w-7xl mx-auto">
+<!-- Left Column (Main) -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Hiring Pipeline Visualization -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-6 shadow-sm">
+<h2 class="font-label-caps text-label-caps text-on-surface mb-6 flex items-center justify-between">
+                            Hiring Pipeline
+                            <button class="text-primary hover:text-primary-fixed transition-colors flex items-center gap-1">
+                                View Details <span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</h2>
+<div class="flex w-full items-center justify-between gap-2 relative">
+<!-- Pipeline connecting line -->
+<div class="absolute top-1/2 left-0 right-0 h-[2px] bg-outline-variant -z-10 translate-y-[-50%]"></div>
+<!-- Stages -->
+<div class="flex flex-col items-center gap-2 bg-surface-container-low px-2 cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container-high border-2 border-outline-variant group-hover:border-primary flex items-center justify-center transition-colors">
+<span class="font-body-ui text-on-surface">2.4k</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant group-hover:text-primary transition-colors">Applicants</span>
+</div>
+<div class="flex flex-col items-center gap-2 bg-surface-container-low px-2 cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container-high border-2 border-outline-variant group-hover:border-primary flex items-center justify-center transition-colors">
+<span class="font-body-ui text-on-surface">84</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant group-hover:text-primary transition-colors">Shortlisted</span>
+</div>
+<div class="flex flex-col items-center gap-2 bg-surface-container-low px-2 cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-primary-container border-2 border-primary flex items-center justify-center shadow-[0_0_15px_rgba(197,162,103,0.3)]">
+<span class="font-body-ui text-on-primary-container font-bold">31</span>
+</div>
+<span class="font-label-caps text-[10px] text-primary">Interviews</span>
+</div>
+<div class="flex flex-col items-center gap-2 bg-surface-container-low px-2 cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container-high border-2 border-outline-variant group-hover:border-primary flex items-center justify-center transition-colors">
+<span class="font-body-ui text-on-surface">12</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant group-hover:text-primary transition-colors">Finalists</span>
+</div>
+<div class="flex flex-col items-center gap-2 bg-surface-container-low px-2 cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-surface-container-high border-2 border-outline-variant group-hover:border-primary flex items-center justify-center transition-colors">
+<span class="font-body-ui text-on-surface">6</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant group-hover:text-primary transition-colors">Offers</span>
+</div>
+</div>
+</section>
+<!-- Live AI Operations & Recent Activity Bento -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Live AI Operations -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-6 flex flex-col gap-4">
+<h2 class="font-label-caps text-label-caps text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary" data-icon="memory">memory</span> Live AI Operations
+                            </h2>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between p-3 rounded bg-surface border border-outline-variant border-opacity-30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-tertiary" data-icon="document_scanner">document_scanner</span>
+<div>
+<div class="font-label-caps text-[10px] text-on-surface">Resume Parser</div>
+<div class="text-[12px] text-on-surface-variant opacity-70">Processing 14 new...</div>
+</div>
+</div>
+<div class="w-4 h-4 border-2 border-secondary border-t-transparent rounded-full animate-spin"></div>
+</div>
+<div class="flex items-center justify-between p-3 rounded bg-surface border border-outline-variant border-opacity-30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="psychology">psychology</span>
+<div>
+<div class="font-label-caps text-[10px] text-on-surface">Skill Matcher</div>
+<div class="text-[12px] text-primary opacity-90">Active</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="check_circle">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded bg-surface border border-outline-variant border-opacity-30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-tertiary" data-icon="sort">sort</span>
+<div>
+<div class="font-label-caps text-[10px] text-on-surface">Ranking Agent</div>
+<div class="text-[12px] text-on-surface-variant opacity-70">Updating models...</div>
+</div>
+</div>
+<div class="w-4 h-4 border-2 border-secondary border-t-transparent rounded-full animate-spin"></div>
+</div>
+<div class="flex items-center justify-between p-3 rounded bg-surface border border-outline-variant border-opacity-30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px] text-primary" data-icon="record_voice_over">record_voice_over</span>
+<div>
+<div class="font-label-caps text-[10px] text-on-surface">Interview Agent</div>
+<div class="text-[12px] text-on-surface-variant opacity-70">3 interviews today</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]" data-icon="schedule">schedule</span>
+</div>
+</div>
+</section>
+<!-- Recent Activity -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-6 flex flex-col gap-4">
+<h2 class="font-label-caps text-label-caps text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-tertiary" data-icon="history">history</span> Recent Activity
+                            </h2>
+<div class="flex flex-col gap-4 relative">
+<div class="absolute left-[9px] top-2 bottom-2 w-[1px] bg-outline-variant opacity-50 z-0"></div>
+<div class="flex items-start gap-3 relative z-10">
+<div class="w-5 h-5 rounded-full bg-surface border border-primary flex items-center justify-center mt-0.5 bg-background">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</div>
+<div class="flex flex-col">
+<span class="text-[13px] text-on-surface">AI Screen completed for <a class="text-primary hover:underline" href="#">Sarah Jenkins</a></span>
+<span class="text-[11px] text-on-surface-variant">10 mins ago</span>
+</div>
+</div>
+<div class="flex items-start gap-3 relative z-10">
+<div class="w-5 h-5 rounded-full bg-surface border border-outline-variant flex items-center justify-center mt-0.5 bg-background">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+</div>
+<div class="flex flex-col">
+<span class="text-[13px] text-on-surface">Offer extended to <a class="text-primary hover:underline" href="#">Michael Chen</a></span>
+<span class="text-[11px] text-on-surface-variant">2 hours ago</span>
+</div>
+</div>
+<div class="flex items-start gap-3 relative z-10">
+<div class="w-5 h-5 rounded-full bg-surface border border-outline-variant flex items-center justify-center mt-0.5 bg-background">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+</div>
+<div class="flex flex-col">
+<span class="text-[13px] text-on-surface">Manager review requested by <a class="text-secondary hover:underline" href="#">Alex M.</a></span>
+<span class="text-[11px] text-on-surface-variant">Yesterday, 4:30 PM</span>
+</div>
+</div>
+<div class="flex items-start gap-3 relative z-10">
+<div class="w-5 h-5 rounded-full bg-surface border border-outline-variant flex items-center justify-center mt-0.5 bg-background">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+</div>
+<div class="flex flex-col">
+<span class="text-[13px] text-on-surface">New application matched (94% fit)</span>
+<span class="text-[11px] text-on-surface-variant">Yesterday, 2:15 PM</span>
+</div>
+</div>
+</div>
+<button class="text-center font-label-caps text-[10px] text-on-surface-variant hover:text-on-surface mt-2 transition-colors">View All Activity</button>
+</section>
+</div>
+</div>
+<!-- Right Column (Sidebar) -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Analytics Quick View -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-6">
+<h2 class="font-label-caps text-label-caps text-on-surface mb-6 flex items-center justify-between">
+                            Analytics Quick View
+                            <span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="bar_chart">bar_chart</span>
+</h2>
+<div class="flex flex-col gap-6">
+<!-- Conversion Metric -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="text-[12px] text-on-surface-variant">Screening Conversion</span>
+<span class="text-headline-job-mobile font-headline-job text-primary">34%</span>
+</div>
+<div class="w-full h-1.5 bg-surface rounded-full overflow-hidden border border-outline-variant border-opacity-30">
+<div class="h-full bg-primary rounded-full w-[34%]"></div>
+</div>
+<p class="text-[10px] text-on-surface-variant mt-2 text-right">+4% vs category avg</p>
+</div>
+<hr class="border-outline-variant border-opacity-30">
+<!-- Time to Hire Metric -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="text-[12px] text-on-surface-variant">Avg. Time to Hire</span>
+<span class="text-headline-job-mobile font-headline-job text-on-surface">18d</span>
+</div>
+<div class="flex items-center gap-1">
+<div class="flex-1 h-8 bg-surface border border-outline-variant border-opacity-30 rounded-l flex items-center justify-center"><span class="text-[10px] text-on-surface-variant">Src (4d)</span></div>
+<div class="flex-1 h-8 bg-surface-container-high border-y border-outline-variant border-opacity-30 flex items-center justify-center"><span class="text-[10px] text-primary">Int (12d)</span></div>
+<div class="flex-1 h-8 bg-surface border border-outline-variant border-opacity-30 rounded-r flex items-center justify-center"><span class="text-[10px] text-on-surface-variant">Off (2d)</span></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Team -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-6">
+<h2 class="font-label-caps text-label-caps text-on-surface mb-4 flex items-center justify-between">
+                            Assigned Team
+                            <button class="p-1 rounded hover:bg-surface transition-colors"><span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="add">add</span></button>
+</h2>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<img alt="Hiring Manager" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="Portrait of an experienced hiring manager looking confident in a muted, sophisticated office setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5JZzZgcDjwbmaZdkK3r4MMcBzEyxu6LhlDXEB3ZsT001dTL7jrmMRG491R9eRhWhLPTwEhnUBJRDpYE3oSgHYYx4hEqJ0fQ9ePJW_L0nw31RbwAyFGkq0js_b-4JwiRQmx58XLnSyILjBgLE70Y2mRcK_6w1cotjLirs8rhwsKcUcGtm3sGB6szlbK4ftvDCSpSdSRQyE8gdHfDHKhENnfIU4a1tezykTWD25Kr38NWWfngG8D83u">
+<div>
+<div class="text-[13px] text-on-surface">Dr. Elena Rostova</div>
+<div class="font-label-caps text-[9px] text-on-surface-variant">Hiring Manager</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<img alt="Primary Recruiter" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="Candid portrait of a technical recruiter working at a standing desk in a modern, dark-themed tech office." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoYJHGUWf6Z8WBONGezwTvYBMLVyK3mOk78sszNqOFPB4nIbSXqX2NeLfo5Kv5HY6f6NpHjWxb5YEM17uZNLPhgAwzIMLhpQW9TPhRTj0qoC5kDWSCsedxW_z8PA7ka9REUnKVC3pQG9uSe6PV0n-HWkGDlHqp8lYyGTq0LIs-fRYtWnJQwyEwnVhbmfgi9doaKyPQ80g5vcGVHfryiBCd1M1oHXP2ONMWE3hVizI3Sucvw6rit1oc">
+<div>
+<div class="text-[13px] text-on-surface">James Wu</div>
+<div class="font-label-caps text-[9px] text-on-surface-variant">Primary Recruiter</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<img alt="Technical Interviewer" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="Professional headshot of an engineering lead in business casual attire with a muted background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWZLTpTfViLHJ0EpHz0gUtwv5xuISDs5NiJXvmy-4h33MyCxUifMDpah0ykJwivEb6RP8O24t3HiqBxivHid_16hQRFqUuEUKRIiWI7jkmS8YWshBpr2zfrEGarXrhe73nrP0eGkO_erNGGr65FZiSEdas3JOVhQdqSqvV2mI6fE-TIeCQjYpdqJK4d_NWi1U5CcoY1hoCWQAje0Taogf9B6tyW2AxwVPY0iImOLJNIMcJzmUwH0EK">
+<div>
+<div class="text-[13px] text-on-surface">Anita Desai</div>
+<div class="font-label-caps text-[9px] text-on-surface-variant">Technical Lead (Interviewer)</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+</body></html>

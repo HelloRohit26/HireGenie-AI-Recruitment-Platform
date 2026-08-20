@@ -1,0 +1,288 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>HireGenie AI - Candidate Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-container": "#4f4538",
+                        "on-error": "#690005",
+                        "on-secondary": "#382f23",
+                        "inverse-primary": "#7c5816",
+                        "on-tertiary-fixed": "#001c38",
+                        "outline-variant": "#4f4538",
+                        "surface-container-high": "#2a2a28",
+                        "tertiary": "#aaceff",
+                        "on-secondary-container": "#c1b3a2",
+                        "primary-container": "#d6a85f",
+                        "on-tertiary": "#02315a",
+                        "secondary-fixed-dim": "#d3c4b3",
+                        "success-muted": "#2d3528",
+                        "error-container": "#93000a",
+                        "outline": "#4f4538",
+                        "secondary-fixed": "#f0e0ce",
+                        "on-tertiary-fixed-variant": "#234872",
+                        "on-surface": "#e3e2df",
+                        "on-tertiary-container": "#1e446e",
+                        "surface-tint": "#efbf73",
+                        "on-primary": "#432c00",
+                        "surface-container-highest": "#353532",
+                        "surface-container-low": "#1c1c19",
+                        "background": "#131311",
+                        "inverse-surface": "#e5e2de",
+                        "on-primary-fixed-variant": "#604100",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#d3c4b3",
+                        "primary": "#f4c377",
+                        "tertiary-container": "#8fb2e2",
+                        "surface-variant": "#353532",
+                        "primary-fixed": "#ffdeae",
+                        "tertiary-fixed-dim": "#a6c9fa",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#efbf73",
+                        "surface-container": "#20201d",
+                        "inverse-on-surface": "#31302e",
+                        "surface": "#131311",
+                        "on-primary-container": "#5b3d00",
+                        "on-background": "#e5e2de",
+                        "on-primary-fixed": "#281800",
+                        "tertiary-fixed": "#d3e4ff",
+                        "surface-bright": "#3a3937",
+                        "on-surface-variant": "#d2c4b3",
+                        "on-secondary-fixed-variant": "#4f4538",
+                        "surface-dim": "#131311",
+                        "accent-lume": "#f2dec0",
+                        "on-secondary-fixed": "#221a0f",
+                        "surface-container-lowest": "#0e0e0c"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.125rem",
+                        lg: "0.25rem",
+                        xl: "0.5rem",
+                        full: "0.75rem"
+                    },
+                    spacing: {
+                        unit: "8px",
+                        "container-max": "1200px",
+                        "onboarding-track-height": "4px",
+                        gutter: "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px"
+                    },
+                    fontFamily: {
+                        "title-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    fontSize: {
+                        "title-md": ["20px", { lineHeight: "28px", fontWeight: "500" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "500" }],
+                        "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "600" }],
+                        "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "600" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "500" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            background-color: theme('colors.background');
+            color: theme('colors.on-surface');
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Subtle radial gradient background for authentication/onboarding */
+        .auth-backdrop {
+            background: radial-gradient(circle at center, rgba(244, 195, 119, 0.05) 0%, rgba(19, 19, 17, 1) 70%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Drag & Drop Area Styles */
+        .drop-zone {
+            border: 1px dashed theme('colors.outline');
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: theme('colors.primary');
+            background-color: rgba(244, 195, 119, 0.02);
+        }
+
+        .drop-zone.uploading {
+            border: 1px solid theme('colors.primary');
+            background-color: rgba(244, 195, 119, 0.05);
+        }
+
+        /* Parsing Animation */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .parsing-ring::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid theme('colors.primary');
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        .check-item {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease forwards;
+        }
+
+        .check-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="auth-backdrop">
+<!-- Top AppBar (from JSON, adapted for Onboarding - hidden nav items as it's a linear flow) -->
+<header class="flex justify-center items-center w-full px-margin-mobile h-16 max-w-container-max mx-auto bg-background dark:bg-background docked full-width top-0 z-50 fixed">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[24px]">temp_preferences_custom</span>
+<h1 class="text-title-md font-title-md font-bold text-on-surface dark:text-on-surface">HireGenie AI</h1>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="w-full max-w-[480px] px-6 pt-32 pb-24 flex flex-col items-center">
+<!-- Progress Indicators (Horizon Line) -->
+<div class="w-full flex gap-2 mb-12">
+<!-- Step 1: Completed -->
+<div class="h-onboarding-track-height flex-1 bg-primary rounded-full"></div>
+<!-- Step 2: Active -->
+<div class="h-onboarding-track-height flex-1 rounded-full" style="background: linear-gradient(to right, theme('colors.primary'), theme('colors.outline'));"></div>
+<!-- Step 3: Upcoming -->
+<div class="h-onboarding-track-height flex-1 bg-outline opacity-30 rounded-full"></div>
+<!-- Step 4: Upcoming -->
+<div class="h-onboarding-track-height flex-1 bg-outline opacity-30 rounded-full"></div>
+</div>
+<!-- Header Section -->
+<div class="text-center w-full mb-10">
+<p class="text-label-md font-label-md text-primary tracking-widest uppercase mb-2">Step 02</p>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-4">Upload Resume</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Let's build your profile. Upload your latest resume, and our AI will extract the key details instantly.</p>
+</div>
+<!-- Upload State (Initial) -->
+<div class="w-full" id="upload-state">
+<div class="drop-zone w-full rounded-xl p-10 flex flex-col items-center justify-center cursor-pointer relative overflow-hidden bg-surface-container-low" onclick="simulateUpload()">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center mb-6 relative z-10">
+<span class="material-symbols-outlined text-on-surface-variant text-[32px]">upload_file</span>
+</div>
+<h3 class="text-title-md font-title-md text-on-surface mb-2 relative z-10">Drop your resume here</h3>
+<p class="text-body-md font-body-md text-on-surface-variant relative z-10">or click to browse (PDF, DOCX)</p>
+<input aria-label="Upload Resume" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" type="file">
+</div>
+<!-- Optional: Manual Entry Link -->
+<div class="w-full text-center mt-6">
+<button class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors">I'll enter my details manually</button>
+</div>
+</div>
+<!-- Parsing State (Hidden initially) -->
+<div class="w-full hidden flex-col items-center" id="parsing-state">
+<div class="w-20 h-20 relative flex items-center justify-center mb-8">
+<div class="w-16 h-16 rounded-full bg-primary-container/20 flex items-center justify-center relative z-10 parsing-ring">
+<span class="material-symbols-outlined text-primary text-[32px]">document_scanner</span>
+</div>
+</div>
+<h3 class="text-title-md font-title-md text-on-surface mb-8">Parsing resume...</h3>
+<!-- Checklist -->
+<div class="w-full bg-surface-container-low border border-outline rounded-xl p-6 flex flex-col gap-4">
+<div class="flex items-center gap-4 check-item" id="check-exp">
+<span class="material-symbols-outlined text-outline-variant text-[24px] icon-status">radio_button_unchecked</span>
+<span class="text-body-md font-body-md text-on-surface-variant">Experience found</span>
+</div>
+<div class="flex items-center gap-4 check-item" id="check-edu">
+<span class="material-symbols-outlined text-outline-variant text-[24px] icon-status">radio_button_unchecked</span>
+<span class="text-body-md font-body-md text-on-surface-variant">Education found</span>
+</div>
+<div class="flex items-center gap-4 check-item" id="check-skills">
+<span class="material-symbols-outlined text-outline-variant text-[24px] icon-status">radio_button_unchecked</span>
+<span class="text-body-md font-body-md text-on-surface-variant">Skills found</span>
+</div>
+<div class="flex items-center gap-4 check-item" id="check-proj">
+<span class="material-symbols-outlined text-outline-variant text-[24px] icon-status">radio_button_unchecked</span>
+<span class="text-body-md font-body-md text-on-surface-variant">Projects found</span>
+</div>
+</div>
+<!-- Review Button (Hidden initially, shown after parsing) -->
+<button class="w-full mt-10 bg-primary text-on-primary py-4 px-8 rounded-full text-label-md font-label-md flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors opacity-0 pointer-events-none transform translate-y-4 duration-500" id="btn-review">
+<span>Review Profile</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</main>
+<script>
+        function simulateUpload() {
+            const uploadState = document.getElementById('upload-state');
+            const parsingState = document.getElementById('parsing-state');
+            const btnReview = document.getElementById('btn-review');
+            const checks = [
+                document.getElementById('check-exp'),
+                document.getElementById('check-edu'),
+                document.getElementById('check-skills'),
+                document.getElementById('check-proj')
+            ];
+
+            // Hide upload, show parsing
+            uploadState.style.display = 'none';
+            parsingState.classList.remove('hidden');
+            parsingState.classList.add('flex');
+
+            // Simulate checklist progression
+            checks.forEach((check, index) => {
+                setTimeout(() => {
+                    check.classList.add('visible');
+                    
+                    // After short delay, mark as checked
+                    setTimeout(() => {
+                        const icon = check.querySelector('.icon-status');
+                        const text = check.querySelector('span:not(.icon-status)');
+                        
+                        icon.textContent = 'check_circle';
+                        icon.classList.remove('text-outline-variant');
+                        icon.classList.add('text-primary');
+                        
+                        text.classList.remove('text-on-surface-variant');
+                        text.classList.add('text-on-surface');
+                    }, 500);
+
+                }, (index + 1) * 800);
+            });
+
+            // Show Review button after all checks complete
+            setTimeout(() => {
+                // Change title
+                parsingState.querySelector('h3').textContent = 'Parsing Complete';
+                parsingState.querySelector('.parsing-ring').classList.remove('parsing-ring');
+                
+                // Reveal Button
+                btnReview.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            }, (checks.length + 1) * 800 + 500);
+        }
+    </script>
+</body></html>

@@ -1,0 +1,40 @@
+# Environment & Secrets
+.env
+.env.local
+.env.*
+*.env
+!.env.example
+!backend/.env.example
+
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+ENV/
+
+# Databases & Local Artifacts
+*.sqlite
+*.sqlite3
+*.db
+uploads/
+backend/uploads/
+chroma_db/
+backend/chroma_db/
+
+# Node & Frontend Build
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+build/
+.eslintcache
+.turbo
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

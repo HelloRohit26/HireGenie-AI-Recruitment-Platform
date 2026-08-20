@@ -1,0 +1,252 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root,
+  .light {
+    /* LIGHT THEME — SOFT BLUE / WHITE ENVIRONMENT */
+    --bg-primary: #F7FAFF;
+    --bg-secondary: #F1F6FF;
+    --surface: #FFFFFF;
+    --surface-elevated: #F8FAFC;
+    --border: rgba(79, 111, 255, 0.14);
+    --border-strong: rgba(79, 111, 255, 0.28);
+    
+    --text-primary: #14213D;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    
+    --accent-primary: #4F6FFF;     /* Soft Royal Blue Accent */
+    --accent-secondary: #7B8CFF;   /* Periwinkle */
+    --accent-supporting: #38BDF8;  /* Cyan */
+    
+    --status-success: #10B981;
+    --status-warning: #F59E0B;
+    --status-error: #EF4444;
+
+    --shadow-sm: 0 2px 8px rgba(79, 111, 255, 0.06);
+    --shadow-md: 0 8px 24px rgba(79, 111, 255, 0.12);
+    --shadow-lg: 0 16px 40px rgba(79, 111, 255, 0.18);
+
+    --ambient-opacity: 0.15;
+
+    /* Backward compatibility mappings */
+    --bg-dark: var(--bg-primary);
+    --bg-card: var(--surface);
+    --bg-obsidian: var(--bg-primary);
+    --border-subtle: var(--border);
+    --primary-brass: var(--accent-primary);
+    --accent-sage: var(--accent-secondary);
+  }
+
+  .dark {
+    /* DARK THEME — DEEP BLUE GRAPHITE */
+    --bg-primary: #0A0F1D;
+    --bg-secondary: #111827;
+    --surface: #1E293B;
+    --surface-elevated: #334155;
+    --border: rgba(255, 255, 255, 0.12);
+    --border-strong: rgba(255, 255, 255, 0.24);
+    
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    
+    --accent-primary: #4F6FFF;
+    --accent-secondary: #7B8CFF;
+    --accent-supporting: #38BDF8;
+    
+    --status-success: #10B981;
+    --status-warning: #F59E0B;
+    --status-error: #EF4444;
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+
+    --ambient-opacity: 0.35;
+
+    /* Backward compatibility mappings */
+    --bg-dark: var(--bg-primary);
+    --bg-card: var(--surface);
+    --bg-obsidian: var(--bg-primary);
+    --border-subtle: var(--border);
+    --primary-brass: var(--accent-primary);
+    --accent-sage: var(--accent-secondary);
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: background-color 0.35s ease, color 0.35s ease;
+    overflow-x: hidden;
+  }
+}
+
+/* ─── GLOBAL THEME SMOOTH TRANSITIONS ───────────────── */
+
+*, *::before, *::after {
+  border-color: var(--border);
+}
+
+.theme-transition,
+.theme-transition * {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.light body,
+.light {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+.light [class*="bg-[#11110F]"],
+.light [class*="bg-[#171815]"],
+.light [class*="bg-[#181815]"],
+.light [class*="bg-[#1D1F1B]"],
+.light [class*="bg-[#20201C]"],
+.light [class*="bg-[#23251F]"],
+.light [class*="bg-[#292B25]"],
+.light [class*="bg-[#2A2A28]"] {
+  background-color: var(--surface) !important;
+}
+
+.light [class*="text-[#F4F1E9]"],
+.light [class*="text-[#E8E5DA]"],
+.light [class*="text-[#E5E2DE]"] {
+  color: var(--text-primary) !important;
+}
+
+.light [class*="text-[#A1A19A]"],
+.light [class*="text-[#AAA99F]"] {
+  color: var(--text-secondary) !important;
+}
+
+.light [class*="border-[#2A2A28]"],
+.light [class*="border-[#20201C]"] {
+  border-color: var(--border) !important;
+}
+
+/* Hero Spline background styling */
+.hero-spline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* ─── NEXT-GEN AUTH & UI KEYFRAME ANIMATIONS ───────────────── */
+@keyframes authModalPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes floatOrb {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(15px, -20px) scale(1.08);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes borderRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+@keyframes shineSweep {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+.animate-auth-pop {
+  animation: authModalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float-slow {
+  animation: floatOrb 8s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shakeError 0.4s ease-in-out;
+}
+
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-sweep::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 80%
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  animation: shineSweep 4s infinite linear;
+  pointer-events: none;
+}
+

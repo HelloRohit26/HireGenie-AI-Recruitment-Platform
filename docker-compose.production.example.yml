@@ -1,0 +1,50 @@
+# HireGenie AI — Production Docker Compose Manifest with Redis & Celery Worker
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: hiregenie-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hiregenie-backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:////app/hiregenie.db
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - DURABLE_QUEUE_ENABLED=True
+    depends_on:
+      - redis
+    restart: always
+
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hiregenie-celery-worker
+    command: celery -A app.workers.celery_app worker --loglevel=info --concurrency=4
+    environment:
+      - DATABASE_URL=sqlite:////app/hiregenie.db
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - DURABLE_QUEUE_ENABLED=True
+    depends_on:
+      - redis
+      - backend
+    restart: always
+
+volumes:
+  redis_data:

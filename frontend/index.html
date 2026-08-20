@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" class="dark h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HireGenie AI - Recruiter Command Center</title>
+  <meta name="description" content="HireGenie AI Autonomous Recruitment Platform - Recruiter TalentOS Command Center">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN Fallback -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Hanken Grotesk', 'sans-serif'],
+            mono: ['Geist', 'monospace']
+          },
+          colors: {
+            brand: {
+              dark: '#11110F',
+              card: '#181815',
+              border: '#2A2A28',
+              brass: '#D6A85F',
+              sage: '#79A89A',
+              terra: '#C97C5D',
+              text: '#E5E2DE'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#11110F] text-[#E5E2DE] font-sans antialiased min-h-screen selection:bg-[#D6A85F]/30 selection:text-[#F4C377]">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

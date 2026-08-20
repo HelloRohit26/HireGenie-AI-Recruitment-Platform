@@ -1,0 +1,463 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>HireGenie AI - Team &amp; Permissions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary": "#3a2f1c",
+                        "surface-container": "#20201e",
+                        "on-primary-container": "#848282",
+                        "on-secondary": "#30312d",
+                        "inverse-primary": "#5f5e5e",
+                        "on-primary-fixed": "#1c1b1b",
+                        "secondary-container": "#474743",
+                        "surface-variant": "#353533",
+                        "surface-bright": "#393937",
+                        "on-tertiary-container": "#908169",
+                        "on-surface-variant": "#c4c7c7",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-primary": "#313030",
+                        "tertiary-fixed-dim": "#d6c4aa",
+                        "surface-container-lowest": "#0e0e0d",
+                        "surface": "#131312",
+                        "on-surface": "#e5e2df",
+                        "on-tertiary-fixed-variant": "#514531",
+                        "tertiary-container": "#221908",
+                        "on-secondary-fixed-variant": "#474743",
+                        "on-error": "#690005",
+                        "on-background": "#e5e2df",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#e5e2df",
+                        "tertiary": "#d6c4aa",
+                        "background": "#131312",
+                        "primary-fixed": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1b1c1a",
+                        "surface-dim": "#131312",
+                        "secondary-fixed-dim": "#c8c6c2",
+                        "surface-container-highest": "#353533",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary": "#c8c6c2",
+                        "primary-container": "#1a1a1a",
+                        "surface-tint": "#c8c6c5",
+                        "tertiary-fixed": "#f3e0c4",
+                        "surface-container-high": "#2a2a28",
+                        "outline-variant": "#444748",
+                        "primary": "#c8c6c5",
+                        "inverse-on-surface": "#30302e",
+                        "secondary-fixed": "#e4e2dd",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#241a09",
+                        "on-secondary-fixed": "#1b1c19",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b6b5b0"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "container-padding": "32px",
+                        "drawer-width": "480px",
+                        "sidebar-width": "240px",
+                        "element-gap": "16px",
+                        "unit": "4px",
+                        "table-row-height": "48px"
+                    },
+                    fontFamily: {
+                        "body-md": ["Hanken Grotesk"],
+                        "display-sm": ["Hanken Grotesk"],
+                        "body-sm": ["Hanken Grotesk"],
+                        "title-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "mono-data": ["JetBrains Mono"],
+                        "label-caps": ["Hanken Grotesk"]
+                    },
+                    fontSize: {
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "display-sm": ["30px", { lineHeight: "38px", letterSpacing: "-0.02em", fontWeight: "600" }],
+                        "body-sm": ["13px", { lineHeight: "18px", fontWeight: "400" }],
+                        "title-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }],
+                        "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "500" }],
+                        "mono-data": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+                        "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.08em", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #444748;
+            border-radius: 4px;
+        }
+        
+        /* Table Row Hover State */
+        .hover-row:hover .row-actions {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Checkbox-Lite */
+        .checkbox-lite {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1px solid #8e9192;
+            border-radius: 2px;
+            background-color: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .checkbox-lite:checked {
+            background-color: #d6c4aa;
+            border-color: #d6c4aa;
+        }
+        .checkbox-lite:checked::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            width: 4px;
+            height: 8px;
+            border: solid #131312;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen overflow-x-hidden selection:bg-tertiary selection:text-on-tertiary">
+<!-- TopAppBar -->
+<header class="bg-surface border-b border-outline-variant docked full-width top-0 sticky z-40">
+<div class="flex justify-between items-center h-table-row-height px-container-padding ml-[240px]">
+<div class="flex items-center gap-6">
+<span class="font-title-sm text-title-sm font-bold text-on-surface">Settings &amp; Administration</span>
+<nav class="hidden md:flex gap-6 h-full items-center">
+<a class="text-on-surface-variant pb-2 font-body-md hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform h-full flex items-end" href="#">General</a>
+<a class="text-tertiary border-b-2 border-tertiary pb-2 font-body-md hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform h-full flex items-end" href="#">Team</a>
+<a class="text-on-surface-variant pb-2 font-body-md hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform h-full flex items-end" href="#">AI Configuration</a>
+<a class="text-on-surface-variant pb-2 font-body-md hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform h-full flex items-end" href="#">Integrations</a>
+<a class="text-on-surface-variant pb-2 font-body-md hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform h-full flex items-end" href="#">Audit Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-DEFAULT py-1 pl-8 pr-3 text-body-sm text-on-surface focus:outline-none focus:border-tertiary w-64 placeholder:text-on-surface-variant transition-colors" placeholder="Search settings..." type="text">
+</div>
+<button class="text-on-surface-variant hover:text-tertiary transition-colors p-1 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+<button class="text-on-surface-variant hover:text-tertiary transition-colors p-1 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant ml-2 shrink-0">
+<img alt="Admin User" class="w-full h-full object-cover" data-alt="A professional headshot of an administrative user in a corporate setting. High-quality lighting, neutral background, reflecting a modern, authoritative aesthetic typical of enterprise software profiles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB5UfAZXRNzyf4r5e2uN8S_DtXA0FwXAIsjYDWSpDAZsY3lCjpjy9y_P7MOzGgOi6TSe6sT508ZZoOJPSSFMqOvuQbSSfjZvdxKx1ElcbDWyCpqDhIdc9ZvJ-GywN5JcIPsAY2f_Rn-DhXWqtIcLYTSedd9dapWiBFZwFbzv8dlwfPIFFXZ4GeH2oKdu7H_I4ripXURCy8h8ncK_fjZijfhFniZLJWy_sO-iZzheVh-kvYohojb6oY">
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="bg-surface w-[240px] h-screen fixed left-0 top-0 border-r border-outline-variant z-50">
+<div class="flex flex-col h-full py-element-gap">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-8 h-8 bg-tertiary rounded flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-tertiary" style="font-variation-settings: 'FILL' 1;">work</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight leading-tight">TalentOS</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase opacity-80">Enterprise Suite</p>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-tertiary transition-colors">maps_ar</span>
+                    Talent Pipeline
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-tertiary transition-colors">person_search</span>
+                    Active Sourcing
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-tertiary transition-colors">psychology</span>
+                    Intelligence Hub
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-tertiary transition-colors">analytics</span>
+                    Analytics
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-tertiary border-l-2 border-tertiary font-bold bg-surface-container-high transition-all duration-200 ease-in-out -ml-[14px] pl-[25px]" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+                    Settings
+                </a>
+</nav>
+<div class="px-6 mt-auto">
+<div class="pt-4 border-t border-outline-variant flex items-center gap-2 text-on-surface-variant font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>System Status: Optimal</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-[240px] p-container-padding max-w-[1200px] min-h-[calc(100vh-48px)]">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-display-sm text-display-sm text-on-surface mb-2">Team &amp; Permissions</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Manage your organization's recruiting team, assign roles, and configure granular access controls for TalentOS modules.</p>
+</div>
+<button class="bg-tertiary text-on-tertiary font-title-sm text-title-sm px-4 py-2 rounded-DEFAULT hover:bg-[#ebdcc4] transition-colors flex items-center gap-2" onclick="document.getElementById('invite-modal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+                Invite Member
+            </button>
+</div>
+<!-- Density Layout Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Team Members Table (Spans 8 cols) -->
+<section class="lg:col-span-12 xl:col-span-8 bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden flex flex-col h-[500px]">
+<div class="px-4 py-3 bg-[#1A1A1A] border-b border-outline-variant flex justify-between items-center shrink-0">
+<h3 class="font-title-sm text-title-sm text-on-surface">Active Team Members (12)</h3>
+<div class="flex gap-2">
+<button class="p-1 text-on-surface-variant hover:text-on-surface transition-colors rounded hover:bg-surface-variant">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-y-auto custom-scrollbar flex-1 relative">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-[#1A1A1A] z-10 shadow-[0_1px_0_0_#444748]">
+<tr>
+<th class="font-label-caps text-label-caps text-on-surface-variant uppercase px-3 py-2 font-normal">Member</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant uppercase px-3 py-2 font-normal">Role</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant uppercase px-3 py-2 font-normal">Last Active</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant uppercase px-3 py-2 font-normal">Status</th>
+<th class="px-3 py-2 w-10"></th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover-row hover:bg-surface-container transition-colors group h-table-row-height">
+<td class="px-3 py-2">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded bg-tertiary-fixed-dim text-on-tertiary-fixed-variant flex items-center justify-center font-bold text-[10px]">SC</div>
+<div>
+<div class="font-medium text-on-surface">Sarah Chen</div>
+<div class="font-mono-data text-mono-data text-on-surface-variant">sarah@hiregenie.ai</div>
+</div>
+</div>
+</td>
+<td class="px-3 py-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-tertiary/10 text-tertiary border border-tertiary/20">Owner</span>
+</td>
+<td class="px-3 py-2 font-mono-data text-mono-data text-on-surface-variant">Just now</td>
+<td class="px-3 py-2">
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+<span class="text-on-surface-variant">Active</span>
+</div>
+</td>
+<td class="px-3 py-2 text-right">
+<div class="row-actions opacity-0 pointer-events-none transition-opacity flex justify-end gap-1">
+<button class="p-1 text-on-surface-variant hover:text-tertiary rounded hover:bg-surface-variant"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover-row hover:bg-surface-container transition-colors group h-table-row-height">
+<td class="px-3 py-2">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded bg-surface-variant text-on-surface flex items-center justify-center font-bold text-[10px]">MR</div>
+<div>
+<div class="font-medium text-on-surface">Marcus Rodriguez</div>
+<div class="font-mono-data text-mono-data text-on-surface-variant">marcus@hiregenie.ai</div>
+</div>
+</div>
+</td>
+<td class="px-3 py-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-surface-variant text-on-surface border border-outline-variant">Admin</span>
+</td>
+<td class="px-3 py-2 font-mono-data text-mono-data text-on-surface-variant">2h ago</td>
+<td class="px-3 py-2">
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+<span class="text-on-surface-variant">Active</span>
+</div>
+</td>
+<td class="px-3 py-2 text-right">
+<div class="row-actions opacity-0 pointer-events-none transition-opacity flex justify-end gap-1">
+<button class="p-1 text-on-surface-variant hover:text-tertiary rounded hover:bg-surface-variant"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover-row hover:bg-surface-container transition-colors group h-table-row-height">
+<td class="px-3 py-2">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded bg-surface-variant text-on-surface flex items-center justify-center font-bold text-[10px]">AJ</div>
+<div>
+<div class="font-medium text-on-surface">Aisha Johnson</div>
+<div class="font-mono-data text-mono-data text-on-surface-variant">aisha@hiregenie.ai</div>
+</div>
+</div>
+</td>
+<td class="px-3 py-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-surface-variant text-on-surface border border-outline-variant">Recruiter</span>
+</td>
+<td class="px-3 py-2 font-mono-data text-mono-data text-on-surface-variant">1d ago</td>
+<td class="px-3 py-2">
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+<span class="text-on-surface-variant">Active</span>
+</div>
+</td>
+<td class="px-3 py-2 text-right">
+<div class="row-actions opacity-0 pointer-events-none transition-opacity flex justify-end gap-1">
+<button class="p-1 text-on-surface-variant hover:text-tertiary rounded hover:bg-surface-variant"><span class="material-symbols-outlined text-[16px]">edit</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover-row hover:bg-surface-container transition-colors group h-table-row-height">
+<td class="px-3 py-2">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded bg-surface-variant text-on-surface flex items-center justify-center font-bold text-[10px] opacity-50">PL</div>
+<div class="opacity-70">
+<div class="font-medium text-on-surface">Priya Patel</div>
+<div class="font-mono-data text-mono-data text-on-surface-variant">priya@hiregenie.ai</div>
+</div>
+</div>
+</td>
+<td class="px-3 py-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-surface-variant text-on-surface border border-outline-variant opacity-70">Viewer</span>
+</td>
+<td class="px-3 py-2 font-mono-data text-mono-data text-on-surface-variant opacity-70">-</td>
+<td class="px-3 py-2">
+<div class="flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary"></div>
+<span class="text-on-surface-variant italic">Invited</span>
+</div>
+</td>
+<td class="px-3 py-2 text-right">
+<div class="row-actions opacity-0 pointer-events-none transition-opacity flex justify-end gap-1">
+<button class="p-1 text-on-surface-variant hover:text-tertiary rounded hover:bg-surface-variant" title="Resend Invite"><span class="material-symbols-outlined text-[16px]">send</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Role Permissions Matrix (Spans 4 cols on XL, 12 on smaller) -->
+<section class="lg:col-span-12 xl:col-span-4 bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden flex flex-col h-[500px]">
+<div class="px-4 py-3 bg-[#1A1A1A] border-b border-outline-variant shrink-0">
+<h3 class="font-title-sm text-title-sm text-on-surface">Role Matrix</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Capabilities per access level</p>
+</div>
+<div class="overflow-x-auto overflow-y-auto custom-scrollbar flex-1 p-4">
+<div class="grid grid-cols-[auto_1fr_1fr_1fr] gap-0 text-center text-[12px]">
+<!-- Headers -->
+<div class="p-2 border-b border-r border-outline-variant text-left sticky left-0 bg-surface-container-low z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Capability</span>
+</div>
+<div class="p-2 border-b border-r border-outline-variant font-medium text-tertiary">Owner</div>
+<div class="p-2 border-b border-r border-outline-variant font-medium text-on-surface">Admin</div>
+<div class="p-2 border-b border-outline-variant font-medium text-on-surface">Recruit</div>
+<!-- Row 1 -->
+<div class="p-2 border-b border-r border-outline-variant text-left font-medium text-on-surface sticky left-0 bg-surface-container-low z-10 hover:bg-surface-container transition-colors">View Candidates</div>
+<div class="p-2 border-b border-r border-outline-variant flex items-center justify-center bg-tertiary/5"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<div class="p-2 border-b border-r border-outline-variant flex items-center justify-center"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<div class="p-2 border-b border-outline-variant flex items-center justify-center"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<!-- Row 2 -->
+<div class="p-2 border-b border-r border-outline-variant text-left font-medium text-on-surface sticky left-0 bg-surface-container-low z-10 hover:bg-surface-container transition-colors">Create Jobs</div>
+<div class="p-2 border-b border-r border-outline-variant flex items-center justify-center bg-tertiary/5"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<div class="p-2 border-b border-r border-outline-variant flex items-center justify-center"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<div class="p-2 border-b border-outline-variant flex items-center justify-center"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<!-- Row 3 -->
+<div class="p-2 border-b border-r border-outline-variant text-left font-medium text-on-surface sticky left-0 bg-surface-container-low z-10 hover:bg-surface-container transition-colors">AI Sourcing</div>
+<div class="p-2 border-b border-r border-outline-variant flex items-center justify-center bg-tertiary/5"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<div class="p-2 border-b border-r border-outline-variant flex items-center justify-center"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<div class="p-2 border-b border-outline-variant flex items-center justify-center"><input class="checkbox-lite" disabled="" type="checkbox"></div>
+<!-- Row 4 -->
+<div class="p-2 border-b border-r border-outline-variant text-left font-medium text-on-surface sticky left-0 bg-surface-container-low z-10 border-l-2 border-l-tertiary bg-surface-container-high transition-colors">Manage Team</div>
+<div class="p-2 border-b border-r border-outline-variant flex items-center justify-center bg-tertiary/5"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<div class="p-2 border-b border-r border-outline-variant flex items-center justify-center"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<div class="p-2 border-b border-outline-variant flex items-center justify-center"><input class="checkbox-lite" disabled="" type="checkbox"></div>
+<!-- Row 5 -->
+<div class="p-2 border-r border-outline-variant text-left font-medium text-on-surface sticky left-0 bg-surface-container-low z-10 hover:bg-surface-container transition-colors">Billing &amp; APIs</div>
+<div class="p-2 border-r border-outline-variant flex items-center justify-center bg-tertiary/5"><input checked="" class="checkbox-lite" disabled="" type="checkbox"></div>
+<div class="p-2 border-r border-outline-variant flex items-center justify-center"><input class="checkbox-lite" disabled="" type="checkbox"></div>
+<div class="p-2 border-outline-variant flex items-center justify-center"><input class="checkbox-lite" disabled="" type="checkbox"></div>
+</div>
+<div class="mt-6 flex justify-end">
+<button class="text-tertiary font-body-sm hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+                            Customize Roles
+                        </button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Invite Modal (Hidden by default, shown via JS trigger) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center" id="invite-modal">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-sm" onclick="document.getElementById('invite-modal').classList.add('hidden')"></div>
+<!-- Modal Content -->
+<div class="relative w-full max-w-md bg-surface-container border border-outline-variant rounded-lg shadow-2xl overflow-hidden flex flex-col">
+<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-[#1A1A1A]">
+<h3 class="font-title-sm text-title-sm text-on-surface">Invite Team Member</h3>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors" onclick="document.getElementById('invite-modal').classList.add('hidden')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="p-6 space-y-6">
+<!-- Inline Refined Form Field -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Email Address</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant rounded-none px-0 py-2 text-on-surface font-mono-data focus:ring-0 focus:border-tertiary transition-colors placeholder:text-on-surface-variant/50" placeholder="colleague@company.com" type="email">
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant uppercase mb-3">Assign Role</label>
+<div class="space-y-3">
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="mt-0.5"><input checked="" class="appearance-none w-4 h-4 rounded-full border border-outline-variant checked:border-tertiary checked:bg-tertiary ring-0 focus:ring-0 transition-colors relative after:content-[''] after:absolute after:inset-[3px] after:rounded-full after:bg-background after:scale-0 checked:after:scale-100 after:transition-transform" name="role" type="radio"></div>
+<div>
+<div class="font-medium text-on-surface group-hover:text-tertiary transition-colors">Recruiter</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Standard access. Can view candidates and manage jobs.</div>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="mt-0.5"><input class="appearance-none w-4 h-4 rounded-full border border-outline-variant checked:border-tertiary checked:bg-tertiary ring-0 focus:ring-0 transition-colors relative after:content-[''] after:absolute after:inset-[3px] after:rounded-full after:bg-background after:scale-0 checked:after:scale-100 after:transition-transform" name="role" type="radio"></div>
+<div>
+<div class="font-medium text-on-surface group-hover:text-tertiary transition-colors">Admin</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Elevated access. Can manage team and configure AI settings.</div>
+</div>
+</label>
+</div>
+</div>
+</div>
+<div class="px-6 py-4 border-t border-outline-variant bg-surface-container-low flex justify-end gap-3">
+<button class="px-4 py-2 font-title-sm text-title-sm text-on-surface-variant hover:text-on-surface transition-colors" onclick="document.getElementById('invite-modal').classList.add('hidden')">Cancel</button>
+<button class="px-4 py-2 bg-tertiary text-on-tertiary font-title-sm text-title-sm rounded-DEFAULT hover:bg-[#ebdcc4] transition-colors shadow-sm">Send Invite</button>
+</div>
+</div>
+</div>
+</body></html>

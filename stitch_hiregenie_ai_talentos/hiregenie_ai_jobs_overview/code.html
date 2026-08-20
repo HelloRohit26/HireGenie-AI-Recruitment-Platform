@@ -1,0 +1,597 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>HireGenie AI - Jobs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Geist:wght@400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#204f43",
+                      "on-secondary": "#02382d",
+                      "tertiary": "#ffbba1",
+                      "outline": "#9b8f7f",
+                      "surface-container-highest": "#353532",
+                      "inverse-surface": "#e5e2de",
+                      "error-container": "#93000a",
+                      "tertiary-container": "#ee9b7a",
+                      "on-error": "#690005",
+                      "on-tertiary-container": "#6c3218",
+                      "inverse-on-surface": "#31302e",
+                      "on-tertiary-fixed-variant": "#71361c",
+                      "surface-container-low": "#1c1c19",
+                      "on-tertiary-fixed": "#370e00",
+                      "on-background": "#e5e2de",
+                      "surface-container": "#20201d",
+                      "on-error-container": "#ffdad6",
+                      "surface-bright": "#3a3937",
+                      "secondary-fixed-dim": "#a0d0c1",
+                      "error": "#ffb4ab",
+                      "primary-fixed-dim": "#efbf73",
+                      "tertiary-fixed-dim": "#ffb599",
+                      "on-secondary-container": "#8fbfb0",
+                      "inverse-primary": "#7c5816",
+                      "on-primary-fixed-variant": "#604100",
+                      "surface-tint": "#efbf73",
+                      "primary-fixed": "#ffdeae",
+                      "on-secondary-fixed": "#002019",
+                      "on-tertiary": "#552008",
+                      "on-surface": "#e5e2de",
+                      "on-primary": "#432c00",
+                      "surface-container-high": "#2a2a28",
+                      "primary-container": "#d6a85f",
+                      "surface-container-lowest": "#0e0e0c",
+                      "on-primary-container": "#5b3d00",
+                      "tertiary-fixed": "#ffdbce",
+                      "secondary-container": "#204f43",
+                      "surface-variant": "#353532",
+                      "primary": "#f4c377",
+                      "outline-variant": "#4f4538",
+                      "secondary": "#a0d0c1",
+                      "background": "#131311",
+                      "surface-dim": "#131311",
+                      "secondary-fixed": "#bceddd",
+                      "on-primary-fixed": "#281800",
+                      "on-surface-variant": "#d2c4b3",
+                      "surface": "#131311"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "margin-page": "48px",
+                      "gutter": "24px",
+                      "unit": "4px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-sm": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "display-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "mono-label": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "display-lg-mobile": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "mono-label": [
+                              "13px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "15px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #11110F;
+            color: #e5e2de;
+            font-family: 'Hanken Grotesk', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .shader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .brim-border {
+            border: 1px solid #2A2A25;
+            border-top: 1px solid #33332D;
+        }
+
+        .surface-card {
+            background-color: #181815;
+            border: 1px solid #2A2A25;
+        }
+
+        .ai-border {
+            border: 1px solid #C97C5D;
+        }
+        
+        .row-hover:hover {
+            background-color: #20201C;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+        
+        .row-hover:hover .row-actions {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #11110F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2A2A25;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #353532;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex">
+<!-- WebGL Shader Background -->
+<div class="shader-container">
+
+</div>
+<!-- SideNavBar Component -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-surface dark:bg-surface border-r border-outline-variant dark:border-outline-variant flex flex-col h-full py-stack-lg z-40">
+<div class="px-gutter mb-stack-lg flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container text-[18px]">temp_preferences_custom</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary leading-tight">HireGenie AI</h1>
+<p class="font-mono-label text-mono-label text-on-surface-variant uppercase tracking-wider text-[10px]">TalentOS</p>
+</div>
+</div>
+<div class="px-gutter mb-stack-md">
+<button class="w-full bg-primary-container text-on-primary-container hover:bg-primary transition-colors py-2 px-4 rounded flex items-center justify-center gap-2 font-label-sm text-label-sm uppercase" onclick="document.getElementById('createJobModal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                New Search
+            </button>
+</div>
+<ul class="flex-1 flex flex-col gap-1 px-4 mt-stack-sm overflow-y-auto">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-md text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+                    Command Center
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-md text-primary font-bold border-r-2 border-primary bg-surface-container-low font-body-md text-body-md Active: opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">work</span>
+                    Jobs
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-md text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+                    Candidates
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-md text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]">psychology</span>
+                    AI Screening
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-md text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+                    Interviews
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-md text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+                    Insights
+                </a>
+</li>
+</ul>
+<div class="mt-auto px-4 border-t border-outline-variant pt-stack-md mx-4">
+<ul class="flex flex-col gap-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-2 rounded-md text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors font-body-md text-body-md text-[13px]" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+                        Settings
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-2 rounded-md text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors font-body-md text-body-md text-[13px]" href="#">
+<span class="material-symbols-outlined text-[18px]">help</span>
+                        Help
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 flex flex-col min-h-screen relative z-10">
+<!-- TopAppBar Component -->
+<header class="bg-surface-dim dark:bg-surface-dim border-b border-outline-variant dark:border-outline-variant docked full-width top-0 sticky z-30 flex justify-between items-center w-full px-margin-page h-16 transition-all duration-300">
+<div class="flex items-center gap-6">
+<!-- Search on left (placeholder) -->
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-surface border border-outline-variant rounded-md py-1.5 pl-9 pr-3 text-body-md font-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-all placeholder:text-on-surface-variant/50" placeholder="Search commands..." type="text">
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-8 font-label-sm text-label-sm uppercase tracking-widest">
+<a class="text-primary font-bold" href="#">Workspace</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Company</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 text-primary border border-primary/30 rounded-full px-3 py-1 font-label-sm text-label-sm hover:bg-primary/10 transition-colors Click: scale-95 duration-150">
+<span class="w-2 h-2 rounded-full bg-[#79A89A] animate-pulse"></span>
+                    AI System Status
+                </button>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<button class="w-8 h-8 rounded-full hover:bg-surface-container-high flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="w-8 h-8 rounded-full hover:bg-surface-container-high flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[20px]">dark_mode</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden ml-2">
+<img alt="Recruiter Profile" class="w-full h-full object-cover" data-alt="A highly detailed close-up portrait of a professional corporate recruiter. The lighting is soft and cinematic, emphasizing a modern enterprise aesthetic. The color palette features deep blacks and sophisticated warm tones, reflecting a premium, high-stakes business environment. Minimalist background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuGOwPANq4ODWpzl0r_CfUg0yhO2msBJK3UN9hrpa3hjpY9ujetbzE2zqn1ZgtWymS7EzFEdcTksJzYf4wYk9OBctbJ1YxB80JibwT7alPpOb7oRo2YEyWAXhlxEVLIsbDQe7QWAVh3B7eKVvXiOn824O97J1EUPDpWv7V4mUf1XFSaG9yavC4lisU3_BgBfIC34H4QxSNE5Jd0mraF9r2x9psKhT7fg2sGwKMGp2dyBNaaW4_NMfk">
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="flex-1 p-margin-page max-w-[1600px] mx-auto w-full">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-stack-lg">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-2">Jobs</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Manage your hiring pipelines and autonomous recruitment campaigns.</p>
+</div>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary transition-colors py-3 px-6 rounded-md flex items-center justify-center gap-2 font-label-sm text-label-sm uppercase tracking-wider Click: scale-95 duration-150" onclick="document.getElementById('createJobModal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Create Job
+                </button>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-stack-lg border-b border-outline-variant pb-4">
+<div class="flex gap-6 font-label-sm text-label-sm uppercase tracking-wider">
+<button class="text-primary font-bold border-b-2 border-primary pb-4 -mb-4">All</button>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors pb-4 -mb-4">Active</button>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors pb-4 -mb-4">Draft</button>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors pb-4 -mb-4">Paused</button>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors pb-4 -mb-4">Closed</button>
+</div>
+<div class="flex gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface border border-outline-variant rounded py-1.5 pl-3 pr-8 font-mono-label text-mono-label text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none">
+<option>Dept: All</option>
+<option>Engineering</option>
+<option>Data</option>
+<option>Design</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px] pointer-events-none">arrow_drop_down</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface border border-outline-variant rounded py-1.5 pl-3 pr-8 font-mono-label text-mono-label text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none">
+<option>Location: All</option>
+<option>Remote</option>
+<option>Bangalore</option>
+<option>New York</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px] pointer-events-none">arrow_drop_down</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface border border-outline-variant rounded py-1.5 pl-3 pr-8 font-mono-label text-mono-label text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none">
+<option>Status: All</option>
+<option>Sourcing</option>
+<option>Interviewing</option>
+<option>Offering</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px] pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+</div>
+<!-- Jobs List (Bento/Card-like Table) -->
+<div class="flex flex-col gap-3">
+<!-- Header Row -->
+<div class="grid grid-cols-12 gap-4 px-6 py-2 font-mono-label text-mono-label text-on-surface-variant uppercase tracking-wider text-[11px] border-b border-outline-variant/50">
+<div class="col-span-3">Role &amp; Dept</div>
+<div class="col-span-2">Location &amp; Date</div>
+<div class="col-span-1 text-right">Apps</div>
+<div class="col-span-2 text-right text-primary">AI Shortlist</div>
+<div class="col-span-1 text-right">Interviews</div>
+<div class="col-span-1 text-right">Offers</div>
+<div class="col-span-2 text-right">Status</div>
+</div>
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 surface-card rounded-lg items-center row-hover transition-all duration-300 relative group cursor-pointer brim-border">
+<div class="col-span-3 flex flex-col gap-1">
+<span class="font-headline-md text-headline-md text-on-surface text-[18px]">AI Engineer</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Engineering</span>
+</div>
+<div class="col-span-2 flex flex-col gap-1">
+<span class="font-body-md text-body-md text-on-surface">Remote</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant opacity-70">Posted 2d ago</span>
+</div>
+<div class="col-span-1 text-right font-mono-label text-mono-label text-on-surface">2,481</div>
+<div class="col-span-2 text-right font-mono-label text-mono-label text-primary font-bold flex justify-end items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+                        84
+                    </div>
+<div class="col-span-1 text-right font-mono-label text-mono-label text-on-surface">12</div>
+<div class="col-span-1 text-right font-mono-label text-mono-label text-on-surface">2</div>
+<div class="col-span-2 flex justify-end">
+<span class="px-2 py-1 rounded bg-[#79A89A]/10 text-[#79A89A] font-mono-label text-mono-label border border-[#79A89A]/30 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#79A89A]"></span>
+                            Active Sourcing
+                        </span>
+</div>
+<!-- Hover Actions -->
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-200 row-actions bg-surface p-2 rounded shadow-[0_0_20px_rgba(0,0,0,0.8)] border border-outline-variant">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="View"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="Edit"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="Pause"><span class="material-symbols-outlined text-[18px]">pause</span></button>
+<div class="w-px h-4 bg-outline-variant mx-1"></div>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="More"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 surface-card rounded-lg items-center row-hover transition-all duration-300 relative group cursor-pointer brim-border">
+<div class="col-span-3 flex flex-col gap-1">
+<span class="font-headline-md text-headline-md text-on-surface text-[18px]">Data Scientist</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Data</span>
+</div>
+<div class="col-span-2 flex flex-col gap-1">
+<span class="font-body-md text-body-md text-on-surface flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">location_on</span>
+                            Bangalore
+                        </span>
+<span class="font-mono-label text-mono-label text-on-surface-variant opacity-70">Posted 5d ago</span>
+</div>
+<div class="col-span-1 text-right font-mono-label text-mono-label text-on-surface">1,204</div>
+<div class="col-span-2 text-right font-mono-label text-mono-label text-primary font-bold flex justify-end items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+                        42
+                    </div>
+<div class="col-span-1 text-right font-mono-label text-mono-label text-on-surface">8</div>
+<div class="col-span-1 text-right font-mono-label text-mono-label text-on-surface">0</div>
+<div class="col-span-2 flex justify-end">
+<span class="px-2 py-1 rounded bg-[#79A89A]/10 text-[#79A89A] font-mono-label text-mono-label border border-[#79A89A]/30 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#79A89A]"></span>
+                            Active Sourcing
+                        </span>
+</div>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-200 row-actions bg-surface p-2 rounded shadow-[0_0_20px_rgba(0,0,0,0.8)] border border-outline-variant">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="View"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="Edit"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="Pause"><span class="material-symbols-outlined text-[18px]">pause</span></button>
+<div class="w-px h-4 bg-outline-variant mx-1"></div>
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="More"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-12 gap-4 px-6 py-5 surface-card rounded-lg items-center row-hover transition-all duration-300 relative group cursor-pointer brim-border opacity-70">
+<div class="col-span-3 flex flex-col gap-1">
+<span class="font-headline-md text-headline-md text-on-surface text-[18px]">Backend Engineer</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Engineering</span>
+</div>
+<div class="col-span-2 flex flex-col gap-1">
+<span class="font-body-md text-body-md text-on-surface">Remote</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant opacity-70">Drafted 1h ago</span>
+</div>
+<div class="col-span-1 text-right font-mono-label text-mono-label text-on-surface-variant">-</div>
+<div class="col-span-2 text-right font-mono-label text-mono-label text-on-surface-variant">-</div>
+<div class="col-span-1 text-right font-mono-label text-mono-label text-on-surface-variant">-</div>
+<div class="col-span-1 text-right font-mono-label text-mono-label text-on-surface-variant">-</div>
+<div class="col-span-2 flex justify-end">
+<span class="px-2 py-1 rounded bg-surface-variant text-on-surface-variant font-mono-label text-mono-label border border-outline-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                            Draft
+                        </span>
+</div>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-200 row-actions bg-surface p-2 rounded shadow-[0_0_20px_rgba(0,0,0,0.8)] border border-outline-variant">
+<button class="p-1.5 text-on-surface-variant hover:text-primary transition-colors" title="Edit"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1.5 text-on-surface-variant hover:text-error transition-colors" title="Delete"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Modal Overlay: Create Job -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity" id="createJobModal">
+<div class="bg-[#181815] w-full max-w-4xl h-[85vh] rounded-xl flex flex-col overflow-hidden brim-border shadow-[0_0_64px_rgba(0,0,0,0.8)]">
+<!-- Modal Header / Wizard Progress -->
+<div class="px-8 py-6 border-b border-outline-variant/50 bg-[#181815] z-10">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-display-lg-mobile text-display-lg-mobile text-on-surface">New Autonomous Campaign</h3>
+<button class="text-on-surface-variant hover:text-on-surface p-2" onclick="document.getElementById('createJobModal').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- 5 Steps -->
+<div class="flex gap-2">
+<div class="flex-1">
+<div class="h-1 bg-primary rounded-full mb-2"></div>
+<span class="font-mono-label text-mono-label text-primary uppercase">01 Basic Role</span>
+</div>
+<div class="flex-1">
+<div class="h-1 bg-surface-variant rounded-full mb-2"></div>
+<span class="font-mono-label text-mono-label text-on-surface-variant uppercase">02 Screening</span>
+</div>
+<div class="flex-1">
+<div class="h-1 bg-surface-variant rounded-full mb-2"></div>
+<span class="font-mono-label text-mono-label text-on-surface-variant uppercase">03 Shortlist</span>
+</div>
+<div class="flex-1">
+<div class="h-1 bg-surface-variant rounded-full mb-2"></div>
+<span class="font-mono-label text-mono-label text-on-surface-variant uppercase">04 Interview</span>
+</div>
+<div class="flex-1">
+<div class="h-1 bg-surface-variant rounded-full mb-2"></div>
+<span class="font-mono-label text-mono-label text-on-surface-variant uppercase">05 Publish</span>
+</div>
+</div>
+</div>
+<!-- Modal Content (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<!-- Step 01 Content (Visible) -->
+<div id="step1">
+<div class="grid grid-cols-2 gap-8">
+<div class="space-y-6">
+<div>
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-2">Job Title</label>
+<input class="w-full bg-background border border-outline-variant rounded p-3 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none" placeholder="e.g. Senior Frontend Engineer" type="text">
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-2">Department</label>
+<select class="w-full bg-background border border-outline-variant rounded p-3 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none appearance-none">
+<option>Engineering</option>
+</select>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-2">Location</label>
+<select class="w-full bg-background border border-outline-variant rounded p-3 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none appearance-none">
+<option>Remote</option>
+</select>
+</div>
+</div>
+<!-- AI Generator Trigger -->
+<div class="p-6 rounded-lg ai-border bg-[#181815] relative overflow-hidden group cursor-pointer mt-4">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-[#C97C5D]/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+<div class="flex items-start gap-4 relative z-10">
+<div class="w-10 h-10 rounded bg-[#C97C5D]/10 flex items-center justify-center text-[#C97C5D]">
+<span class="material-symbols-outlined">magic_button</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface text-[16px] mb-1">Generate Description with Genie</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-[14px]">Let AI draft a high-converting job description based on your title and department.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Textarea side -->
+<div class="flex flex-col h-full">
+<label class="block font-label-sm text-label-sm uppercase text-on-surface-variant mb-2 flex justify-between">
+                                Job Description
+                                <span class="text-primary cursor-pointer hover:underline">Edit Manually</span>
+</label>
+<textarea class="w-full flex-1 bg-background border border-outline-variant rounded p-4 text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none resize-none font-mono-label" placeholder="Awaiting content..."></textarea>
+</div>
+</div>
+</div>
+<!-- Stubbing other steps visually for demonstration (hidden normally) -->
+<div class="hidden mt-12 pt-8 border-t border-outline-variant/30" id="step2-5-preview">
+<p class="text-on-surface-variant font-mono-label text-mono-label">Other steps would be shown here dynamically...</p>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-8 py-6 border-t border-outline-variant/50 bg-[#181815] flex justify-between items-center z-10">
+<button class="px-6 py-2 border border-outline-variant rounded text-on-surface hover:bg-surface-variant transition-colors font-label-sm text-label-sm uppercase">Cancel</button>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary transition-colors py-2 px-8 rounded flex items-center justify-center gap-2 font-label-sm text-label-sm uppercase tracking-wider">
+                    Next Step
+                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+        // Simple shim for Tailwind arbitrary variants used in animation
+        tailwind.config.theme.extend.keyframes = {
+            shimmer: {
+                '100%': { transform: 'translateX(100%)' }
+            }
+        };
+    </script>
+</body></html>

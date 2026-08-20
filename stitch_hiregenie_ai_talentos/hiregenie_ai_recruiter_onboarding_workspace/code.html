@@ -1,0 +1,272 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>HireGenie AI - Onboarding Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#4f4538",
+                        "on-error": "#690005",
+                        "on-secondary": "#382f23",
+                        "inverse-primary": "#7c5816",
+                        "on-tertiary-fixed": "#001c38",
+                        "outline-variant": "#4f4538",
+                        "surface-container-high": "#2a2a28",
+                        "tertiary": "#aaceff",
+                        "on-secondary-container": "#c1b3a2",
+                        "primary-container": "#d6a85f",
+                        "on-tertiary": "#02315a",
+                        "secondary-fixed-dim": "#d3c4b3",
+                        "success-muted": "#2d3528",
+                        "error-container": "#93000a",
+                        "outline": "#4f4538",
+                        "secondary-fixed": "#f0e0ce",
+                        "on-tertiary-fixed-variant": "#234872",
+                        "on-surface": "#e3e2df",
+                        "on-tertiary-container": "#1e446e",
+                        "surface-tint": "#efbf73",
+                        "on-primary": "#432c00",
+                        "surface-container-highest": "#353532",
+                        "surface-container-low": "#1c1c19",
+                        "background": "#131311",
+                        "inverse-surface": "#e5e2de",
+                        "on-primary-fixed-variant": "#604100",
+                        "on-error-container": "#ffdad6",
+                        "secondary": "#d3c4b3",
+                        "primary": "#f4c377",
+                        "tertiary-container": "#8fb2e2",
+                        "surface-variant": "#353532",
+                        "primary-fixed": "#ffdeae",
+                        "tertiary-fixed-dim": "#a6c9fa",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#efbf73",
+                        "surface-container": "#20201d",
+                        "inverse-on-surface": "#31302e",
+                        "surface": "#131311",
+                        "on-primary-container": "#5b3d00",
+                        "on-background": "#e5e2de",
+                        "on-primary-fixed": "#281800",
+                        "tertiary-fixed": "#d3e4ff",
+                        "surface-bright": "#3a3937",
+                        "on-surface-variant": "#d2c4b3",
+                        "on-secondary-fixed-variant": "#4f4538",
+                        "surface-dim": "#131311",
+                        "accent-lume": "#f2dec0",
+                        "on-secondary-fixed": "#221a0f",
+                        "surface-container-lowest": "#0e0e0c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "container-max": "1200px",
+                        "onboarding-track-height": "4px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "title-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .form-input-focus {
+            transition: all 0.2s ease;
+        }
+        .form-input-focus:focus-within {
+            border-color: theme('colors.primary');
+            box-shadow: 0 0 4px rgba(214, 168, 95, 0.2);
+        }
+        .form-input-focus:focus-within label {
+            transform: translateY(-24px) scale(0.85);
+            color: theme('colors.primary');
+        }
+        
+        .progress-track-active {
+            background: linear-gradient(90deg, theme('colors.primary') 0%, theme('colors.outline') 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased overflow-x-hidden">
+<!-- Progress Indicator Horizon -->
+<div class="w-full flex h-onboarding-track-height">
+<div class="flex-1 progress-track-active"></div>
+<div class="flex-1 bg-outline opacity-30"></div>
+<div class="flex-1 bg-outline opacity-30"></div>
+<div class="flex-1 bg-outline opacity-30"></div>
+</div>
+<!-- SideNavBar (Hidden on Mobile, Visible on Desktop) -->
+<!-- Suppressed due to onboarding flow logic, but keeping the visual anchor on the left if requested by prompt implies a layout, 
+         however the prompt asks for a centralized high-performance form layout. We'll use a split layout to feel premium. -->
+<div class="flex-1 flex flex-col md:flex-row w-full max-w-[1600px] mx-auto">
+<!-- Left Panel: Context & Branding (Editorial Typography) -->
+<div class="hidden md:flex flex-col justify-between w-1/3 min-w-[400px] p-margin-desktop border-r border-outline-variant bg-surface-container-lowest">
+<div>
+<div class="flex items-center gap-2 mb-16">
+<span class="material-symbols-outlined text-primary text-[32px]">temp_preferences_custom</span>
+<span class="text-title-md font-title-md font-bold text-on-surface">HireGenie AI</span>
+</div>
+<h1 class="text-display-lg font-display-lg text-on-surface mb-6">
+                    Set up your<br>Workspace.
+                </h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-sm">
+                    Configure your primary environment. This acts as the command center for your recruiting operations.
+                </p>
+</div>
+<div class="flex flex-col gap-6">
+<!-- Static Step Indicators -->
+<div class="flex items-center gap-4 text-primary">
+<span class="text-label-md font-label-md font-bold">01</span>
+<span class="text-title-md font-title-md">Workspace</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant opacity-50">
+<span class="text-label-md font-label-md">02</span>
+<span class="text-title-md font-title-md">Company</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant opacity-50">
+<span class="text-label-md font-label-md">03</span>
+<span class="text-title-md font-title-md">Preferences</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant opacity-50">
+<span class="text-label-md font-label-md">04</span>
+<span class="text-title-md font-title-md">Ready</span>
+</div>
+</div>
+</div>
+<!-- Mobile Header (Visible only on mobile) -->
+<div class="md:hidden flex justify-center items-center w-full px-margin-mobile h-16 bg-background">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[24px]">temp_preferences_custom</span>
+<span class="text-title-md font-title-md font-bold text-on-surface">HireGenie AI</span>
+</div>
+</div>
+<div class="md:hidden px-margin-mobile pt-8 pb-4">
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-on-surface mb-2">Set up Workspace</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Step 1 of 4</p>
+</div>
+<!-- Right Panel: The Form Canvas -->
+<div class="flex-1 flex flex-col justify-center items-center p-margin-mobile md:p-margin-desktop relative">
+<!-- Subtle Radial Gradient Backdrop for Depth -->
+<div class="absolute inset-0 pointer-events-none flex justify-center items-center">
+<div class="w-[600px] h-[600px] bg-primary rounded-full opacity-[0.03] blur-[100px]"></div>
+</div>
+<div class="w-full max-w-[480px] z-10 flex flex-col gap-6">
+<div class="form-input-focus relative border border-outline rounded bg-transparent p-4 mt-4">
+<label class="absolute top-4 left-4 text-body-md font-body-md text-on-surface-variant transition-all duration-200 pointer-events-none origin-left" style="transform-origin: left top;">Workspace Name</label>
+<input class="w-full bg-transparent border-none p-0 text-body-md font-body-md text-on-surface focus:ring-0 outline-none" placeholder=" " type="text">
+</div>
+<div class="form-input-focus relative border border-outline rounded bg-transparent p-4 mt-4">
+<label class="absolute top-4 left-4 text-body-md font-body-md text-on-surface-variant transition-all duration-200 pointer-events-none origin-left" style="transform-origin: left top;">Company Name</label>
+<input class="w-full bg-transparent border-none p-0 text-body-md font-body-md text-on-surface focus:ring-0 outline-none" placeholder=" " type="text">
+</div>
+<div class="form-input-focus relative border border-outline rounded bg-transparent p-4 mt-4">
+<label class="absolute top-4 left-4 text-body-md font-body-md text-on-surface-variant transition-all duration-200 pointer-events-none origin-left" style="transform-origin: left top;">Website URL</label>
+<input class="w-full bg-transparent border-none p-0 text-body-md font-body-md text-on-surface focus:ring-0 outline-none" placeholder=" " type="url">
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+<div class="form-input-focus relative border border-outline rounded bg-transparent p-4">
+<label class="absolute top-4 left-4 text-body-md font-body-md text-on-surface-variant transition-all duration-200 pointer-events-none origin-left" style="transform-origin: left top;">Industry</label>
+<select class="w-full bg-transparent border-none p-0 text-body-md font-body-md text-on-surface focus:ring-0 outline-none appearance-none cursor-pointer mt-1">
+<option disabled="" selected="" value=""></option>
+<option class="bg-surface-container text-on-surface" value="tech">Technology</option>
+<option class="bg-surface-container text-on-surface" value="finance">Finance</option>
+<option class="bg-surface-container text-on-surface" value="health">Healthcare</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-4 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+<div class="form-input-focus relative border border-outline rounded bg-transparent p-4">
+<label class="absolute top-4 left-4 text-body-md font-body-md text-on-surface-variant transition-all duration-200 pointer-events-none origin-left" style="transform-origin: left top;">Team Size</label>
+<select class="w-full bg-transparent border-none p-0 text-body-md font-body-md text-on-surface focus:ring-0 outline-none appearance-none cursor-pointer mt-1">
+<option disabled="" selected="" value=""></option>
+<option class="bg-surface-container text-on-surface" value="1-10">1-10</option>
+<option class="bg-surface-container text-on-surface" value="11-50">11-50</option>
+<option class="bg-surface-container text-on-surface" value="51-200">51-200</option>
+<option class="bg-surface-container text-on-surface" value="201+">201+</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-4 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="mt-8 flex justify-end">
+<button class="bg-primary text-on-primary px-8 py-4 rounded hover:opacity-90 transition-opacity flex items-center gap-2 group">
+<span class="text-label-md font-label-md">Next Step</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+        // Simple script to handle floating labels when input has value
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            // Initial check
+            if(input.value) {
+                const label = input.previousElementSibling;
+                if(label && label.tagName === 'LABEL') {
+                    label.style.transform = 'translateY(-24px) scale(0.85)';
+                    label.style.color = '#d6a85f'; // primary
+                }
+            }
+
+            input.addEventListener('focus', (e) => {
+                const label = e.target.previousElementSibling;
+                if(label && label.tagName === 'LABEL') {
+                    label.style.transform = 'translateY(-24px) scale(0.85)';
+                    label.style.color = '#d6a85f';
+                }
+            });
+
+            input.addEventListener('blur', (e) => {
+                if(!e.target.value) {
+                    const label = e.target.previousElementSibling;
+                    if(label && label.tagName === 'LABEL') {
+                        label.style.transform = 'none';
+                        label.style.color = '#d2c4b3'; // on-surface-variant
+                    }
+                }
+            });
+            
+            // Handle select changes immediately
+            if(input.tagName === 'SELECT') {
+                input.addEventListener('change', (e) => {
+                     const label = e.target.previousElementSibling;
+                     if(label && label.tagName === 'LABEL' && e.target.value) {
+                         label.style.transform = 'translateY(-24px) scale(0.85)';
+                         label.style.color = '#d6a85f';
+                     }
+                });
+            }
+        });
+    </script>
+</body></html>

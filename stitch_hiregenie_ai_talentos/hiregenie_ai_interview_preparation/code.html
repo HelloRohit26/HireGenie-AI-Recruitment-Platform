@@ -1,0 +1,225 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>HireGenie AI - Voice Interview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#4f4538",
+                        "surface": "#121412",
+                        "on-tertiary-fixed": "#001c38",
+                        "inverse-primary": "#7c5816",
+                        "surface-tint": "#efbf73",
+                        "on-tertiary": "#02315a",
+                        "error": "#ffb4ab",
+                        "secondary": "#c9c6c2",
+                        "on-secondary-container": "#b7b5b1",
+                        "tertiary-fixed-dim": "#a6c9fa",
+                        "surface-container-highest": "#343533",
+                        "surface-container": "#1f201e",
+                        "on-secondary": "#31302e",
+                        "secondary-fixed": "#e5e2de",
+                        "on-error": "#690005",
+                        "surface-bright": "#383938",
+                        "on-tertiary-fixed-variant": "#234872",
+                        "inverse-surface": "#e3e2df",
+                        "surface-container-lowest": "#0d0f0d",
+                        "surface-dim": "#121412",
+                        "primary": "#f4c377",
+                        "on-primary-fixed-variant": "#604100",
+                        "background": "#121412",
+                        "secondary-fixed-dim": "#c9c6c2",
+                        "inverse-on-surface": "#2f312f",
+                        "primary-container": "#d6a85f",
+                        "tertiary-fixed": "#d3e4ff",
+                        "on-surface": "#e3e2df",
+                        "tertiary-container": "#8fb2e2",
+                        "on-surface-variant": "#d2c4b3",
+                        "on-primary-container": "#5b3d00",
+                        "secondary-container": "#474744",
+                        "on-tertiary-container": "#1e446e",
+                        "on-background": "#e3e2df",
+                        "on-secondary-fixed-variant": "#474744",
+                        "on-primary-fixed": "#281800",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#432c00",
+                        "surface-container-high": "#292a29",
+                        "outline": "#9b8f7f",
+                        "surface-container-low": "#1a1c1a",
+                        "surface-variant": "#343533",
+                        "primary-fixed-dim": "#efbf73",
+                        "primary-fixed": "#ffdeae",
+                        "on-secondary-fixed": "#1c1c19",
+                        "tertiary": "#aaceff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "24px",
+                        "sm": "12px",
+                        "base": "8px",
+                        "lg": "48px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "container_max": "1120px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "display": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #121412; /* Fallback for older browsers */
+        }
+        
+        .glass-panel {
+            background: rgba(41, 42, 41, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(155, 143, 127, 0.2);
+        }
+        
+        .subtle-pulse {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.2; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation (Suppressed for focused linear journey as per logic) -->
+<!-- Side Navigation (Suppressed for focused linear journey as per logic) -->
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center p-md md:p-xl relative overflow-hidden">
+<!-- Atmospheric Background Elements -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-container/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-secondary-container/10 rounded-full blur-[150px]"></div>
+</div>
+<div class="max-w-[800px] w-full z-10">
+<!-- Header Section -->
+<div class="text-center mb-xl">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-surface-container-high border border-outline-variant/30 mb-md relative">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">mic</span>
+<div class="absolute inset-0 rounded-full border border-primary/30 subtle-pulse"></div>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-sm">AI Voice Interview</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-lg mx-auto">
+                    You are about to begin your technical assessment for the <strong class="text-on-surface font-medium">AI Engineer</strong> role at <strong class="text-on-surface font-medium">Acme AI</strong>.
+                </p>
+</div>
+<!-- Bento Grid Structure for Info & System Checks -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md mb-xl">
+<!-- Interview Details Panel -->
+<div class="md:col-span-1 glass-panel rounded-xl p-md flex flex-col justify-between shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
+<div>
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider mb-md">Session Details</h3>
+<ul class="space-y-sm">
+<li class="flex items-center text-body-md font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary mr-sm text-[20px]">schedule</span>
+                                15 minutes
+                            </li>
+<li class="flex items-center text-body-md font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary mr-sm text-[20px]">headset</span>
+                                Browser Voice
+                            </li>
+<li class="flex items-center text-body-md font-body-md text-on-surface">
+<span class="material-symbols-outlined text-secondary mr-sm text-[20px]">psychology</span>
+                                Technical Focus
+                            </li>
+</ul>
+</div>
+</div>
+<!-- System Checks Panel -->
+<div class="md:col-span-2 glass-panel rounded-xl p-md shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
+<div class="flex items-center justify-between mb-md">
+<h3 class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">System Readiness</h3>
+<span class="inline-flex px-sm py-xs bg-primary-container/10 text-primary rounded-full text-label-md font-label-md border border-primary/20">All Systems Go</span>
+</div>
+<div class="space-y-sm">
+<!-- Microphone Check -->
+<div class="flex items-center justify-between p-sm rounded-lg bg-surface-container-low border border-outline-variant/30 hover:bg-surface-container transition-colors duration-300">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm text-[20px]">mic</span>
+<span class="text-body-md font-body-md text-on-surface">Microphone</span>
+</div>
+<div class="flex items-center text-primary">
+<span class="text-label-md font-label-md mr-xs">Ready</span>
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</div>
+</div>
+<!-- Speaker Check -->
+<div class="flex items-center justify-between p-sm rounded-lg bg-surface-container-low border border-outline-variant/30 hover:bg-surface-container transition-colors duration-300">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm text-[20px]">volume_up</span>
+<span class="text-body-md font-body-md text-on-surface">Speaker</span>
+</div>
+<div class="flex items-center text-primary">
+<span class="text-label-md font-label-md mr-xs">Ready</span>
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</div>
+</div>
+<!-- Connection Check -->
+<div class="flex items-center justify-between p-sm rounded-lg bg-surface-container-low border border-outline-variant/30 hover:bg-surface-container transition-colors duration-300">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm text-[20px]">wifi</span>
+<span class="text-body-md font-body-md text-on-surface">Connection</span>
+</div>
+<div class="flex items-center text-primary">
+<span class="text-label-md font-label-md mr-xs">Excellent</span>
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Area -->
+<div class="flex flex-col sm:flex-row items-center justify-center gap-md">
+<button class="w-full sm:w-auto px-xl py-sm bg-primary-container text-[#131311] rounded-full text-label-md font-label-md hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-[0_4px_16px_rgba(214,168,95,0.2)]">
+                    Enter Interview
+                </button>
+<button class="w-full sm:w-auto px-xl py-sm bg-transparent text-on-surface border border-outline-variant rounded-full text-label-md font-label-md hover:bg-surface-container-highest transition-all duration-300">
+                    Back to Application
+                </button>
+</div>
+<div class="mt-lg text-center">
+<p class="text-[12px] text-on-surface-variant font-body-md">Ensure you are in a quiet environment before proceeding.</p>
+</div>
+</div>
+</main>
+</body></html>

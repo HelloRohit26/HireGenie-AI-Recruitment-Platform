@@ -1,0 +1,467 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>TalentOS - Settings &amp; Administration</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#3a2f1c",
+                        "surface-container": "#20201e",
+                        "on-primary-container": "#848282",
+                        "on-secondary": "#30312d",
+                        "inverse-primary": "#5f5e5e",
+                        "on-primary-fixed": "#1c1b1b",
+                        "secondary-container": "#474743",
+                        "surface-variant": "#353533",
+                        "surface-bright": "#393937",
+                        "on-tertiary-container": "#908169",
+                        "on-surface-variant": "#c4c7c7",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-primary": "#313030",
+                        "tertiary-fixed-dim": "#d6c4aa",
+                        "surface-container-lowest": "#0e0e0d",
+                        "surface": "#131312",
+                        "on-surface": "#e5e2df",
+                        "on-tertiary-fixed-variant": "#514531",
+                        "tertiary-container": "#221908",
+                        "on-secondary-fixed-variant": "#474743",
+                        "on-error": "#690005",
+                        "on-background": "#e5e2df",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#e5e2df",
+                        "tertiary": "#d6c4aa",
+                        "background": "#131312",
+                        "primary-fixed": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1b1c1a",
+                        "surface-dim": "#131312",
+                        "secondary-fixed-dim": "#c8c6c2",
+                        "surface-container-highest": "#353533",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary": "#c8c6c2",
+                        "primary-container": "#1a1a1a",
+                        "surface-tint": "#c8c6c5",
+                        "tertiary-fixed": "#f3e0c4",
+                        "surface-container-high": "#2a2a28",
+                        "outline-variant": "#444748",
+                        "primary": "#c8c6c5",
+                        "inverse-on-surface": "#30302e",
+                        "secondary-fixed": "#e4e2dd",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#241a09",
+                        "on-secondary-fixed": "#1b1c19",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b6b5b0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-padding": "32px",
+                        "drawer-width": "480px",
+                        "sidebar-width": "240px",
+                        "element-gap": "16px",
+                        "unit": "4px",
+                        "table-row-height": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Hanken Grotesk"],
+                        "display-sm": ["Hanken Grotesk"],
+                        "body-sm": ["Hanken Grotesk"],
+                        "title-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "mono-data": ["JetBrains Mono"],
+                        "label-caps": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-sm": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "title-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "mono-data": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom Scrollbar for dense tables */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444748;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8e9192;
+        }
+        
+        /* Drawer Backdrop Blur */
+        .drawer-backdrop {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-surface dark:bg-surface w-[sidebar-width] h-screen fixed left-0 top-0 border-r border-outline-variant dark:border-outline-variant flex flex-col h-full py-element-gap z-30">
+<div class="px-element-gap mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-tertiary flex items-center justify-center text-on-tertiary font-bold">HG</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface leading-tight">TalentOS</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Enterprise Suite</p>
+</div>
+</div>
+<ul class="flex-1 flex flex-col gap-1 px-2">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">maps_ar</span>
+                    Talent Pipeline
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">person_search</span>
+                    Active Sourcing
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">psychology</span>
+                    Intelligence Hub
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">analytics</span>
+                    Analytics
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-tertiary border-l-2 border-tertiary font-bold bg-surface-container-high transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<div class="px-element-gap mt-auto">
+<div class="flex items-center gap-3 p-2 rounded bg-surface-container-low border border-outline-variant">
+<img alt="HireGenie Logo" class="w-8 h-8 rounded object-cover" data-alt="A small, professional headshot photo of a corporate user in a modern office environment. Neutral lighting, dark mode aesthetic, wearing dark business casual attire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfWURajiO9wjTOwgM3ldVWgmSnRa4kijU18E76xnWki-_LZoOIhM6vzt6yhPgNOQzumgNSQ5mipluj64201i6i2FMxUHixAj7iNaCBzA1eHfpMJTWha0I2XEgHqWdw7gOI8lrD-tr6Bn4H3EkbVLx1DX4qpo_mEi143DQI23IPoMwdi_jilmwts8R3trS9AXz64mQdpBwseaaBbQHSmyxpAqPznhCLZVIq2X4MX5Gqvd_FoKBLi_97">
+<div class="flex-1 overflow-hidden">
+<p class="font-body-sm text-body-sm text-on-surface truncate">Admin User</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant truncate">System Administrator</p>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col ml-[240px] relative h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface docked full-width top-0 sticky z-40 border-b border-outline-variant dark:border-outline-variant flex justify-between items-center h-table-row-height px-container-padding">
+<div class="flex items-center gap-container-padding h-full">
+<span class="font-title-sm text-title-sm font-bold text-on-surface dark:text-on-surface">Settings &amp; Administration</span>
+<nav class="flex items-center gap-6 h-full pt-1">
+<a class="h-full flex items-center text-on-surface-variant pb-2 hover:text-tertiary transition-colors font-body-md text-body-md" href="#">General</a>
+<a class="h-full flex items-center text-on-surface-variant pb-2 hover:text-tertiary transition-colors font-body-md text-body-md" href="#">Team</a>
+<a class="h-full flex items-center text-on-surface-variant pb-2 hover:text-tertiary transition-colors font-body-md text-body-md" href="#">AI Configuration</a>
+<a class="h-full flex items-center text-on-surface-variant pb-2 hover:text-tertiary transition-colors font-body-md text-body-md" href="#">Integrations</a>
+<a class="h-full flex items-center text-tertiary border-b-2 border-tertiary pb-2 hover:text-tertiary transition-colors font-body-md text-body-md" href="#">Audit Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded pl-8 pr-3 py-1 text-body-sm font-body-sm text-on-surface focus:outline-none focus:border-tertiary w-64 placeholder-on-surface-variant transition-colors" placeholder="Search settings..." type="text">
+</div>
+<button class="text-on-surface-variant hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform flex items-center">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+<button class="text-on-surface-variant hover:text-tertiary transition-colors scale-95 active:opacity-80 transition-transform flex items-center relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+</div>
+</header>
+<!-- Main Scrollable Canvas -->
+<main class="flex-1 overflow-y-auto bg-background p-container-padding max-w-[1200px] w-full mx-auto pb-32">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-display-sm text-display-sm text-on-surface mb-2">Audit &amp; Security</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Monitor system events, review AI agent actions, and manage security configurations for your organization.</p>
+</div>
+</div>
+<!-- Bento Layout for Content -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Security Controls (Left Column, smaller) -->
+<div class="lg:col-span-1 flex flex-col gap-6">
+<!-- Security Card -->
+<section class="bg-surface-container-low border border-outline-variant rounded flex flex-col">
+<div class="p-4 border-b border-outline-variant flex items-center gap-2 bg-[#1A1A1A] rounded-t">
+<span class="material-symbols-outlined text-tertiary text-[18px]">shield</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Security</h3>
+</div>
+<div class="p-4 flex flex-col gap-6">
+<!-- 2FA -->
+<div class="flex items-start justify-between gap-4">
+<div>
+<h4 class="font-body-sm text-body-sm font-bold text-on-surface">Two-Factor Authentication</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Require 2FA for all team members.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer flex-shrink-0 mt-1">
+<input checked="" class="sr-only peer" type="checkbox" value="">
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:border-outline after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-tertiary"></div>
+</label>
+</div>
+<!-- Session Mgt -->
+<div class="border-t border-outline-variant pt-6">
+<h4 class="font-body-sm text-body-sm font-bold text-on-surface mb-3">Active Sessions</h4>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between p-3 rounded bg-surface border border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">laptop_mac</span>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface">Mac OS • Chrome</p>
+<p class="font-label-caps text-label-caps text-tertiary">Current Session</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between p-3 rounded bg-surface border border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">smartphone</span>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface">iOS • Safari</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Last active: 2h ago</p>
+</div>
+</div>
+<button class="font-label-caps text-label-caps text-error hover:text-on-error-container transition-colors">REVOKE</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Audit Logs (Right Column, larger) -->
+<div class="lg:col-span-2 flex flex-col">
+<section class="bg-surface-container-low border border-outline-variant rounded flex flex-col flex-1">
+<!-- Filters Header -->
+<div class="p-4 border-b border-outline-variant flex flex-wrap items-center justify-between gap-4 bg-[#1A1A1A] rounded-t">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">history</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">System Events</h3>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-surface border border-outline-variant rounded px-2 py-1">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">filter_list</span>
+<select class="bg-transparent border-none text-body-sm font-body-sm text-on-surface focus:ring-0 p-0 pr-6 text-on-surface-variant">
+<option>All Actors</option>
+<option>AI Agents</option>
+<option>Human Users</option>
+</select>
+</div>
+<div class="flex items-center gap-2 bg-surface border border-outline-variant rounded px-2 py-1">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">calendar_today</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant">Last 7 Days</span>
+</div>
+<button class="bg-tertiary text-on-tertiary px-3 py-1 rounded font-label-caps text-label-caps hover:bg-tertiary-fixed transition-colors">EXPORT</button>
+</div>
+</div>
+<!-- Dense Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-highest">
+<th class="p-3 pl-4 font-label-caps text-label-caps text-on-surface-variant font-normal tracking-wider w-32">TIMESTAMP</th>
+<th class="p-3 font-label-caps text-label-caps text-on-surface-variant font-normal tracking-wider w-40">ACTOR</th>
+<th class="p-3 font-label-caps text-label-caps text-on-surface-variant font-normal tracking-wider">ACTION</th>
+<th class="p-3 font-label-caps text-label-caps text-on-surface-variant font-normal tracking-wider w-32">RESOURCE</th>
+<th class="p-3 pr-4 font-label-caps text-label-caps text-on-surface-variant font-normal tracking-wider w-24 text-right">STATUS</th>
+</tr>
+</thead>
+<tbody class="font-mono-data text-mono-data">
+<!-- Row 1: AI Action (Triggers Drawer) -->
+<tr class="border-b border-outline-variant hover:bg-surface-variant transition-colors cursor-pointer group" onclick="toggleDrawer()">
+<td class="p-3 pl-4 text-on-surface-variant">10:42:01 UTC</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[14px]">smart_toy</span>
+<span class="text-on-surface">Sourcing_Agent_v2</span>
+</div>
+</td>
+<td class="p-3 text-on-surface truncate max-w-[200px]">Update candidate score (ID: 8942)</td>
+<td class="p-3 text-on-surface-variant">Candidate_Profile</td>
+<td class="p-3 pr-4 text-right text-tertiary">SUCCESS</td>
+</tr>
+<!-- Row 2: Human Action -->
+<tr class="border-b border-outline-variant hover:bg-surface-variant transition-colors">
+<td class="p-3 pl-4 text-on-surface-variant">09:15:22 UTC</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[14px]">person</span>
+<span class="text-on-surface">Sarah J. (Admin)</span>
+</div>
+</td>
+<td class="p-3 text-on-surface truncate max-w-[200px]">Modify permissions: Recruitment Team</td>
+<td class="p-3 text-on-surface-variant">Role_Policy</td>
+<td class="p-3 pr-4 text-right text-tertiary">SUCCESS</td>
+</tr>
+<!-- Row 3: Error -->
+<tr class="border-b border-outline-variant hover:bg-surface-variant transition-colors">
+<td class="p-3 pl-4 text-on-surface-variant">08:01:45 UTC</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[14px]">api</span>
+<span class="text-on-surface">Workday_Sync</span>
+</div>
+</td>
+<td class="p-3 text-on-surface truncate max-w-[200px]">Fetch delta employee records</td>
+<td class="p-3 text-on-surface-variant">API_Endpoint</td>
+<td class="p-3 pr-4 text-right text-error">FAILED</td>
+</tr>
+<!-- Row 4 -->
+<tr class="border-b border-outline-variant hover:bg-surface-variant transition-colors">
+<td class="p-3 pl-4 text-on-surface-variant">Yesterday</td>
+<td class="p-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[14px]">person</span>
+<span class="text-on-surface">David Chen</span>
+</div>
+</td>
+<td class="p-3 text-on-surface truncate max-w-[200px]">Login attempt via SSO</td>
+<td class="p-3 text-on-surface-variant">Auth_Service</td>
+<td class="p-3 pr-4 text-right text-tertiary">SUCCESS</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 border-t border-outline-variant flex justify-center bg-[#1A1A1A] rounded-b">
+<button class="font-label-caps text-label-caps text-tertiary hover:text-tertiary-fixed transition-colors">LOAD MORE</button>
+</div>
+</section>
+</div>
+</div>
+</main>
+</div>
+<!-- NavigationDrawer (Audit Detail) -->
+<div class="fixed inset-0 bg-background/50 drawer-backdrop z-40 hidden transition-opacity duration-300 opacity-0" id="auditDrawerOverlay" onclick="toggleDrawer()"></div>
+<aside class="bg-surface-container dark:bg-surface-container fixed right-0 top-0 h-full w-[drawer-width] z-50 shadow-2xl dark:shadow-none flex flex-col p-container-padding translate-x-full transition-transform duration-300 ease-out border-l border-outline-variant" id="auditDrawer">
+<div class="flex justify-between items-center mb-6">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">AUDIT EVENT DETAIL</p>
+<h2 class="font-title-sm text-title-sm text-tertiary font-bold">evt_8x992m_ai_score</h2>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-1 rounded transition-all" onclick="toggleDrawer()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto pr-2 custom-scrollbar flex flex-col gap-6">
+<!-- Context Block -->
+<div class="bg-surface border border-outline-variant rounded p-4">
+<div class="grid grid-cols-2 gap-4 font-mono-data text-mono-data">
+<div>
+<span class="text-on-surface-variant block mb-1">TIMESTAMP</span>
+<span class="text-on-surface">2023-10-27 10:42:01 UTC</span>
+</div>
+<div>
+<span class="text-on-surface-variant block mb-1">ACTOR</span>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+                            Sourcing_Agent_v2
+                        </div>
+</div>
+<div class="col-span-2">
+<span class="text-on-surface-variant block mb-1">ACTION INTENT</span>
+<span class="text-on-surface">Re-evaluated candidate match score based on updated job description requirements (Req_ID: 104).</span>
+</div>
+</div>
+</div>
+<!-- AI Reasoning -->
+<div>
+<h3 class="font-title-sm text-title-sm text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">psychology</span>
+                    Agent Reasoning Trace
+                </h3>
+<div class="bg-[#1A1A1A] border border-outline-variant rounded p-4 font-mono-data text-mono-data text-on-surface-variant whitespace-pre-wrap text-xs">
+[10:41:59] TRIGGER: Job description modified.
+[10:42:00] FETCH: Candidate profile (ID: 8942) skills array.
+[10:42:00] ANALYZE: Comparing new requirement "React Native" against candidate skills.
+[10:42:00] INFERENCE: Candidate has 3 years "React" experience, but no explicit "React Native". Applying cross-skill penalty (-15%).
+[10:42:01] ACTION: Adjust overall fit score from 88 to 73.
+                </div>
+</div>
+<!-- State Diff -->
+<div>
+<h3 class="font-title-sm text-title-sm text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">difference</span>
+                    State Mutation (Diff)
+                </h3>
+<div class="grid grid-cols-2 gap-px bg-outline-variant rounded overflow-hidden border border-outline-variant">
+<div class="bg-surface p-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-2">BEFORE</span>
+<pre class="font-mono-data text-mono-data text-error text-[11px] whitespace-pre-wrap">{
+  "candidate_id": "8942",
+  "match_score": 88,
+  "flags": []
+}</pre>
+</div>
+<div class="bg-surface p-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-2">AFTER</span>
+<pre class="font-mono-data text-mono-data text-tertiary text-[11px] whitespace-pre-wrap">{
+  "candidate_id": "8942",
+  "match_score": 73,
+  "flags": ["skill_gap_identified"]
+}</pre>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('auditDrawer');
+            const overlay = document.getElementById('auditDrawerOverlay');
+            
+            if (drawer.classList.contains('translate-x-full')) {
+                // Open
+                overlay.classList.remove('hidden');
+                // slight delay for display block to take effect before opacity transition
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-0');
+                    drawer.classList.remove('translate-x-full');
+                    drawer.classList.add('translate-x-0');
+                }, 10);
+            } else {
+                // Close
+                overlay.classList.add('opacity-0');
+                drawer.classList.remove('translate-x-0');
+                drawer.classList.add('translate-x-full');
+                
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300); // match transition duration
+            }
+        }
+    </script>
+</body></html>

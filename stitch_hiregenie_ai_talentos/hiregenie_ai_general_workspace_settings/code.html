@@ -1,0 +1,321 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Settings &amp; Administration - HireGenie</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#3a2f1c",
+                        "surface-container": "#20201e",
+                        "on-primary-container": "#848282",
+                        "on-secondary": "#30312d",
+                        "inverse-primary": "#5f5e5e",
+                        "on-primary-fixed": "#1c1b1b",
+                        "secondary-container": "#474743",
+                        "surface-variant": "#353533",
+                        "surface-bright": "#393937",
+                        "on-tertiary-container": "#908169",
+                        "on-surface-variant": "#c4c7c7",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-primary": "#313030",
+                        "tertiary-fixed-dim": "#d6c4aa",
+                        "surface-container-lowest": "#0e0e0d",
+                        "surface": "#131312",
+                        "on-surface": "#e5e2df",
+                        "on-tertiary-fixed-variant": "#514531",
+                        "tertiary-container": "#221908",
+                        "on-secondary-fixed-variant": "#474743",
+                        "on-error": "#690005",
+                        "on-background": "#e5e2df",
+                        "error-container": "#93000a",
+                        "inverse-surface": "#e5e2df",
+                        "tertiary": "#d6c4aa",
+                        "background": "#131312",
+                        "primary-fixed": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1b1c1a",
+                        "surface-dim": "#131312",
+                        "secondary-fixed-dim": "#c8c6c2",
+                        "surface-container-highest": "#353533",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary": "#c8c6c2",
+                        "primary-container": "#1a1a1a",
+                        "surface-tint": "#c8c6c5",
+                        "tertiary-fixed": "#f3e0c4",
+                        "surface-container-high": "#2a2a28",
+                        "outline-variant": "#444748",
+                        "primary": "#c8c6c5",
+                        "inverse-on-surface": "#30302e",
+                        "secondary-fixed": "#e4e2dd",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#241a09",
+                        "on-secondary-fixed": "#1b1c19",
+                        "outline": "#8e9192",
+                        "on-secondary-container": "#b6b5b0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-padding": "32px",
+                        "drawer-width": "480px",
+                        "sidebar-width": "240px",
+                        "element-gap": "16px",
+                        "unit": "4px",
+                        "table-row-height": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Hanken Grotesk"],
+                        "display-sm": ["Hanken Grotesk"],
+                        "body-sm": ["Hanken Grotesk"],
+                        "title-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "mono-data": ["JetBrains Mono"],
+                        "label-caps": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-sm": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "title-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "mono-data": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .input-refined {
+            @apply w-full bg-transparent border border-transparent border-b-outline-variant text-on-surface font-body-md text-body-md py-2 px-3 -ml-3 focus:outline-none focus:border-tertiary focus:bg-surface-container transition-all duration-200 rounded-none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background flex min-h-screen selection:bg-tertiary selection:text-on-tertiary antialiased">
+<!-- Shared Component: SideNavBar -->
+<nav class="w-[sidebar-width] h-screen fixed left-0 top-0 bg-surface dark:bg-surface border-r border-outline-variant dark:border-outline-variant flex flex-col py-element-gap z-50">
+<div class="px-6 mb-8 flex flex-col gap-1">
+<span class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">dataset</span>
+                TalentOS
+            </span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Enterprise Suite</span>
+</div>
+<ul class="flex-1 flex flex-col gap-2">
+<li>
+<a class="flex items-center gap-3 px-6 py-2 text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">maps_ar</span>
+                    Talent Pipeline
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-2 text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">person_search</span>
+                    Active Sourcing
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-2 text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">psychology</span>
+                    Intelligence Hub
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-6 py-2 text-on-surface-variant font-body-md hover:text-tertiary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                    Analytics
+                </a>
+</li>
+<li class="mt-auto">
+<a class="flex items-center gap-3 px-6 py-2 text-tertiary border-l-2 border-tertiary font-bold bg-surface-container-high transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="ml-[sidebar-width] flex-1 flex flex-col min-h-screen bg-background">
+<!-- Shared Component: TopAppBar -->
+<header class="w-full top-0 sticky z-40 bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant flex justify-between items-center h-table-row-height px-container-padding transition-all">
+<div class="flex items-center gap-8 h-full">
+<span class="font-title-sm text-title-sm font-bold text-on-surface dark:text-on-surface mr-4">Settings &amp; Administration</span>
+<nav class="flex h-full gap-6 items-end">
+<a class="text-tertiary border-b-2 border-tertiary pb-2 font-body-md text-body-md transition-colors" href="#">General</a>
+<a class="text-on-surface-variant pb-2 font-body-md text-body-md hover:text-tertiary transition-colors" href="#">Team</a>
+<a class="text-on-surface-variant pb-2 font-body-md text-body-md hover:text-tertiary transition-colors" href="#">AI Configuration</a>
+<a class="text-on-surface-variant pb-2 font-body-md text-body-md hover:text-tertiary transition-colors" href="#">Integrations</a>
+<a class="text-on-surface-variant pb-2 font-body-md text-body-md hover:text-tertiary transition-colors" href="#">Audit Logs</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container border border-outline-variant text-on-surface font-body-sm text-body-sm rounded-none pl-9 pr-3 py-1.5 focus:outline-none focus:border-tertiary w-64 transition-all placeholder:text-on-surface-variant" placeholder="Search settings..." type="text">
+</div>
+<button class="text-tertiary dark:text-tertiary hover:text-on-surface transition-colors scale-95 active:opacity-80 transition-transform">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="text-tertiary dark:text-tertiary hover:text-on-surface transition-colors scale-95 active:opacity-80 transition-transform">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant ml-2 overflow-hidden">
+<img alt="Admin User" class="w-full h-full object-cover" data-alt="A minimalist avatar of a corporate administrator in a dark studio setting. High contrast, technical aesthetic, monochrome with subtle warm light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6bntjTb4XBW9ZgLFRALRxPBx8CHqmx5NTY_TdfoI9txQ83lqrhajl70b1DbueH5tUID9uTEj5y3q56z3lg17NTmzyjyp8RTN4Ks0UGhRw_C8snM5KEn0EyeLHdzszErCYwLKYk8hL-JA5WblFuhhjZAGFQpN1zA9hq_5OdDJdiTgS_z_bs443EVSenZt_GBaUMzjPuLyLp-9N6zUj3vmjClCbkJVFWPgF168R561GH4HNVkml7MGb">
+</div>
+</div>
+</header>
+<!-- Page Content Canvas -->
+<main class="flex-1 w-full max-w-[1200px] mx-auto p-container-padding flex gap-12 items-start mt-6">
+<!-- In-page Secondary Navigation (Architectural Structural Element) -->
+<aside class="w-48 shrink-0 sticky top-[calc(48px+2rem)] flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-2">Configuration</span>
+<a class="font-body-md text-body-md text-tertiary border-l-2 border-tertiary pl-3 py-1 bg-surface-container-lowest" href="#general-details">General Details</a>
+<a class="font-body-md text-body-md text-on-surface-variant pl-[14px] py-1 hover:text-on-surface transition-colors" href="#workspace-data">Workspace Data</a>
+<a class="font-body-md text-body-md text-on-surface-variant pl-[14px] py-1 hover:text-on-surface transition-colors" href="#branding">Branding &amp; Identity</a>
+</aside>
+<!-- Form Container -->
+<div class="flex-1 flex flex-col gap-16 max-w-[800px]">
+<!-- Section 1: General Details -->
+<section class="scroll-mt-[100px] flex flex-col gap-8" id="general-details">
+<div class="border-b border-outline-variant pb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">General Details</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage core information and localization settings for this workspace.</p>
+</div>
+<div class="grid grid-cols-2 gap-x-8 gap-y-6">
+<div class="col-span-2 flex flex-col gap-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Workspace Name</label>
+<input class="input-refined" type="text" value="HireGenie Global Operations">
+</div>
+<div class="col-span-1 flex flex-col gap-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Company Name</label>
+<input class="input-refined" type="text" value="Acme Corp">
+</div>
+<div class="col-span-1 flex flex-col gap-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Website</label>
+<input class="input-refined" type="text" value="https://acmecorp.com">
+</div>
+<div class="col-span-1 flex flex-col gap-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Industry</label>
+<div class="relative">
+<select class="input-refined appearance-none w-full bg-transparent">
+<option>Technology / Software</option>
+<option>Financial Services</option>
+<option>Healthcare</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-sm">expand_more</span>
+</div>
+</div>
+<div class="col-span-1 flex flex-col gap-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Default Location</label>
+<input class="input-refined" type="text" value="San Francisco, CA">
+</div>
+<div class="col-span-1 flex flex-col gap-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant">Timezone</label>
+<div class="relative">
+<select class="input-refined appearance-none w-full bg-transparent">
+<option>Pacific Time (PT) - UTC-8</option>
+<option>Eastern Time (ET) - UTC-5</option>
+<option>Central European Time (CET) - UTC+1</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-sm">expand_more</span>
+</div>
+</div>
+<div class="col-span-1 flex flex-col gap-1">
+<label class="font-label-caps text-label-caps text-on-surface-variant">System Language</label>
+<div class="relative">
+<select class="input-refined appearance-none w-full bg-transparent">
+<option>English (US)</option>
+<option>Spanish (ES)</option>
+<option>French (FR)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-sm">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Workspace Data -->
+<section class="scroll-mt-[100px] flex flex-col gap-8" id="workspace-data">
+<div class="border-b border-outline-variant pb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Workspace Data</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Technical identifiers and current utilization metrics.</p>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<!-- Metric Card 1 -->
+<div class="bg-surface-container border border-outline-variant p-5 flex flex-col gap-3 group hover:border-tertiary transition-colors">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Workspace ID</span>
+<span class="material-symbols-outlined text-outline text-sm group-hover:text-tertiary transition-colors">content_copy</span>
+</div>
+<span class="font-mono-data text-mono-data text-on-surface tracking-wider">WKS-89A-24X9</span>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-surface-container border border-outline-variant p-5 flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Total Members</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-md text-headline-md text-on-surface">1,248</span>
+<span class="font-body-sm text-body-sm text-tertiary">+12 this week</span>
+</div>
+</div>
+<!-- Metric Card 3 -->
+<div class="bg-surface-container border border-outline-variant p-5 flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Storage Utilization</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-md text-headline-md text-on-surface">42.8<span class="text-title-sm text-on-surface-variant">GB</span></span>
+</div>
+<div class="w-full h-1 bg-surface-bright mt-2">
+<div class="h-full bg-tertiary" style="width: 42%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Branding -->
+<section class="scroll-mt-[100px] flex flex-col gap-8 mb-24" id="branding">
+<div class="border-b border-outline-variant pb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Branding &amp; Identity</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Customize the appearance of external-facing candidate portals.</p>
+</div>
+<div class="flex gap-12 items-start">
+<!-- Logo Upload -->
+<div class="flex flex-col gap-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Brand Logo</span>
+<div class="w-32 h-32 border border-outline-variant border-dashed bg-surface-container flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-tertiary hover:bg-surface-container-high transition-all group relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-10 transition-opacity" data-alt="A sleek, minimalist corporate logo composed of intersecting geometric lines in brushed brass over a dark graphite background. High resolution, crisp vector style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBh12Qv3pyN0d3ltrl5W4rjdcf8J5h5HSESCE9fPaQB5dE0MCZySfoljxGxRfbllkns0zzixBSAeo4K6SQbnUgF58vbXpnWarJObtmYiv99Hu7jUeBup_zIR0c7vcrWFEIhdmORfo8j9jI8ETPJDXWFygx2_yYrCuCBIdqT2Vek9oru4nw93po82kwnFyPefDky8Vd9DhRd10qg1eqjuqIF4MJv748KcQTJNFGCDlN7nk51TALnsjcI')"></div>
+<span class="material-symbols-outlined text-outline group-hover:text-tertiary z-10">upload</span>
+<span class="font-label-caps text-label-caps text-outline group-hover:text-tertiary z-10">Upload PNG</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant w-32 text-center">Max 2MB, 512x512px</span>
+</div>
+<!-- Accent Color -->
+<div class="flex flex-col gap-3 flex-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Accent Color</span>
+<div class="flex gap-4 items-center">
+<div class="w-10 h-10 border border-outline-variant bg-[#d6c4aa]"></div>
+<div class="flex-1 max-w-[160px]">
+<input class="input-refined font-mono-data text-mono-data" type="text" value="#D6C4AA">
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mt-2">Used for primary buttons and highlights on candidate-facing pages to match your brand identity.</p>
+<!-- Save Actions (Contextual to Branding but represents page save) -->
+<div class="mt-8 flex gap-4 pt-4 border-t border-outline-variant">
+<button class="bg-tertiary text-on-tertiary px-6 py-2 font-title-sm text-title-sm hover:opacity-90 transition-opacity">Save Changes</button>
+<button class="bg-transparent border border-outline-variant text-on-surface px-6 py-2 font-title-sm text-title-sm hover:bg-surface-container transition-colors">Discard</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>
