@@ -1,0 +1,140 @@
+================================================================================
+🚀 HIREGENIE AI (TalentOS) — LINKEDIN POST TEMPLATES & SHOWCASE GUIDE
+================================================================================
+
+Folder Contents:
+1. hiregenie_hero_banner.jpg       -> Banner / First Slide (Hero Overview)
+2. recruiter_command_center.png   -> Recruiter Command Center & Job Pipelines
+3. candidate_interview_entry.png  -> Candidate Check-in & System Verification
+4. voice_interview_room.png       -> Live Voice Room with Code Sandbox & Proctoring
+5. sarvam_voice_active.png        -> Active Sarvam Conversational Voice AI Streaming Call
+
+--------------------------------------------------------------------------------
+📸 HOW TO UPLOAD ON LINKEDIN FOR MAXIMUM REACH & ENGAGEMENT:
+--------------------------------------------------------------------------------
+Option A: MULTI-IMAGE CAROUSEL / POST (Recommended)
+Select and attach images in this exact order:
+1. hiregenie_hero_banner.jpg
+2. recruiter_command_center.png
+3. voice_interview_room.png
+4. sarvam_voice_active.png
+5. candidate_interview_entry.png
+
+Option B: CONVERT TO PDF CAROUSEL (Highest LinkedIn Reach Algorithm Boost)
+Convert these 5 images into a single PDF (e.g. "HireGenie_AI_TalentOS_Demo.pdf") 
+and upload as a LinkedIn Document. Document posts get 3x higher impressions!
+
+================================================================================
+📌 POST OPTION 1: STORYTELLING & PROBLEM-SOLVER (VIRAL FORMAT)
+(Best for high engagement, likes, recruiter & founder connections)
+================================================================================
+
+Most tech hiring today is broken. 
+
+Recruiters spend 40+ hours per week manually filtering 500+ resumes, chasing candidates for scheduling, and dealing with interview no-shows. 
+
+Candidates wait weeks for feedback only to be ghosted.
+
+Over the past few weeks, I asked myself: 
+"What if the entire recruitment lifecycle—from job posting to screening, real-time voice interviews, and offer dispatch—could run autonomously?"
+
+Introducing 🧞 HireGenie AI (TalentOS) — an autonomous, multi-agent recruitment platform powered by Conversational Voice AI!
+
+Here is what it does end-to-end:
+
+🎯 Autonomous JD Intelligence & Sourcing:
+Recruiters post a role; AI automatically extracts required skills, weights core vs. bonus capabilities, and scores applicants objectively.
+
+🎙️ Real-Time Conversational Voice Interviews (Powered by Sarvam AI):
+No more rigid questionnaires! Our integrated voice room features sub-second speech-to-speech interaction via Sarvam AI's Conversational Voice agent, fluent in natural Indian accents, English, and vernacular nuances.
+
+💻 Live In-Browser Coding Sandbox:
+Candidates can write and test code (Python, JS, TS, Go, SQL) directly inside the interview cockpit alongside the voice agent.
+
+👁️ AI Proctoring & Fairness Auditing:
+Live webcam presence checks, tab-switch monitoring, and built-in EEOC 4/5ths Disparate Impact Ratio compliance to ensure zero algorithmic bias.
+
+📊 Recruiter Command Center & 360° Candidate Dossiers:
+Detailed evaluation scorecards, audio scrubbers with synchronized transcripts, and 1-click autonomous offer letter dispatch.
+
+🛠️ Tech Stack under the hood:
+• Backend: Python 3.11, FastAPI, SQLAlchemy, PostgreSQL, Celery, Redis
+• Frontend: React 18, TypeScript, Vite, Tailwind CSS, Lucide Icons
+• Voice & Speech: Sarvam Conversational AI SDK, WebRTC Audio Streams
+• Intelligence: Google Gemini 1.5 Pro / Flash, Canonical Skill Normalizers
+
+Check out the full repository, architecture diagrams, and docs on GitHub:
+👉 https://github.com/HelloRohit26/HireGenie-AI-Recruitment-Platform
+
+I'd love to hear your feedback! How do you see Autonomous AI Agents shaping the future of technical hiring? Drop your thoughts in the comments! 👇
+
+#AI #ArtificialIntelligence #GenerativeAI #SarvamAI #FastAPI #ReactJS #TypeScript #Python #MachineLearning #RecruitmentTech #HRTech #TalentAcquisition #SoftwareEngineering #WebRTC #OpenSource
+
+================================================================================
+📌 POST OPTION 2: TECHNICAL DEEP-DIVE (FOR TECH LEADS, CTOS & ENGINEERS)
+(Best for showcasing software engineering depth, architecture, and system design)
+================================================================================
+
+🚀 Excited to unveil HireGenie AI (TalentOS): An Autonomous Multi-Agent Recruitment & Talent Intelligence Platform.
+
+Building this challenged me to solve some tough real-time engineering problems across audio streaming, deterministic AI evaluations, and asynchronous job queues.
+
+Key Architectural Innovations:
+
+1. Sub-Second Conversational Voice AI with Sarvam AI:
+Instead of standard text chat or clunky push-to-talk widgets, HireGenie embeds Sarvam Conversational Voice AI directly into the interview cockpit. It streams bidirectional WebRTC audio, allowing sub-second natural dialogues tailored for Indian tech talent.
+
+2. Deterministic Resume Screening & Skill Normalization:
+Variations like "React", "React.js", and "ReactJS" break standard regex parsers. We implemented an ontology-driven canonical skill normalizer coupled with LLM reasoning to evaluate applicants against strict, reproducible rubrics.
+
+3. Parallelized Async Worker Queue:
+Heavy tasks (PDF parsing, multi-criteria screening, email dispatch, transcript evaluation) run asynchronously on Celery workers backed by Redis, ensuring sub-100ms API response times.
+
+4. Unified Split-Screen Cockpit:
+Built with React 18 + Vite, featuring a live multi-language code sandbox, real-time waveform visualizers, webcam proctoring, and turn-by-turn speech transcription.
+
+5. Fairness & Trust Guardrails:
+Integrated automated Disparate Impact Ratio (4/5ths rule) calculations to track and eliminate demographic bias across hiring funnels.
+
+🔗 GitHub Repo with complete architecture, screenshots, and setup:
+👉 https://github.com/HelloRohit26/HireGenie-AI-Recruitment-Platform
+
+Special thanks to the Sarvam AI team for building such high-fidelity conversational voice models! 
+
+Would love to connect with fellow engineers and builders working on Agentic AI and Real-time Voice systems. What do you think of this architecture?
+
+#SystemDesign #AgenticAI #VoiceAI #SarvamAI #FastAPI #FullStack #Python #React #PostgreSQL #SoftwareArchitecture #Celery #MachineLearning #WebDevelopment
+
+================================================================================
+📌 POST OPTION 3: SHORT, CRISP & HIGH-IMPACT (FAST SCROLL STOPPER)
+(Best for maximum quick readability and mobile feeds)
+================================================================================
+
+Say goodbye to traditional recruitment bottlenecks! 🧞‍♂️✨
+
+I just launched HireGenie AI (TalentOS) — an Autonomous Multi-Agent Hiring Platform with real-time Conversational Voice AI!
+
+What happens when a candidate applies?
+1️⃣ Instant AI resume parsing & canonical skill matching
+2️⃣ Autonomous shortlisting & interview invitation via email
+3️⃣ Real-time Voice AI technical interview conducted by Sarvam AI
+4️⃣ Live code execution sandbox & anti-cheating proctoring
+5️⃣ Comprehensive scorecards, audio replay, & offer letter dispatch
+
+Zero recruiter manual fatigue. 100% auditable hiring decisions.
+
+Check out the demo screenshots below & explore the open-source codebase:
+⭐ GitHub: https://github.com/HelloRohit26/HireGenie-AI-Recruitment-Platform
+
+Let me know your thoughts in the comments! 🚀
+
+#AI #GenerativeAI #SarvamAI #Recruitment #TechInnovation #Coding #WebDevelopment #Python #FastAPI #React
+
+================================================================================
+💡 PRO TIPS FOR POSTING:
+================================================================================
+1. Tag @Sarvam AI in your post — they often like and reshare projects built on their APIs!
+2. Post during peak hours: Tuesday - Thursday between 9:00 AM - 11:30 AM IST or 6:00 PM - 8:00 PM IST.
+3. Put the GitHub link both in the post body and in the first comment for maximum algorithmic reach.
+4. Reply to all initial comments within the first 60 minutes to boost organic feed distribution.
+================================================================================
