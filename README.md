@@ -305,13 +305,37 @@ npm run dev
 
 ---
 
-### 4. Running via Docker Compose
+### 4. Running via Docker Desktop (One-Click Launch)
 
-To spin up the entire production-grade stack (PostgreSQL, Redis, Celery, and Backend):
+Run the entire full-stack system (PostgreSQL 16, Redis 7, FastAPI Backend, Celery Worker, and React Nginx Frontend) in containers:
 
-```bash
-docker-compose -f backend/docker-compose.yml up --build -d
+#### Option A: Windows 1-Click PowerShell Script (Docker Desktop)
+```powershell
+.\run-docker.ps1
 ```
+
+#### Option B: Standard Docker Compose CLI
+```bash
+# Launch all 5 containers in the background:
+docker compose up --build -d
+
+# Seed fresher job requisitions into the Docker database:
+docker exec -it hiregenie-backend python seed_fresher_jobs.py
+
+# View real-time container logs:
+docker compose logs -f
+
+# Stop all containers:
+docker compose down
+```
+
+| Service Container | URL / Port | Credentials / Note |
+| :--- | :--- | :--- |
+| **Frontend (React + Nginx)** | `http://localhost:3000` | Production SPA build |
+| **Backend REST & WebSocket API** | `http://localhost:8000/docs` | FastAPI Interactive Swagger UI |
+| **PostgreSQL 16** | `localhost:5432` | User: `postgres`, Pass: `rohit`, DB: `hiregenie` |
+| **Redis 7** | `localhost:6379` | Celery broker & result cache |
+| **Celery Asynchronous Worker** | Internal Container | 4 concurrent agent workers |
 
 ---
 

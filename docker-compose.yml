@@ -1,0 +1,157 @@
+# ==============================================================================
+# 🧞 HireGenie AI (TalentOS) — Production-Grade Docker Compose Manifest
+# Works seamlessly with Docker Desktop (Windows, macOS, Linux)
+# ==============================================================================
+
+services:
+  # ----------------------------------------------------------------------------
+  # 1. PostgreSQL Relational Database (v16)
+  # ----------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: hiregenie-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-rohit}
+      POSTGRES_DB: ${POSTGRES_DB:-hiregenie}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d hiregenie"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hiregenie-net
+
+  # ----------------------------------------------------------------------------
+  # 2. Redis In-Memory Cache & Celery Broker (v7)
+  # ----------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: hiregenie-redis
+    restart: always
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hiregenie-net
+
+  # ----------------------------------------------------------------------------
+  # 3. FastAPI REST & WebSocket Backend Service (Python 3.12)
+  # ----------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hiregenie-backend
+    restart: always
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-rohit}@postgres:5432/${POSTGRES_DB:-hiregenie}
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - DURABLE_QUEUE_ENABLED=True
+      - CELERY_TASK_ALWAYS_EAGER=False
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - uploads_data:/app/uploads
+      - chroma_data:/app/chroma_db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks:
+      - hiregenie-net
+
+  # ----------------------------------------------------------------------------
+  # 4. Celery Asynchronous Task Worker
+  # ----------------------------------------------------------------------------
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hiregenie-celery-worker
+    restart: always
+    command: celery -A app.workers.celery_app worker --loglevel=info --concurrency=4
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-rohit}@postgres:5432/${POSTGRES_DB:-hiregenie}
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - DURABLE_QUEUE_ENABLED=True
+      - CELERY_TASK_ALWAYS_EAGER=False
+    depends_on:
+      backend:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    volumes:
+      - uploads_data:/app/uploads
+      - chroma_data:/app/chroma_db
+    networks:
+      - hiregenie-net
+
+  # ----------------------------------------------------------------------------
+  # 5. React 18 + Vite + Tailwind CSS Frontend (Production Nginx)
+  # ----------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=http://localhost:8000
+        - VITE_API_BASE_URL=http://localhost:8000/api/v1
+    container_name: hiregenie-frontend
+    restart: always
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - hiregenie-net
+
+# ------------------------------------------------------------------------------
+# Persistent Docker Volumes
+# ------------------------------------------------------------------------------
+volumes:
+  postgres_data:
+    name: hiregenie_postgres_data
+  redis_data:
+    name: hiregenie_redis_data
+  uploads_data:
+    name: hiregenie_uploads_data
+  chroma_data:
+    name: hiregenie_chroma_data
+
+# ------------------------------------------------------------------------------
+# Bridge Network
+# ------------------------------------------------------------------------------
+networks:
+  hiregenie-net:
+    name: hiregenie-network
+    driver: bridge
