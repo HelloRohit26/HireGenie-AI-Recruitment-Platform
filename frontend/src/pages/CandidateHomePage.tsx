@@ -88,14 +88,24 @@ export const CandidateHomePage: React.FC<CandidateHomePageProps> = ({ onNavigate
                 </div>
               </div>
 
-              <div className="shrink-0">
+              <div className="shrink-0 flex items-center gap-2">
+                <button
+                  type="button"
+                  id="start-voice-interview-home-btn"
+                  onClick={() => onNavigate?.(`/interview/${activeApplication.interview_invitation?.invitation_token}/room?autostart=true`)}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#D6A85F] via-[#F4C377] to-[#D6A85F] text-[#11110F] text-xs font-bold shadow-lg hover:bg-[#F4C377] hover:scale-105 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-sm">phone_in_talk</span>
+                  <span>START VOICE INTERVIEW NOW</span>
+                </button>
                 <button
                   type="button"
                   onClick={() => onNavigate?.(`/interview/${activeApplication.interview_invitation?.invitation_token}/prep`)}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-[#D6A85F] text-[#11110F] text-xs font-bold shadow-lg hover:bg-[#F4C377] transition-all flex items-center justify-center gap-2"
+                  className="px-3 py-2.5 rounded-lg bg-[#181815] border border-[#3A3A36] text-[#A1A19A] hover:text-[#F4F1E9] text-xs font-mono transition flex items-center gap-1 cursor-pointer"
+                  title="Test microphone and audio"
                 >
-                  <span className="material-symbols-outlined text-sm">play_arrow</span>
-                  Enter Interview Prep & Test
+                  <span className="material-symbols-outlined text-sm">tune</span>
+                  <span className="hidden md:inline">Setup</span>
                 </button>
               </div>
             </div>

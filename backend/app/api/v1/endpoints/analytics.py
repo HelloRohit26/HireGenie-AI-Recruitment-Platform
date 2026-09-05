@@ -5,6 +5,7 @@ from typing import Optional
 
 from app.db.session import get_db
 from app.services.analytics_service import AnalyticsService
+from app.core.rbac import get_current_user_optional
 
 router = APIRouter()
 
@@ -64,13 +65,15 @@ def get_skill_availability(
 
 
 @router.get("/summary")
-def get_summary_telemetry(db: Session = Depends(get_db)):
-    """Get real top-level system metrics, telemetry, and activity stream from SQLite."""
-    return AnalyticsService.get_summary_telemetry(db)
+def get_summary_telemetry(db: Session = Depends(get_db), current_user = Depends(get_current_user_optional)):
+    """Get real top-level system metrics, telemetry, and activity stream from PostgreSQL."""
+    user_id = current_user.id if current_user else None
+    return AnalyticsService.get_summary_telemetry(db, user_id=user_id)
 
 
 @router.get("/insights")
-def get_real_insights(db: Session = Depends(get_db)):
-    """Get calculated insights metrics directly from SQLite database."""
-    return AnalyticsService.get_real_insights(db)
+def get_real_insights(db: Session = Depends(get_db), current_user = Depends(get_current_user_optional)):
+    """Get calculated insights metrics directly from PostgreSQL database."""
+    user_id = current_user.id if current_user else None
+    return AnalyticsService.get_real_insights(db, user_id=user_id)
 

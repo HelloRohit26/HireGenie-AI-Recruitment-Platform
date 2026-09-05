@@ -134,6 +134,14 @@ class Job(Base):
     created_by = Column(Integer, ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    @property
+    def creator_id(self):
+        return self.created_by
+
+    @creator_id.setter
+    def creator_id(self, value):
+        self.created_by = value
+
     # Relationships
     creator = relationship("User", back_populates="jobs")
     screening_questions = relationship("ScreeningQuestion", back_populates="job", cascade="all, delete-orphan")
@@ -283,6 +291,9 @@ class Interview(Base):
     transcript = Column(JSON, nullable=True)
     evaluation_data = Column(JSON, nullable=True)
     overall_score = Column(Float, nullable=True)
+    code_submissions = Column(JSON, nullable=True)
+    proctoring_data = Column(JSON, nullable=True)
+    integrity_score = Column(Float, default=100.0)
 
     # Relationships
     application = relationship("CandidateApplication", back_populates="interviews")
@@ -319,6 +330,9 @@ class InterviewSession(Base):
     current_question_index = Column(Integer, default=0)
     transcript = Column(JSON, nullable=True)
     audio_recording_url = Column(String(512), nullable=True)
+    code_submissions = Column(JSON, nullable=True)
+    proctoring_data = Column(JSON, nullable=True)
+    integrity_score = Column(Float, default=100.0)
 
     created_at = Column(DateTime, default=datetime.utcnow)
 

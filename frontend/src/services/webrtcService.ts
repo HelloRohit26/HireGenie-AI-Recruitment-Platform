@@ -40,6 +40,193 @@ export interface WebRTCOptions {
   onError?: (error: Error) => void;
 }
 
+// Native Web Audio Buffer Queue for Real-Time Binary PCM Streaming (Zero Glitch)
+export class NativeStreamAudioPlayer {
+  private ctx: AudioContext | null = null;
+  private nextPlayTime = 0;
+  private activeNodes: AudioBufferSourceNode[] = [];
+  private sampleRate = 16000;
+
+  constructor() {
+    if (typeof window !== 'undefined') {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      if (AudioCtx) {
+        this.ctx = new AudioCtx({ sampleRate: this.sampleRate });
+      }
+    }
+  }
+
+  public async resume(): Promise<void> {
+    if (this.ctx && this.ctx.state === 'suspended') {
+      await this.ctx.resume();
+    }
+  }
+
+  public playRawBytes(arrayBuffer: ArrayBuffer): void {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      if (AudioCtx) {
+        this.ctx = new AudioCtx({ sampleRate: this.sampleRate });
+      }
+    }
+    if (!this.ctx) return;
+    this.resume();
+
+    // 16-bit PCM to Float32 conversion
+    const int16 = new Int16Array(arrayBuffer);
+    if (int16.length === 0) return;
+
+    const float32 = new Float32Array(int16.length);
+    for (let i = 0; i < int16.length; i++) {
+      float32[i] = int16[i] / 32768.0;
+    }
+
+    const buffer = this.ctx.createBuffer(1, float32.length, this.sampleRate);
+    buffer.getChannelData(0).set(float32);
+
+    const source = this.ctx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(this.ctx.destination);
+
+    const currentTime = this.ctx.currentTime;
+    
+    // Agar queue piche chhoot gayi ho toh small 30ms pre-buffer rakho taaki audio na kate
+    if (this.nextPlayTime < currentTime) {
+      this.nextPlayTime = currentTime + 0.03;
+    }
+
+    source.start(this.nextPlayTime);
+    this.nextPlayTime += buffer.duration;
+
+    this.activeNodes.push(source);
+    source.onended = () => {
+      this.activeNodes = this.activeNodes.filter((n) => n !== source);
+    };
+  }
+
+  public pushChunk(base64OrBuffer: string | ArrayBuffer): void {
+    if (base64OrBuffer instanceof ArrayBuffer) {
+      this.playRawBytes(base64OrBuffer);
+    } else if (typeof base64OrBuffer === 'string') {
+      const buf = base64ToArrayBuffer(base64OrBuffer);
+      this.playRawBytes(buf);
+    }
+  }
+
+  public playChunk(data: string | ArrayBuffer): void {
+    this.pushChunk(data);
+  }
+
+  public queueChunk(data: string | ArrayBuffer): void {
+    this.pushChunk(data);
+  }
+
+  public stop(): void {
+    this.activeNodes.forEach((node) => {
+      try {
+        node.stop();
+      } catch (e) {}
+    });
+    this.activeNodes = [];
+    if (this.ctx) {
+      this.nextPlayTime = this.ctx.currentTime;
+    }
+  }
+
+  public stopAll(): void {
+    this.stop();
+  }
+
+  public getIsPlaying(): boolean {
+    return this.activeNodes.length > 0;
+  }
+
+  public destroy(): void {
+    this.stop();
+    if (this.ctx && this.ctx.state !== 'closed') {
+      this.ctx.close();
+      this.ctx = null;
+    }
+  }
+
+  public getContext(): AudioContext | null {
+    return this.ctx;
+  }
+}
+
+export const nativePlayer = new NativeStreamAudioPlayer();
+export const streamPlayer = nativePlayer;
+export const audioPlayer = nativePlayer;
+export const voicePlayer = nativePlayer;
+export const ContinuousAudioStreamer = NativeStreamAudioPlayer;
+export const SmoothVoicePlayer = NativeStreamAudioPlayer;
+export const StreamAudioPlayer = NativeStreamAudioPlayer;
+
+// Utility: Convert ArrayBuffer to Base64
+export function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+// Utility: Convert Base64 to ArrayBuffer
+export function base64ToArrayBuffer(base64: string): ArrayBuffer {
+  const cleanB64 = base64.includes(',') ? base64.split(',')[1] : base64;
+  const binaryString = atob(cleanB64);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
+
+// Standalone helper: Send 16kHz PCM audio chunk over WebSocket (Direct Binary ArrayBuffer)
+export function sendAudioChunk(ws: WebSocket | null, pcmData: ArrayBuffer): void {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    // Send direct binary frame (Zero JSON latency)
+    ws.send(pcmData);
+  }
+}
+
+// Utility: Downsample Float32 input audio to 16kHz 16-bit linear PCM ArrayBuffer
+export function downsampleTo16kPCM(inputData: Float32Array, inputSampleRate: number): ArrayBuffer {
+  if (inputSampleRate === 16000) {
+    const pcm16 = new Int16Array(inputData.length);
+    for (let i = 0; i < inputData.length; i++) {
+      const s = Math.max(-1, Math.min(1, inputData[i]));
+      pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+    }
+    return pcm16.buffer;
+  }
+
+  const ratio = inputSampleRate / 16000;
+  const newLength = Math.round(inputData.length / ratio);
+  const pcm16 = new Int16Array(newLength);
+  let offsetResult = 0;
+  let offsetInput = 0;
+
+  while (offsetResult < newLength) {
+    const nextOffsetInput = Math.round((offsetResult + 1) * ratio);
+    let sum = 0;
+    let count = 0;
+    for (let i = offsetInput; i < nextOffsetInput && i < inputData.length; i++) {
+      sum += inputData[i];
+      count++;
+    }
+    const avg = count > 0 ? sum / count : 0;
+    const s = Math.max(-1, Math.min(1, avg));
+    pcm16[offsetResult] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+    offsetResult++;
+    offsetInput = nextOffsetInput;
+  }
+  return pcm16.buffer;
+}
+
 // Utility: Encode Float32Array PCM samples into standard 16-bit mono WAV buffer
 function encodeWAV(samples: Float32Array, sampleRate: number): ArrayBuffer {
   const buffer = new ArrayBuffer(44 + samples.length * 2);
@@ -145,22 +332,31 @@ export class WebRTCService {
     try {
       this.updateState('connecting');
 
-      // Request microphone access
+      // Request microphone access with Echo Cancellation & noise suppression enabled
       if (typeof navigator !== 'undefined' && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         try {
           this.localStream = await navigator.mediaDevices.getUserMedia({
             audio: {
-              echoCancellation: true,
+              channelCount: 1,
+              sampleRate: 16000,
+              echoCancellation: true, // Prevents speaker audio from looping back
               noiseSuppression: true,
-              autoGainControl: true
+              autoGainControl: true,
             },
-            video: false
+            video: false,
           });
           this.setupAudioPipeline(this.localStream);
         } catch (initialMicErr: any) {
           console.warn('[HireGenie WebRTC] Trying fallback audio constraints...', initialMicErr);
           try {
-            this.localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+            this.localStream = await navigator.mediaDevices.getUserMedia({
+              audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: true,
+              },
+              video: false,
+            });
             this.setupAudioPipeline(this.localStream);
           } catch (basicMicErr: any) {
             console.warn('[HireGenie WebRTC] Microphone fallback initialized (silent stream):', basicMicErr);
@@ -188,6 +384,7 @@ export class WebRTCService {
       console.log(`[HireGenie WebRTC] Connecting WebSocket signaling to ${signalingUrl}`);
 
       this.socket = new WebSocket(signalingUrl);
+      this.socket.binaryType = 'arraybuffer'; // Enable raw binary audio frame streaming
       this.setupSocketListeners();
 
     } catch (err: any) {
@@ -248,70 +445,102 @@ export class WebRTCService {
     };
 
     this.socket.onmessage = async (event) => {
-      try {
-        const msg = JSON.parse(event.data);
-
-        if (msg.type === 'connected') {
-          this.updateState('connected');
-        } else if (msg.type === 'ai_speech') {
-          // CRITICAL: Prevent duplicate audio playback using unique response_id
-          const respId = msg.response_id || msg.text;
-          if (respId && this.playedResponseIds.has(respId)) {
-            console.warn(`[HireGenie Voice] Dropping duplicate AI speech turn: ${respId}`);
-            return;
-          }
-          if (respId) {
-            this.playedResponseIds.add(respId);
-          }
-
-          if (this.options.onAISpeech) {
-            this.options.onAISpeech({
-              speaker: 'ai',
-              text: msg.text,
-              response_id: msg.response_id,
-              question_index: msg.question_index,
-              total_questions: msg.total_questions,
-              question_text: msg.question_text || msg.text,
-              competency_focus: msg.competency_focus,
-              question_type: msg.question_type,
-              current_difficulty: msg.current_difficulty,
-              interview_completed: msg.interview_completed,
-              audio_base64: msg.audio_base64,
-              audio_format: msg.audio_format,
-              voice_provider: msg.voice_provider,
-              speaker_name: msg.speaker
-            });
-          }
-
-          // Play Sarvam AI TTS Audio exactly once
-          if (msg.audio_base64) {
-            await this.playAudioBase64(msg.audio_base64, msg.audio_format || 'audio/wav');
-          } else {
-            // If no audio payload, automatically switch to listening mode after short delay
-            setTimeout(() => {
-              this.onAISpeechFinished();
-            }, 2500);
-          }
-        } else if (msg.type === 'interview_completed') {
-          this.updateVoiceState('COMPLETED');
-          if (this.options.onInterviewCompleted) {
-            this.options.onInterviewCompleted();
-          }
-        } else if (msg.type === 'barge_in_acknowledged') {
-          this.updateVoiceState('LISTENING');
-        } else if (msg.type === 'offer' && this.peerConnection) {
-          await this.peerConnection.setRemoteDescription(new RTCSessionDescription(msg.sdp));
-          const answer = await this.peerConnection.createAnswer();
-          await this.peerConnection.setLocalDescription(answer);
-          this.socket?.send(JSON.stringify({ type: 'answer', sdp: answer }));
-        } else if (msg.type === 'candidate' && this.peerConnection) {
-          await this.peerConnection.addIceCandidate(new RTCIceCandidate(msg.candidate));
-        } else if (msg.type === 'error') {
-          console.error('[HireGenie WebRTC] Server error:', msg.message);
-          this.updateState('failed');
+      // 1. Direct raw audio binary chunk from Sarvam AI agent (ArrayBuffer)
+      if (event.data instanceof ArrayBuffer) {
+        this.isAudioPlaying = true;
+        this.updateVoiceState('AI_SPEAKING');
+        if (this.options.onAudioPlaybackStart) {
+          this.options.onAudioPlaybackStart();
         }
-      } catch (e) {
-        console.error('[HireGenie WebRTC] Signaling parse error:', e);
+        nativePlayer.playRawBytes(event.data);
+        return;
+      }
+
+      // 2. Text / JSON control & signaling messages
+      if (typeof event.data === 'string') {
+        try {
+          const data = JSON.parse(event.data);
+
+          // Real-time AI Audio Chunk Streaming (Fallback if base64 text)
+          if (data.type === 'ai_audio_chunk' && data.audio_base64) {
+            const pcmBuf = base64ToArrayBuffer(data.audio_base64);
+            this.isAudioPlaying = true;
+            this.updateVoiceState('AI_SPEAKING');
+            nativePlayer.playRawBytes(pcmBuf);
+          }
+          // Barge-in Acknowledgment
+          else if (data.type === 'barge_in_acknowledged') {
+            nativePlayer.stop();
+            this.stopCurrentPlayback();
+          }
+          // Connection & Welcome
+          else if (data.type === 'connected') {
+            this.updateState('connected');
+          }
+          // Standard / Complete AI Speech Turn
+          else if (data.type === 'ai_speech') {
+            const respId = data.response_id || data.text;
+            if (respId && this.playedResponseIds.has(respId)) {
+              console.warn(`[HireGenie Voice] Dropping duplicate AI speech turn: ${respId}`);
+              return;
+            }
+            if (respId) {
+              this.playedResponseIds.add(respId);
+            }
+
+            if (this.options.onAISpeech) {
+              this.options.onAISpeech({
+                speaker: 'ai',
+                text: data.text,
+                response_id: data.response_id,
+                question_index: data.question_index,
+                total_questions: data.total_questions,
+                question_text: data.question_text || data.text,
+                competency_focus: data.competency_focus,
+                question_type: data.question_type,
+                current_difficulty: data.current_difficulty,
+                interview_completed: data.interview_completed,
+                audio_base64: data.audio_base64,
+                audio_format: data.audio_format,
+                voice_provider: data.voice_provider,
+                speaker_name: data.speaker
+              });
+            }
+
+            // Play Sarvam AI TTS Audio if provided as audio turn
+            if (data.audio_base64) {
+              const pcmBuf = base64ToArrayBuffer(data.audio_base64);
+              this.isAudioPlaying = true;
+              this.updateVoiceState('AI_SPEAKING');
+              nativePlayer.playRawBytes(pcmBuf);
+            } else {
+              setTimeout(() => {
+                this.onAISpeechFinished();
+              }, 2500);
+            }
+          }
+          // Session End
+          else if (data.type === 'interview_completed') {
+            this.updateVoiceState('COMPLETED');
+            if (this.options.onInterviewCompleted) {
+              this.options.onInterviewCompleted();
+            }
+          }
+          // WebRTC SDP Offer / Candidate Exchange
+          else if (data.type === 'offer' && this.peerConnection) {
+            await this.peerConnection.setRemoteDescription(new RTCSessionDescription(data.sdp));
+            const answer = await this.peerConnection.createAnswer();
+            await this.peerConnection.setLocalDescription(answer);
+            this.socket?.send(JSON.stringify({ type: 'answer', sdp: answer }));
+          } else if (data.type === 'candidate' && this.peerConnection) {
+            await this.peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+          } else if (data.type === 'error') {
+            console.error('[HireGenie WebRTC] Server error:', data.message);
+            this.updateState('failed');
+          }
+        } catch (e) {
+          console.error('[HireGenie WebRTC] Signaling parse error:', e);
+        }
       }
     };
 
@@ -341,7 +570,7 @@ export class WebRTCService {
 
     if (this.voiceState !== 'COMPLETED') {
       this.updateVoiceState('LISTENING');
-      console.log('🎙️ [AUTOMATIC LISTENING] Microphone active and listening for candidate voice...');
+      console.log('🎙️ [AUTOMATIC LISTENING] Microphone active and streaming candidate voice...');
     }
 
     if (this.options.onAudioPlaybackEnd) {
@@ -350,14 +579,32 @@ export class WebRTCService {
   }
 
   /**
+   * Immediately stops active audio playback (Barge-in / Candidate Interrupt)
+   */
+  public stopCurrentPlayback(): void {
+    // 1. Stop nativePlayer queue
+    nativePlayer.stop();
+
+    // 2. Stop HTMLAudioElement if any is active
+    if (this.currentAudioElement) {
+      this.currentAudioElement.pause();
+      this.currentAudioElement = null;
+    }
+
+    this.isAudioPlaying = false;
+    if (this.voiceState !== 'COMPLETED') {
+      this.updateVoiceState('LISTENING');
+    }
+    console.log('⚡ [HireGenie Voice] Active audio playback stopped immediately.');
+  }
+
+  /**
    * Barge-in handler: Candidate interrupts AI while AI is speaking
    */
   public triggerBargeIn(): void {
-    if (this.isAudioPlaying && this.currentAudioElement) {
+    if (this.isAudioPlaying || nativePlayer.getIsPlaying()) {
       console.log('⚡ [BARGE-IN] Candidate interrupted AI audio playback.');
-      this.currentAudioElement.pause();
-      this.currentAudioElement = null;
-      this.isAudioPlaying = false;
+      this.stopCurrentPlayback();
 
       if (this.socket && this.socket.readyState === WebSocket.OPEN) {
         this.socket.send(JSON.stringify({ type: 'barge_in' }));
@@ -371,53 +618,28 @@ export class WebRTCService {
   }
 
   /**
-   * Plays Sarvam AI Audio returned via Base64 with single-instance guarantee
+   * Decodes Base64 audio chunk or ArrayBuffer and feeds it into the NativeStreamAudioPlayer queue
    */
-  public playAudioBase64(base64Data: string, format = 'audio/wav'): Promise<void> {
-    return new Promise((resolve) => {
-      try {
-        // Cancel any active audio playback to prevent overlapping / double audio
-        if (this.currentAudioElement) {
-          this.currentAudioElement.pause();
-          this.currentAudioElement = null;
-        }
+  public playAudioChunk(audioData: string | ArrayBuffer): void {
+    try {
+      this.isAudioPlaying = true;
+      this.updateVoiceState('AI_SPEAKING');
 
-        this.isAudioPlaying = true;
-        this.updateVoiceState('AI_SPEAKING');
-
-        const cleanB64 = base64Data.includes(',') ? base64Data.split(',')[1] : base64Data;
-        const audioSrc = `data:${format};base64,${cleanB64}`;
-        const audio = new Audio(audioSrc);
-        this.currentAudioElement = audio;
-
-        if (this.options.onAudioPlaybackStart) {
-          this.options.onAudioPlaybackStart();
-        }
-
-        audio.onended = () => {
-          this.currentAudioElement = null;
-          this.onAISpeechFinished();
-          resolve();
-        };
-
-        audio.onerror = (err) => {
-          console.warn('[HireGenie Voice] Audio playback note:', err);
-          this.currentAudioElement = null;
-          this.onAISpeechFinished();
-          resolve();
-        };
-
-        audio.play().catch(e => {
-          console.warn('[HireGenie Voice] Audio autoplay requires user interaction:', e);
-          this.onAISpeechFinished();
-          resolve();
-        });
-      } catch (err) {
-        console.error('[HireGenie Voice] Audio playback error:', err);
-        this.onAISpeechFinished();
-        resolve();
+      if (this.options.onAudioPlaybackStart) {
+        this.options.onAudioPlaybackStart();
       }
-    });
+
+      nativePlayer.pushChunk(audioData);
+    } catch (err) {
+      console.error('[HireGenie Voice] playAudioChunk error:', err);
+    }
+  }
+
+  /**
+   * Helper: Sends continuous 16kHz PCM audio chunk over WebSocket
+   */
+  public sendAudioChunk(ws: WebSocket | null, pcmData: ArrayBuffer): void {
+    sendAudioChunk(ws, pcmData);
   }
 
   /**
@@ -426,23 +648,42 @@ export class WebRTCService {
   private setupAudioPipeline(stream: MediaStream): void {
     try {
       const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-      this.audioContext = new AudioCtx();
+      if (!this.audioContext || this.audioContext.state === 'closed') {
+        this.audioContext = new AudioCtx();
+      }
       const source = this.audioContext.createMediaStreamSource(stream);
       this.analyser = this.audioContext.createAnalyser();
       this.analyser.fftSize = 256;
       source.connect(this.analyser);
 
-      // Setup ScriptProcessor for candidate PCM recording to Sarvam STT
-      this.processorNode = this.audioContext.createScriptProcessor(4096, 1, 1);
+      // Setup ScriptProcessor for continuous 16kHz PCM streaming to Sarvam Voice Agent
+      const bufferSize = 4096;
+      this.processorNode = this.audioContext.createScriptProcessor(bufferSize, 1, 1);
+      
       this.processorNode.onaudioprocess = (e) => {
-        // Buffer PCM samples when in LISTENING or CANDIDATE_SPEAKING mode
-        if (this.voiceState === 'LISTENING' || this.voiceState === 'CANDIDATE_SPEAKING') {
-          if (!this.isMuted) {
-            const inputData = e.inputBuffer.getChannelData(0);
-            this.recordedSamples.push(new Float32Array(inputData));
-          }
+        if (this.isMuted) return;
+
+        // Silence Microphone While AI Speaks: Pause sending candidate mic frames while the AI agent is actively outputting speech chunks
+        const isAiSpeaking = audioPlayer.getIsPlaying() || this.voiceState === 'AI_SPEAKING';
+        if (isAiSpeaking) return;
+
+        const inputData = e.inputBuffer.getChannelData(0);
+        const inputSampleRate = this.audioContext?.sampleRate || 16000;
+
+        // Continuous streaming when active or listening
+        if (
+          this.voiceState === 'LISTENING' ||
+          this.voiceState === 'CANDIDATE_SPEAKING' ||
+          this.voiceState === 'IDLE'
+        ) {
+          // Downsample input data to 16kHz 16-bit linear PCM
+          const pcm16Data = downsampleTo16kPCM(inputData, inputSampleRate);
+
+          // Stream continuous 16kHz PCM chunk to backend WebSocket
+          this.sendAudioChunk(this.socket, pcm16Data);
         }
       };
+
       source.connect(this.processorNode);
       this.processorNode.connect(this.audioContext.destination);
 
@@ -473,7 +714,11 @@ export class WebRTCService {
         }
 
         // 2. Continuous VAD during candidate turns
-        if (this.autoListeningEnabled && (this.voiceState === 'LISTENING' || this.voiceState === 'CANDIDATE_SPEAKING') && !this.isMuted) {
+        if (
+          this.autoListeningEnabled &&
+          (this.voiceState === 'LISTENING' || this.voiceState === 'CANDIDATE_SPEAKING') &&
+          !this.isMuted
+        ) {
           if (normalizedLevel >= this.speechStartThreshold) {
             // Speech detected
             this.lastSoundDetectedTime = now;
@@ -490,10 +735,11 @@ export class WebRTCService {
             const silenceDuration = this.lastSoundDetectedTime ? (now - this.lastSoundDetectedTime) : 0;
             const totalSpeechDuration = this.speakingStartTime ? (now - this.speakingStartTime) : 0;
 
-            // If silence exceeded threshold and candidate spoke long enough -> end turn automatically
             if (silenceDuration >= this.endOfTurnSilenceMs && totalSpeechDuration >= this.minSpeechDurationMs) {
-              console.log(`🎙️ [VAD END OF TURN] Silence ${silenceDuration}ms detected -> Sending audio to Sarvam STT.`);
-              this.finalizeAndSendCandidateAudio();
+              console.log(`🎙️ [VAD TURN COMPLETE] Silence ${silenceDuration}ms detected.`);
+              this.isCandidateSpeaking = false;
+              this.speakingStartTime = null;
+              this.lastSoundDetectedTime = null;
             }
           }
         }
@@ -505,55 +751,6 @@ export class WebRTCService {
     } catch (e) {
       console.warn('[HireGenie WebRTC] Audio pipeline init warning:', e);
     }
-  }
-
-  /**
-   * Finalizes candidate recorded audio buffer, encodes to WAV, and sends to Sarvam STT via WebSocket
-   */
-  public finalizeAndSendCandidateAudio(): void {
-    if (this.recordedSamples.length === 0) {
-      this.isCandidateSpeaking = false;
-      return;
-    }
-
-    this.updateVoiceState('PROCESSING');
-    this.isCandidateSpeaking = false;
-    this.speakingStartTime = null;
-    this.lastSoundDetectedTime = null;
-
-    let totalLength = 0;
-    for (const chunk of this.recordedSamples) {
-      totalLength += chunk.length;
-    }
-
-    const merged = new Float32Array(totalLength);
-    let offset = 0;
-    for (const chunk of this.recordedSamples) {
-      merged.set(chunk, offset);
-      offset += chunk.length;
-    }
-
-    const sampleRate = this.audioContext?.sampleRate || 16000;
-    const wavBuffer = encodeWAV(merged, sampleRate);
-    
-    let binary = '';
-    const bytes = new Uint8Array(wavBuffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    const base64Audio = btoa(binary);
-
-    console.log(`[HireGenie Voice] Transmitting candidate voice (${base64Audio.length} b64 chars) to Sarvam STT...`);
-    
-    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-      this.socket.send(JSON.stringify({
-        type: 'candidate_audio',
-        audio_base64: base64Audio
-      }));
-    }
-
-    this.recordedSamples = [];
   }
 
   /**
@@ -595,10 +792,8 @@ export class WebRTCService {
 
   public disconnect(): void {
     this.autoListeningEnabled = false;
-    if (this.currentAudioElement) {
-      this.currentAudioElement.pause();
-      this.currentAudioElement = null;
-    }
+    this.stopCurrentPlayback();
+    streamPlayer.destroy();
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
@@ -618,7 +813,7 @@ export class WebRTCService {
       this.socket.close();
       this.socket = null;
     }
-    if (this.audioContext) {
+    if (this.audioContext && this.audioContext.state !== 'closed') {
       this.audioContext.close();
       this.audioContext = null;
     }
@@ -631,3 +826,4 @@ export class WebRTCService {
     }
   }
 }
+

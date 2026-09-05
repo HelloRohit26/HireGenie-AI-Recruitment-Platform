@@ -217,12 +217,14 @@ def send_email_task(self, communication_id: int):
             logger.warning(f"⚠️ [CELERY EMAIL TASK] Provider unconfigured for Log #{communication_id}: {error_msg}")
             return {"status": "FAILED", "error": error_msg, "provider_status": "EMAIL NOT CONFIGURED"}
 
-        # Attempt delivery via active provider
+        # Attempt delivery via active provider with rich HTML body
+        html_body = comm_log.extra_metadata.get("body_html") if (comm_log.extra_metadata and isinstance(comm_log.extra_metadata, dict)) else None
+
         success, error_msg, provider_msg_id = send_real_email(
             to_email=recipient_email,
             subject=subject,
             body_text=body,
-            body_html=None
+            body_html=html_body
         )
 
         if success:

@@ -30,7 +30,7 @@ export const RecruiterCommandCenter: React.FC<RecruiterCommandCenterProps> = ({ 
     setIsLoadingJobs(true);
     setJobsError('');
     Promise.all([
-      jobService.getJobs().catch(err => {
+      jobService.getJobs(true).catch(err => {
         setJobsError(err.message || 'Unable to connect to HireGenie server.');
         return { data: [] };
       }),
@@ -159,10 +159,10 @@ export const RecruiterCommandCenter: React.FC<RecruiterCommandCenterProps> = ({ 
               <MetricCard
                 label="Active Jobs"
                 value={metrics.activeJobs}
-                trend="SQLite"
+                trend="PostgreSQL"
                 subtitle="Requisitions open"
                 icon="work"
-                hoverInfo="Real live SQLite data"
+                hoverInfo="Real live PostgreSQL data"
                 onClick={() => onNavigate?.('/recruiter/jobs')}
               />
               <MetricCard

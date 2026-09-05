@@ -391,6 +391,9 @@ def process_candidate_screening_async(application_id: int, job_id: int):
         if app_record.status == ApplicationStatus.SHORTLISTED:
             invitation = get_or_create_interview_invitation(db, app_record, job)
             send_candidate_email_job(db, app_record, job, candidate_name, invitation_token=invitation.invitation_token)
+        elif app_record.status == ApplicationStatus.REJECTED:
+            from app.services.communication_service import send_rejection_email_job
+            send_rejection_email_job(db, app_record, job, candidate_name, feedback=app_record.rejection_reason)
 
     except Exception as e:
         logger.error(f"Error in async screening pipeline for Application #{application_id}: {str(e)}")

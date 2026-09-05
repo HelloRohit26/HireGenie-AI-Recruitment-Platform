@@ -31,7 +31,7 @@ export interface ApiError {
  */
 export const getAuthToken = (): string | null => {
   if (typeof window !== 'undefined') {
-    return localStorage.getItem('hg_auth_token');
+    return localStorage.getItem('hg_auth_token') || localStorage.getItem('hg_token');
   }
   return null;
 };

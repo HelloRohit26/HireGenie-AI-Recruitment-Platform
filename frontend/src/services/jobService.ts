@@ -75,10 +75,11 @@ const normalizeJob = (item: any): JobRequisition => ({
 
 export const jobService = {
   /**
-   * Fetches all live job requisitions from FastAPI backend
+   * Fetches live job requisitions from FastAPI backend
    */
-  async getJobs(): Promise<ApiResponse<JobRequisition[]>> {
-    const res = await apiRequest<any[]>('/jobs', { method: 'GET' });
+  async getJobs(myJobsOnly: boolean = false): Promise<ApiResponse<JobRequisition[]>> {
+    const query = myJobsOnly ? '?my_jobs_only=true' : '';
+    const res = await apiRequest<any[]>(`/jobs${query}`, { method: 'GET' });
     const normalizedData: JobRequisition[] = (res.data || []).map(normalizeJob);
     return { ...res, data: normalizedData };
   },

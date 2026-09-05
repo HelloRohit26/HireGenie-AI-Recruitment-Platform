@@ -25,7 +25,7 @@ export const AIScreeningPage: React.FC<AIScreeningPageProps> = ({ onNavigate }) 
   const fetchData = async () => {
     try {
       const [jobsRes, candidatesRes] = await Promise.all([
-        jobService.getJobs(),
+        jobService.getJobs(true),
         screeningService.getScreeningQueue(selectedJobId, statusFilter)
       ]);
 

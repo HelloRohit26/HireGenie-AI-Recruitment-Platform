@@ -10,8 +10,14 @@ class Settings(BaseSettings):
     DATABASE_URL: str = ""
     SECRET_KEY: str = "your_super_secret_key_change_this"
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 10080  # 7 days persistent session
     GEMINI_API_KEY: str = ""
+    # Sarvam Conversational AI Voice Agent Settings
+    SARVAM_API_KEY: str = ""
+    SARVAM_ORG_ID: str = ""
+    SARVAM_WORKSPACE_ID: str = ""
+    SARVAM_APP_ID: str = ""
+    SARVAM_TTS_SPEAKER: str = "anushka"
     
     # AI & Voice Provider Settings (Sarvam AI & LiveKit)
     SARVAM_API_KEY: str = ""

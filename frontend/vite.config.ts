@@ -11,6 +11,13 @@ export default defineConfig({
   },
   server: {
     port: 3001,
-    host: true
+    host: true,
+    proxy: {
+      '/api/app-runtime': {
+        target: 'https://apps.sarvam.ai',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
   }
 });

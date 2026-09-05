@@ -84,6 +84,10 @@ export const InterviewPrepPage: React.FC<InterviewPrepPageProps> = ({
     };
 
     queryMicPermission();
+
+    return () => {
+      handleStopMicTest();
+    };
   }, []);
 
   // Enumerate connected microphones
@@ -203,13 +207,15 @@ export const InterviewPrepPage: React.FC<InterviewPrepPageProps> = ({
 
   const handleStopMicTest = () => {
     if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-    if (audioCtxRef.current) {
+    if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
       try {
-        audioCtxRef.current.close();
+        audioCtxRef.current.close().catch(() => {});
       } catch (e) {}
     }
+    audioCtxRef.current = null;
     if (mediaStreamRef.current) {
       mediaStreamRef.current.getTracks().forEach(t => t.stop());
+      mediaStreamRef.current = null;
     }
     setMicTesting(false);
     setMicLevel(0);
@@ -253,11 +259,6 @@ export const InterviewPrepPage: React.FC<InterviewPrepPageProps> = ({
   };
 
   const handleEnterInterview = async () => {
-    if (!micGranted) {
-      setShowSettingsModal(true);
-      setMicError('Microphone permission is required before starting the AI interview.');
-      return;
-    }
     handleStopMicTest();
     try {
       await candidateService.respondToInvitation(token, 'ACCEPT');
@@ -265,7 +266,7 @@ export const InterviewPrepPage: React.FC<InterviewPrepPageProps> = ({
       console.warn('Failed to record invitation acceptance consent:', e);
     }
     if (onNavigate) {
-      onNavigate(`/interview/${token}/room`);
+      onNavigate(`/interview/${token}/room?autostart=true`);
     }
   };
 
@@ -547,15 +548,12 @@ export const InterviewPrepPage: React.FC<InterviewPrepPageProps> = ({
           {/* Action Area */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <button
+              id="start-voice-interview-prep-btn"
               onClick={handleEnterInterview}
-              disabled={!isReadyToStart}
-              className={`w-full sm:w-auto px-8 py-3.5 font-bold text-sm rounded-full shadow-lg transition-all duration-300 flex items-center justify-center gap-2 ${
-                isReadyToStart
-                  ? 'bg-[#D6A85F] text-[#131311] shadow-[#D6A85F]/20 hover:bg-[#F4C377] hover:scale-105 cursor-pointer'
-                  : 'bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed opacity-60'
-              }`}
+              className="w-full sm:w-auto px-8 py-3.5 font-bold text-sm rounded-full shadow-lg transition-all duration-300 flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#D6A85F] via-[#F4C377] to-[#D6A85F] text-[#131311] shadow-[#D6A85F]/30 hover:scale-105 cursor-pointer hover:shadow-xl hover:bg-[#F4C377]"
             >
-              <span>START AI INTERVIEW</span>
+              <span className="material-symbols-outlined text-base">mic</span>
+              <span>START VOICE INTERVIEW NOW</span>
               <span className="material-symbols-outlined text-base">arrow_forward</span>
             </button>
 

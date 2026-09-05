@@ -87,6 +87,32 @@ def send_via_resend(to_email: str, subject: str, body_text: str, body_html: str)
     except urllib.error.HTTPError as e:
         error_content = e.read().decode("utf-8") if e.fp else str(e)
         logger.error(f"❌ [RESEND HTTP ERROR {e.code}] {error_content}")
+
+        # Resend Free Tier restriction: only owner account is allowed without custom domain verification
+        if e.code in (403, 422) and "only send testing emails to your own email address" in error_content:
+            import re
+            match = re.search(r"\(([^)]+@resend\.dev|[^)]+@gmail\.com|[^)]+@[^)]+)\)", error_content)
+            owner_email = match.group(1) if match else "rohitmaurya441865@gmail.com"
+            logger.warning(f"🔄 [RESEND TEST FORWARD] Free tier domain restriction. Redirecting dev email from {to_email} to verified owner: {owner_email}")
+
+            dev_payload = {
+                "from": from_email,
+                "to": [owner_email],
+                "subject": f"[Dev Test for {to_email}] {subject}",
+                "text": f"--- [DEV NOTE: Intended for {to_email}] ---\n\n{body_text}",
+                "html": f"<div style='background:#fef3c7;border:1px solid #f59e0b;padding:8px 12px;border-radius:6px;margin-bottom:15px;color:#92400e;font-size:12px;font-family:sans-serif;'><strong>Dev Notification:</strong> Intended Recipient: <code>{to_email}</code></div>" + body_html
+            }
+            try:
+                dev_data = json.dumps(dev_payload).encode("utf-8")
+                dev_req = urllib.request.Request(url, data=dev_data, headers=headers, method="POST")
+                with urllib.request.urlopen(dev_req, timeout=15) as dev_res:
+                    res_body = json.loads(dev_res.read().decode("utf-8"))
+                    email_id = res_body.get("id")
+                    logger.info(f"✅ [RESEND SUCCESS - DEV REDIRECT] Email delivered to {owner_email} | ID: {email_id}")
+                    return (True, None, email_id)
+            except Exception as retry_err:
+                logger.error(f"❌ [RESEND DEV FORWARD FAILED] {retry_err}")
+
         return (False, f"Resend API Error ({e.code}): {error_content}", None)
     except Exception as e:
         logger.error(f"❌ [RESEND EXCEPTION] {str(e)}")

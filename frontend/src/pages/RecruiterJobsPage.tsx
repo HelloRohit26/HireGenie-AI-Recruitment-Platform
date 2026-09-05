@@ -29,7 +29,7 @@ export const RecruiterJobsPage: React.FC<RecruiterJobsPageProps> = ({ onNavigate
   const fetchJobs = useCallback(() => {
     setIsLoading(true);
     setApiError('');
-    jobService.getJobs()
+    jobService.getJobs(true)
       .then(res => setJobsList(res.data || []))
       .catch((err: any) => {
         console.error("Jobs load error:", err);

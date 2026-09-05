@@ -2,9 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 from app.db.session import get_db
-from app.models.models import Job, ScreeningQuestion, CandidateApplication, ApplicationStatus
+from app.models.models import Job, ScreeningQuestion, CandidateApplication, ApplicationStatus, UserRole
 from app.schemas.schemas import JobCreate, JobResponse, JobStatusUpdate, JobUpdate, ScreeningQuestionResponse
 from app.core.skill_normalizer import SkillNormalizer
+
+from app.core.rbac import get_current_user_optional
 
 router = APIRouter()
 
@@ -115,7 +117,7 @@ def build_job_response(job: Job, db: Session) -> JobResponse:
 
 
 @router.post("/", response_model=JobResponse, status_code=status.HTTP_201_CREATED)
-def create_job_opening(job_in: JobCreate, db: Session = Depends(get_db)):
+def create_job_opening(job_in: JobCreate, db: Session = Depends(get_db), current_user = Depends(get_current_user_optional)):
     """Recruiter Job Creation Wizard: Creates a complete job campaign with custom screening, shortlist, and interview rules."""
     
     # Validations
@@ -147,7 +149,10 @@ def create_job_opening(job_in: JobCreate, db: Session = Depends(get_db)):
     nice_to_have = list(SkillNormalizer.parse_skill_collection(job_in.nice_to_have_skills or []).values())
     extracted = list(SkillNormalizer.parse_skill_collection(job_in.extracted_skills or job_in.must_have_skills or []).values())
 
+    creator_id = current_user.id if current_user else None
+
     db_job = Job(
+        created_by=creator_id,
         title=job_in.title.strip(),
         company=job_in.company.strip(),
         department=job_in.department or "Engineering",
@@ -221,9 +226,21 @@ def create_job_opening(job_in: JobCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/", response_model=List[JobResponse])
-def list_all_jobs(skip: int = 0, limit: int = 50, db: Session = Depends(get_db)):
-    """Retrieves open and active jobs along with real database metric counts."""
-    jobs = db.query(Job).order_by(Job.created_at.desc()).offset(skip).limit(limit).all()
+def list_all_jobs(
+    skip: int = 0,
+    limit: int = 50,
+    my_jobs_only: bool = False,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user_optional)
+):
+    """Retrieves jobs. For Candidate portal: returns all open jobs. For Recruiter portal (my_jobs_only=True): returns creator's jobs."""
+    query = db.query(Job)
+    if my_jobs_only and current_user:
+        # In recruiter portal: if the user is a recruiter or admin, allow viewing all active workspace requisitions
+        if current_user.role not in (UserRole.RECRUITER, UserRole.ADMIN):
+            query = query.filter(Job.created_by == current_user.id)
+
+    jobs = query.order_by(Job.created_at.desc()).offset(skip).limit(limit).all()
     return [build_job_response(j, db) for j in jobs]
 
 

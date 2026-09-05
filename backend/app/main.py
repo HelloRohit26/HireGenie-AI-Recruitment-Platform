@@ -26,28 +26,14 @@ app = FastAPI(
     description="🚀 HireGenie AI — Autonomous Recruitment Platform with Trust & Safety Layer",
 )
 
-# Enable CORS for frontend integration (supports localhost on any port 5173/3000/3001/etc. & configured origins)
-cors_origins = [orig.strip() for orig in (settings.CORS_ORIGINS or "").split(",") if orig.strip()]
-if not cors_origins:
-    cors_origins = [
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:3001",
-    ]
-
 # Audit Middleware — logs all API requests
 app.add_middleware(AuditMiddleware)
 
-# Enable CORS as outermost middleware so OPTIONS preflight requests succeed across all ports
+# Enable CORS as outermost middleware so OPTIONS preflight requests succeed across all ports & origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=cors_origins,
-    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1|0\.0\.0\.0)(:[0-9]+)?$",
+    allow_origins=["*"],
+    allow_origin_regex=r".*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -131,6 +117,12 @@ def startup():
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS last_login TIMESTAMP",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS password_changed_at TIMESTAMP",
             "ALTER TABLE users ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+            "ALTER TABLE interview_sessions ADD COLUMN IF NOT EXISTS code_submissions JSON",
+            "ALTER TABLE interview_sessions ADD COLUMN IF NOT EXISTS proctoring_data JSON",
+            "ALTER TABLE interview_sessions ADD COLUMN IF NOT EXISTS integrity_score FLOAT DEFAULT 100.0",
+            "ALTER TABLE interviews ADD COLUMN IF NOT EXISTS code_submissions JSON",
+            "ALTER TABLE interviews ADD COLUMN IF NOT EXISTS proctoring_data JSON",
+            "ALTER TABLE interviews ADD COLUMN IF NOT EXISTS integrity_score FLOAT DEFAULT 100.0",
         ]:
             try:
                 conn.execute(text(query))
@@ -166,45 +158,13 @@ def startup():
             db.commit()
             db.refresh(recruiter)
 
-            job = Job(
-                title="Senior AI Systems Engineer",
-                company="GenieTech AI Solutions",
-                description="We are seeking an expert AI Engineer to build autonomous LangGraph agents and low-latency voice-to-voice interview rooms.",
-                requirements="Python, FastAPI, LangChain, PostgreSQL, LiveKit, PyTorch",
-                location="Bengaluru / Remote",
-                salary_range="₹25-35 LPA",
-                interview_mode=InterviewMode.WEBRTC,
-                target_shortlist_count=10,
-                screening_enabled=True,
-                created_by=recruiter.id,
-                # JD Intelligence fields
-                extracted_skills=["Python", "FastAPI", "LangChain", "PostgreSQL", "LiveKit", "PyTorch"],
-                must_have_skills=["Python", "FastAPI", "LangChain"],
-                nice_to_have_skills=["LiveKit", "PyTorch", "PostgreSQL"],
-                skill_weights={"Python": 10, "FastAPI": 9, "LangChain": 8, "PostgreSQL": 7, "LiveKit": 6, "PyTorch": 6},
-                jd_quality_score=82.0,
-            )
-            db.add(job)
-            db.commit()
-            db.refresh(job)
-
-            # Add screening questions
-            sq1 = ScreeningQuestion(
-                job_id=job.id,
-                question_text="Describe your experience building production multi-agent systems with FastAPI.",
-                category="Technical",
-                weight=1.5
-            )
-            sq2 = ScreeningQuestion(
-                job_id=job.id,
-                question_text="How do you handle real-time WebRTC audio latency below 200ms?",
-                category="Architecture",
-                weight=1.2
-            )
-            db.add_all([sq1, sq2])
-            db.commit()
-            
-            logger.info("✅ Seed data initialized successfully with active job requisitions!")
+        if db.query(Job).count() == 0:
+            try:
+                from seed_fresher_jobs import seed_two_real_fresher_jobs
+                seed_two_real_fresher_jobs()
+                logger.info("✅ Seeded 2 Real AI Engineer Fresher Jobs in India!")
+            except Exception as seed_err:
+                logger.warning(f"Could not auto-seed fresher jobs: {seed_err}")
     finally:
         db.close()
 

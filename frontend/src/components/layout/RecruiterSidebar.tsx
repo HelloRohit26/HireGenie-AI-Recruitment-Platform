@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface RecruiterSidebarProps {
   activeRoute: string;
@@ -15,8 +15,45 @@ export const RecruiterSidebar: React.FC<RecruiterSidebarProps> = ({
   const storedEmail = localStorage.getItem('hg_user_email') || 'recruiter@hiregenie.ai';
   const initials = storedName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'RA';
 
+  const [stats, setStats] = useState<{
+    jobs_count: number;
+    candidates_count: number;
+    interviews_count: number;
+    screening_active: string;
+    compliance_score: string;
+  }>({
+    jobs_count: 0,
+    candidates_count: 0,
+    interviews_count: 0,
+    screening_active: 'Auto',
+    compliance_score: '10/10'
+  });
+
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        const token = localStorage.getItem('hg_auth_token') || localStorage.getItem('hg_token');
+        const headers: Record<string, string> = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+        
+        const res = await fetch(`${backendUrl}/api/v1/recruiter/stats`, { headers });
+        if (res.ok) {
+          const data = await res.json();
+          setStats(data);
+        }
+      } catch (err) {
+        console.warn('Failed to load recruiter stats:', err);
+      }
+    }
+    loadStats();
+    const interval = setInterval(loadStats, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem('hg_token');
+    localStorage.removeItem('hg_auth_token');
     localStorage.removeItem('hg_user_name');
     localStorage.removeItem('hg_user_email');
     localStorage.removeItem('hg_user_role');
@@ -25,12 +62,12 @@ export const RecruiterSidebar: React.FC<RecruiterSidebarProps> = ({
 
   const mainMenuItems = [
     { id: '/recruiter', label: 'Command Center', icon: 'dashboard', badge: 'Live' },
-    { id: '/recruiter/jobs', label: 'Jobs', icon: 'work', count: '12' },
-    { id: '/recruiter/candidates', label: 'Candidates', icon: 'groups', count: '10.8k' },
-    { id: '/recruiter/screening', label: 'AI Screening', icon: 'psychology', badge: 'Auto' },
-    { id: '/recruiter/interviews', label: 'Interviews', icon: 'video_camera_front', count: '96' },
+    { id: '/recruiter/jobs', label: 'Jobs', icon: 'work', count: String(stats.jobs_count) },
+    { id: '/recruiter/candidates', label: 'Candidates', icon: 'groups', count: String(stats.candidates_count) },
+    { id: '/recruiter/screening', label: 'AI Screening', icon: 'psychology', badge: stats.screening_active },
+    { id: '/recruiter/interviews', label: 'Interviews', icon: 'video_camera_front', count: String(stats.interviews_count) },
     { id: '/recruiter/insights', label: 'Insights', icon: 'analytics' },
-    { id: '/recruiter/trust-safety', label: 'Trust & Safety', icon: 'verified_user', badge: '10/10' }
+    { id: '/recruiter/trust-safety', label: 'Trust & Safety', icon: 'verified_user', badge: stats.compliance_score }
   ];
 
   const bottomMenuItems = [

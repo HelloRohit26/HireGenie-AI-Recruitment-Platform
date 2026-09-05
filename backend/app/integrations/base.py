@@ -204,7 +204,7 @@ class SarvamIntegration(IntegrationBase):
     def __init__(self):
         super().__init__(
             name="Sarvam AI Voice Engine",
-            description="Speech-to-Text (saarika:v1) and Text-to-Speech (bulbul:v1) pipeline",
+            description="Speech-to-Text (saaras:v3) and Text-to-Speech (bulbul:v3) pipeline",
             icon="🎙️",
         )
         import os
@@ -216,12 +216,12 @@ class SarvamIntegration(IntegrationBase):
         self.config = credentials
         return {"status": "connected", "provider": "sarvam_ai"}
 
-    def disconnect(self) -> Dict[str, Any]:
+    def disconnect(self) -> Dict[Dict[str, Any], Any]:
         self.connected = False
         return {"status": "disconnected"}
 
     def health_check(self) -> Dict[str, Any]:
-        return {"healthy": True, "provider": "sarvam_ai", "models": ["saarika:v2.5", "bulbul:v2"]}
+        return {"healthy": True, "provider": "sarvam_ai", "models": ["saaras:v3", "bulbul:v3"]}
 
 
 class PostgreSQLIntegration(IntegrationBase):

@@ -16,15 +16,54 @@ class UserCreate(BaseModel):
     password: str
     role: UserRole = UserRole.CANDIDATE
 
+    @model_validator(mode='before')
+    @classmethod
+    def normalize_user_create(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if "fullName" in data and "full_name" not in data:
+                data["full_name"] = data.pop("fullName")
+            elif "name" in data and "full_name" not in data:
+                data["full_name"] = data.pop("name")
+            if not data.get("full_name"):
+                data["full_name"] = data.get("email", "").split("@")[0].title() or "User"
+            if "role" in data and isinstance(data["role"], str):
+                role_val = data["role"].upper()
+                if role_val in ("RECRUITER", "HR"):
+                    data["role"] = UserRole.RECRUITER
+                elif role_val in ("ADMIN", "SUPERADMIN"):
+                    data["role"] = UserRole.ADMIN
+                else:
+                    data["role"] = UserRole.CANDIDATE
+        return data
+
 
 class UserResponse(BaseModel):
     id: int
     full_name: str
     email: str
     role: UserRole
+    is_active: Optional[bool] = True
+    created_at: Optional[datetime] = None
+    last_login: Optional[datetime] = None
 
     class Config:
         from_attributes = True
+
+
+class AuthResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserResponse
+
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class ForgotPasswordResponse(BaseModel):
+    message: str
+    status: str = "success"
+
 
 
 # --- Screening Question Schemas ---

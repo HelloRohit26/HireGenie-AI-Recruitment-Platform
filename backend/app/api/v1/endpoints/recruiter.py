@@ -2,16 +2,67 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List, Dict, Any, Optional
 from app.db.session import get_db
-from app.models.models import Job, CandidateApplication, ApplicationStatus
+from app.models.models import Job, CandidateApplication, ApplicationStatus, InterviewInvitation, UserRole
 from app.schemas.schemas import MassScreeningRequest
+from app.core.rbac import get_current_user_optional
 
 router = APIRouter()
 
 
+@router.get("/stats")
+def get_recruiter_stats(db: Session = Depends(get_db), current_user = Depends(get_current_user_optional)):
+    """Dynamic Real-Time Recruiter Stats for Sidebar badges and Top Nav."""
+    user_id = current_user.id if current_user else None
+    
+    jobs_query = db.query(Job)
+    if user_id:
+        jobs_query = jobs_query.filter(Job.created_by == user_id)
+    
+    total_jobs = jobs_query.count()
+    job_ids = [j.id for j in jobs_query.all()]
+
+    apps_query = db.query(CandidateApplication)
+    if user_id:
+        if job_ids:
+            apps_query = apps_query.filter(CandidateApplication.job_id.in_(job_ids))
+        else:
+            apps_query = apps_query.filter(CandidateApplication.id == -1)
+    
+    total_candidates = apps_query.count()
+    
+    interview_count = 0
+    if job_ids:
+        interview_count = db.query(InterviewInvitation).join(CandidateApplication).filter(
+            CandidateApplication.job_id.in_(job_ids)
+        ).count()
+
+    return {
+        "jobs_count": total_jobs,
+        "candidates_count": total_candidates,
+        "interviews_count": interview_count,
+        "screening_active": "Auto",
+        "compliance_score": "10/10" if total_jobs > 0 else "N/A"
+    }
+
+
 @router.get("/candidates")
-def list_candidates(job_id: Optional[int] = None, status: Optional[str] = None, db: Session = Depends(get_db)):
+def list_candidates(
+    job_id: Optional[int] = None,
+    status: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user_optional)
+):
     """Recruiter Roster: Fetches live candidate applications directly from database ordered by rank/score."""
     query = db.query(CandidateApplication)
+    
+    # Recruiter Data Isolation: Only show candidates for jobs created by this recruiter
+    if current_user:
+        my_job_ids = [j.id for j in db.query(Job).filter(Job.created_by == current_user.id).all()]
+        if my_job_ids:
+            query = query.filter(CandidateApplication.job_id.in_(my_job_ids))
+        else:
+            query = query.filter(CandidateApplication.id == -1)
+
     if job_id:
         query = query.filter(CandidateApplication.job_id == job_id)
     

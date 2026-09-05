@@ -248,28 +248,44 @@ export const ApplicationJourneyCard: React.FC<ApplicationJourneyCardProps> = ({
           
           {/* CALLOUT ACTIONS (INTERVIEW, OFFER, RETRY) */}
           {/* 1. Voice Interview Invitation Ready */}
-          {interview_invitation && (interview_invitation.status === 'INVITED' || interview_invitation.status === 'ACCEPTED' || interview_invitation.status === 'READY') && !isRejected && (
-            <div className="p-4 bg-gradient-to-r from-[#D6A85F]/15 to-[#79A89A]/15 border border-[#D6A85F]/40 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg">
+          {interview_invitation && (interview_invitation.status === 'INVITED' || interview_invitation.status === 'ACCEPTED' || interview_invitation.status === 'READY' || interview_invitation.status === 'SCHEDULED' || application.status === 'INTERVIEW_SCHEDULED' || application.status === 'SHORTLISTED') && !isRejected && (
+            <div className="p-4 bg-gradient-to-r from-[#D6A85F]/20 via-[#79A89A]/15 to-[#D6A85F]/20 border border-[#D6A85F]/50 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xl animate-fadeIn">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[#F4C377] text-lg">mic</span>
-                  <h3 className="text-sm font-bold text-[#F4F1E9]">Voice AI Interview Invitation Ready</h3>
+                  <span className="material-symbols-outlined text-[#F4C377] text-xl animate-pulse">mic</span>
+                  <h3 className="text-sm font-bold text-[#F4F1E9]">Voice AI Interview Ready — You Are Shortlisted!</h3>
                 </div>
                 <p className="text-xs text-[#A1A19A] font-mono">
-                  You've been shortlisted! Complete your 15-minute autonomous WebRTC audio interview.
+                  Autonomous WebRTC voice assessment for <strong>{job.title}</strong> at <strong>{job.company}</strong>. Click below to begin speaking with your AI Interviewer.
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onNavigate?.(`/interview/${interview_invitation.invitation_token}/prep`);
-                }}
-                className="px-4 py-2 rounded-lg bg-[#D6A85F] text-[#11110F] text-xs font-bold font-mono hover:bg-[#F4C377] shadow-md transition flex items-center justify-center gap-1.5 shrink-0"
-              >
-                <span>ENTER INTERVIEW ROOM</span>
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </button>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  id="start-voice-interview-journey-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onNavigate?.(`/interview/${interview_invitation.invitation_token}/room?autostart=true`);
+                  }}
+                  className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-[#D6A85F] via-[#F4C377] to-[#D6A85F] text-[#11110F] text-xs font-bold font-mono hover:bg-[#F4C377] shadow-lg shadow-[#D6A85F]/25 hover:scale-105 transition flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-sm">phone_in_talk</span>
+                  <span>START VOICE INTERVIEW NOW</span>
+                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onNavigate?.(`/interview/${interview_invitation.invitation_token}/prep`);
+                  }}
+                  className="px-3 py-2.5 rounded-lg bg-[#181815] border border-[#3A3A36] text-[#A1A19A] hover:text-[#F4F1E9] text-xs font-mono transition flex items-center gap-1 cursor-pointer"
+                  title="Test microphone and audio before entering"
+                >
+                  <span className="material-symbols-outlined text-sm">tune</span>
+                  <span className="hidden md:inline">Setup</span>
+                </button>
+              </div>
             </div>
           )}
 

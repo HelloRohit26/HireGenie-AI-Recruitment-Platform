@@ -20,7 +20,7 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({ onNavigate }) => {
   }, []);
 
   const insightMetrics = [
-    { label: 'Total Applications', value: insights ? String(insights.total_applications) : '0', icon: 'groups', note: 'Recorded in SQLite' },
+    { label: 'Total Applications', value: insights ? String(insights.total_applications) : '0', icon: 'groups', note: 'Recorded in PostgreSQL' },
     { label: 'Total Hires', value: insights ? String(insights.total_hires) : '0', icon: 'badge', note: 'Confirmed hires' },
     { label: 'Avg Match Score', value: insights ? insights.average_match_score : 'N/A — insufficient data', icon: 'auto_awesome', note: 'Calculated score' },
     { label: 'Offer Acceptance Rate', value: insights ? insights.offer_acceptance_rate : 'N/A — insufficient data', icon: 'task_alt', note: 'Offer acceptance' },
@@ -40,7 +40,7 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({ onNavigate }) => {
                 Database Insights & Analytics
               </h1>
               <p className="text-xs text-[#A1A19A] dark:text-[#A1A19A] light:text-[#587C6D] mt-0.5 font-mono">
-                Real database metrics calculated from SQLite records. No fabricated values.
+                Real database metrics calculated from PostgreSQL records. No fabricated values.
               </p>
             </div>
           </div>
@@ -70,7 +70,7 @@ export const InsightsPage: React.FC<InsightsPageProps> = ({ onNavigate }) => {
               Database Compliance Policy
             </h3>
             <p className="text-xs text-[#A1A19A] font-mono">
-              All metrics on this page are computed directly from active SQLite database rows. Metrics requiring historical data will display "N/A — insufficient data" until additional applications and hires occur.
+              All metrics on this page are computed directly from active PostgreSQL database rows. Metrics requiring historical data will display "N/A — insufficient data" until additional applications and hires occur.
             </p>
           </div>
         </div>

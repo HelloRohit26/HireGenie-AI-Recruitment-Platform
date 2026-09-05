@@ -1,6 +1,7 @@
 /**
  * HireGenie AI - Dual-Portal Authentication & Session API Service
- * Handles live FastAPI backend user registration, authentication, bearer token management, and role-based access.
+ * Handles live FastAPI backend user registration, authentication, bearer token management,
+ * password recovery, and role-based access backed by PostgreSQL.
  */
 
 import { apiRequest, ApiResponse, setAuthToken } from './apiClient';
@@ -16,7 +17,7 @@ export interface AuthRegisterRequest {
 export interface AuthLoginRequest {
   email: string;
   password: string;
-  role: 'recruiter' | 'candidate';
+  role?: 'recruiter' | 'candidate';
 }
 
 export interface AuthLoginResponse {
@@ -28,32 +29,60 @@ export interface AuthLoginResponse {
 
 export const authService = {
   /**
-   * Registers a new user (Recruiter or Candidate) with FastAPI backend
+   * Registers a new user with FastAPI backend in a single atomic transaction.
+   * Stores user credentials in PostgreSQL and returns an active JWT session.
    */
   async register(data: AuthRegisterRequest): Promise<ApiResponse<AuthLoginResponse>> {
     const backendRole = data.role === 'recruiter' ? 'RECRUITER' : 'CANDIDATE';
-    
-    // Register user in backend
-    const regRes = await apiRequest<any>('/auth/register', {
+
+    const res = await apiRequest<any>('/auth/register', {
       method: 'POST',
       body: JSON.stringify({
         full_name: data.fullName,
         email: data.email,
         password: data.password,
         role: backendRole,
-      })
+      }),
     });
 
-    // Auto-login after successful registration
-    return this.login({
-      email: data.email,
-      password: data.password,
-      role: data.role
-    });
+    const token = res.data?.access_token;
+    if (!token) {
+      throw new Error("Registration failed: No access token received from server.");
+    }
+
+    const userObj = res.data?.user || {};
+    const fullName = userObj.full_name || data.fullName;
+    const rawRole = (userObj.role ? String(userObj.role).toLowerCase() : data.role);
+    const userRole: 'recruiter' | 'candidate' = (rawRole === 'admin' || rawRole === 'recruiter') ? 'recruiter' : 'candidate';
+
+    setAuthToken(token);
+
+    // Persist session info permanently in localStorage
+    localStorage.setItem('hg_auth_token', token);
+    localStorage.setItem('hg_user_name', fullName);
+    localStorage.setItem('hg_user_email', data.email);
+    localStorage.setItem('hg_user_role', userRole);
+
+    const userData: UserProfile = {
+      name: fullName,
+      role: userRole === 'recruiter' ? 'Lead Technical Recruiter' : 'Candidate',
+      greeting: userRole === 'recruiter' ? `Welcome, ${fullName}.` : `Welcome back, ${fullName}.`,
+      subtitle: userRole === 'recruiter' ? 'Your autonomous hiring engine is active.' : 'Your application dashboard is active.',
+    };
+
+    return {
+      ...res,
+      data: {
+        token,
+        user: userData,
+        role: userRole,
+        email: data.email,
+      },
+    };
   },
 
   /**
-   * Authenticates recruiter or candidate user credentials against live FastAPI backend
+   * Authenticates recruiter or candidate user credentials against live PostgreSQL database.
    */
   async login(credentials: AuthLoginRequest): Promise<ApiResponse<AuthLoginResponse>> {
     const res = await apiRequest<any>('/auth/login', {
@@ -61,7 +90,8 @@ export const authService = {
       body: JSON.stringify({
         email: credentials.email,
         password: credentials.password,
-      })
+        role: credentials.role === 'recruiter' ? 'RECRUITER' : 'CANDIDATE',
+      }),
     });
 
     const token = res.data?.access_token;
@@ -71,7 +101,8 @@ export const authService = {
 
     const userObj = res.data?.user || {};
     const fullName = userObj.full_name || credentials.email.split('@')[0];
-    const userRole = (userObj.role ? String(userObj.role).toLowerCase() : credentials.role) as 'recruiter' | 'candidate';
+    const rawRole = (userObj.role ? String(userObj.role).toLowerCase() : (credentials.role || 'candidate'));
+    const userRole: 'recruiter' | 'candidate' = (rawRole === 'admin' || rawRole === 'recruiter') ? 'recruiter' : 'candidate';
 
     setAuthToken(token);
 
@@ -85,7 +116,7 @@ export const authService = {
       name: fullName,
       role: userRole === 'recruiter' ? 'Lead Technical Recruiter' : 'Candidate',
       greeting: userRole === 'recruiter' ? `Welcome, ${fullName}.` : `Welcome back, ${fullName}.`,
-      subtitle: userRole === 'recruiter' ? 'Your autonomous hiring engine is active.' : 'Your application dashboard is active.'
+      subtitle: userRole === 'recruiter' ? 'Your autonomous hiring engine is active.' : 'Your application dashboard is active.',
     };
 
     return {
@@ -94,42 +125,53 @@ export const authService = {
         token,
         user: userData,
         role: userRole,
-        email: credentials.email
-      }
+        email: credentials.email,
+      },
     };
   },
 
   /**
-   * Fetches currently authenticated user profile from FastAPI backend
+   * Initiates password recovery flow via PostgreSQL backend.
+   */
+  async forgotPassword(email: string): Promise<ApiResponse<{ message: string; status: string }>> {
+    return apiRequest<{ message: string; status: string }>('/auth/forgot-password', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    });
+  },
+
+  /**
+   * Fetches currently authenticated user profile from FastAPI backend validated against PostgreSQL.
    */
   async getCurrentUser(): Promise<ApiResponse<UserProfile>> {
     try {
       const res = await apiRequest<any>('/auth/me', { method: 'GET' });
       const fullName = res.data?.full_name || 'HireGenie User';
-      const userRole = res.data?.role ? String(res.data.role).toLowerCase() : 'candidate';
-      
+      const rawRole = res.data?.role ? String(res.data.role).toLowerCase() : 'candidate';
+      const userRole = (rawRole === 'admin' || rawRole === 'recruiter') ? 'recruiter' : 'candidate';
+
       const user: UserProfile = {
         name: fullName,
         role: userRole === 'recruiter' ? 'Lead Technical Recruiter' : 'Candidate',
         greeting: `Welcome, ${fullName}`,
-        subtitle: 'Connected to live HireGenie AI engine'
+        subtitle: 'Connected to live HireGenie AI engine',
       };
       return { ...res, data: user };
     } catch (err) {
-      this.logout();
+      await this.logout();
       throw err;
     }
   },
 
   /**
-   * Cleans fake test data from database via backend admin API
+   * Cleans fake test data from database via backend admin API.
    */
   async cleanFakeData(): Promise<ApiResponse<any>> {
     return apiRequest<any>('/admin/clean-fake-data', { method: 'POST' });
   },
 
   /**
-   * Logs out user and clears bearer token & local session
+   * Logs out user and clears bearer token & local session permanently.
    */
   async logout(): Promise<void> {
     setAuthToken(null);
@@ -137,5 +179,5 @@ export const authService = {
     localStorage.removeItem('hg_user_name');
     localStorage.removeItem('hg_user_email');
     localStorage.removeItem('hg_user_role');
-  }
+  },
 };

@@ -342,7 +342,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onNavigate }) => {
                 { name: 'FastAPI Backend Engine', status: 'Connected Live (8000)', icon: 'cloud_done', color: 'text-emerald-400' },
                 { name: 'LangGraph AI Multi-Agent Pipeline', status: '5 Agents Configured', icon: 'smart_toy', color: 'text-[#38bdf8]' },
                 { name: 'LiveKit WebRTC Voice Room', status: 'Active (Low Latency)', icon: 'settings_voice', color: 'text-emerald-400' },
-                { name: 'PostgreSQL / SQLite Database', status: 'Tables Initialized', icon: 'database', color: 'text-[#38bdf8]' }
+                { name: 'PostgreSQL Production Database', status: 'Tables Initialized', icon: 'database', color: 'text-[#38bdf8]' }
               ].map(item => (
                 <div key={item.name} className="flex items-center justify-between bg-[#020617] border border-[#1e293b] rounded-xl p-4">
                   <div className="flex items-center gap-3.5">
@@ -444,6 +444,55 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onNavigate }) => {
                   onChange={e => setMaxRetries(Number(e.target.value))}
                   className="w-full bg-[#020617] border border-[#1e293b] rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-[#38bdf8]"
                 />
+              </div>
+
+              <div>
+                <label className="text-[10px] text-[#94a3b8] uppercase tracking-wider font-mono block mb-1.5">
+                  Hiring Pipeline & Review Mode
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div 
+                    onClick={() => {
+                      localStorage.setItem('hg_setting_pipeline_mode', 'demo');
+                      setSaved(true);
+                      setTimeout(() => setSaved(false), 2000);
+                    }}
+                    className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                      (localStorage.getItem('hg_setting_pipeline_mode') || 'demo') === 'demo'
+                        ? 'bg-indigo-600/20 border-indigo-500 text-white shadow-lg'
+                        : 'bg-[#020617] border-[#1e293b] text-slate-400 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 font-bold text-xs">
+                      <span className="material-symbols-outlined text-sm text-amber-400">bolt</span>
+                      <span>Instant / Demo Mode</span>
+                    </div>
+                    <p className="text-[10px] text-slate-400 font-mono mt-1">
+                      Immediate screening (30s) & instant shortlisting for fast presentations.
+                    </p>
+                  </div>
+
+                  <div 
+                    onClick={() => {
+                      localStorage.setItem('hg_setting_pipeline_mode', 'realistic');
+                      setSaved(true);
+                      setTimeout(() => setSaved(false), 2000);
+                    }}
+                    className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
+                      localStorage.getItem('hg_setting_pipeline_mode') === 'realistic'
+                        ? 'bg-indigo-600/20 border-indigo-500 text-white shadow-lg'
+                        : 'bg-[#020617] border-[#1e293b] text-slate-400 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 font-bold text-xs">
+                      <span className="material-symbols-outlined text-sm text-emerald-400">hourglass_top</span>
+                      <span>Realistic Production Mode</span>
+                    </div>
+                    <p className="text-[10px] text-slate-400 font-mono mt-1">
+                      Simulates real-world 2–4 hour background review window & scheduled slot delivery.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div>

@@ -13,7 +13,7 @@ from app.core.logger import logger
 class VoiceTools:
     """
     Tools for handling LiveKit WebRTC authentication,
-    Sarvam AI Speech-to-Text (STT) 'saarika:v1', and Text-to-Speech (TTS) 'bulbul:v1'.
+    Sarvam AI Speech-to-Text (STT) 'saaras:v3', and Text-to-Speech (TTS) 'bulbul:v3'.
     """
 
     @staticmethod
@@ -50,7 +50,7 @@ class VoiceTools:
     @staticmethod
     def transcribe_audio_sarvam(audio_data: Any, language_code: str = "en-IN") -> str:
         """
-        Converts audio responses into text transcriptions using Sarvam AI STT (saarika:v2.5).
+        Converts audio responses into text transcriptions using Sarvam AI STT (saaras:v3).
         Supports audio file path (str), raw bytes (bytes), or base64 encoded audio string.
         """
         sarvam_key = settings.SARVAM_API_KEY or os.getenv("SARVAM_API_KEY", "")
@@ -86,7 +86,7 @@ class VoiceTools:
 
             with open(file_path, "rb") as audio_file:
                 files = {"file": (os.path.basename(file_path), audio_file, "audio/wav")}
-                data = {"model": "saarika:v2.5", "language_code": language_code}
+                data = {"model": "saaras:v3", "language_code": language_code}
 
                 response = requests.post(url, headers=headers, files=files, data=data, timeout=30)
                 if response.status_code == 200:
@@ -109,7 +109,7 @@ class VoiceTools:
     @staticmethod
     def synthesize_speech_sarvam(text: str, target_language: str = "en-IN", speaker: str = None) -> dict:
         """
-        Converts textual questions into voice audio response using Sarvam AI TTS (bulbul:v2).
+        Converts textual questions into voice audio response using Sarvam AI TTS (bulbul:v3).
         """
         sarvam_key = settings.SARVAM_API_KEY or os.getenv("SARVAM_API_KEY", "")
         if not sarvam_key:
@@ -138,7 +138,7 @@ class VoiceTools:
             "loudness": 1.5,
             "speech_sample_rate": 22050,
             "enable_preprocessing": True,
-            "model": "bulbul:v2"
+            "model": "bulbul:v3"
         }
 
         try:
@@ -154,7 +154,7 @@ class VoiceTools:
                     "audio_base64": audio_b64,
                     "audio_format": "audio/wav",
                     "voice_provider": "sarvam_ai",
-                    "model": "bulbul:v2",
+                    "model": "bulbul:v3",
                     "speaker": chosen_speaker
                 }
             else:

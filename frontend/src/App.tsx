@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { EntryLandingPage } from './pages/EntryLandingPage';
 import { RecruiterCommandCenter } from './pages/RecruiterCommandCenter';
 import { RecruiterJobsPage } from './pages/RecruiterJobsPage';
@@ -17,12 +18,15 @@ import { CandidateJobDetailPage } from './pages/CandidateJobDetailPage';
 import { MyApplicationsPage } from './pages/MyApplicationsPage';
 import { InterviewEntryPage } from './pages/InterviewEntryPage';
 import { InterviewPrepPage } from './pages/InterviewPrepPage';
+import { InterviewSchedulePage } from './pages/InterviewSchedulePage';
 import { VoiceInterviewRoomPage } from './pages/VoiceInterviewRoomPage';
 import { CandidateOnboardingPage } from './pages/CandidateOnboardingPage';
 import { RecruiterOnboardingPage } from './pages/RecruiterOnboardingPage';
 import { OfferPortalPage } from './pages/OfferPortalPage';
 
 export function AppContent() {
+  const { role: contextRole, user: contextUser, isAuthenticated } = useAuth();
+
   const [currentRoute, setCurrentRoute] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -36,14 +40,15 @@ export function AppContent() {
 
   const [authRole, setAuthRole] = useState<'recruiter' | 'candidate' | null>(() => {
     if (typeof window !== 'undefined') {
-      const savedRole = localStorage.getItem('hg_user_role');
+      const savedRole = (localStorage.getItem('hg_user_role') || '').toLowerCase();
       const token = localStorage.getItem('hg_auth_token');
-      if (token && (savedRole === 'recruiter' || savedRole === 'candidate')) {
-        return savedRole;
+      if (token && (savedRole === 'recruiter' || savedRole === 'admin' || savedRole === 'candidate')) {
+        return (savedRole === 'admin' || savedRole === 'recruiter') ? 'recruiter' : 'candidate';
       }
     }
     return null;
   });
+
   const [userName, setUserName] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('hg_user_name') || '';
@@ -52,6 +57,7 @@ export function AppContent() {
   });
 
   const isRecruiterAuthorized = (): boolean => {
+    if (contextRole === 'recruiter') return true;
     if (typeof window === 'undefined') return false;
     const token = localStorage.getItem('hg_auth_token');
     const role = (localStorage.getItem('hg_user_role') || '').toLowerCase();
@@ -68,6 +74,14 @@ export function AppContent() {
   const handleAuthenticate = (role: 'recruiter' | 'candidate', name: string) => {
     setAuthRole(role);
     setUserName(name);
+    // Smoothly route to target portal after authentication
+    if (currentRoute === '/' || currentRoute === '/entry') {
+      if (role === 'recruiter') {
+        handleNavigate('/recruiter');
+      } else {
+        handleNavigate('/candidate');
+      }
+    }
   };
 
   useEffect(() => {
@@ -110,63 +124,78 @@ export function AppContent() {
     return <CandidateOnboardingPage onNavigate={handleNavigate} />;
   }
 
+  // Parse clean path and query parameters
+  const [routePath, rawQuery] = currentRoute.split('?');
+  const routeQueryParams = new URLSearchParams(rawQuery || '');
+  const isAutoStart = routeQueryParams.get('autostart') === 'true';
+
   // Candidate Offer Portal: /offer/:token
-  const offerPortalMatch = currentRoute.match(/^\/offer\/([^/]+)$/);
+  const offerPortalMatch = routePath.match(/^\/offer\/([^/]+)$/);
   if (offerPortalMatch) {
     return <OfferPortalPage token={offerPortalMatch[1]} onNavigate={handleNavigate} />;
   }
 
-  // Candidate Interview Entry: /interview/:token
-  const interviewEntryMatch = currentRoute.match(/^\/interview\/([^/]+)$/);
-  if (interviewEntryMatch) {
-    return <InterviewEntryPage token={interviewEntryMatch[1]} onNavigate={handleNavigate} />;
+  // Candidate Interview Schedule: /interview/schedule/:token or /interview/:token/schedule
+  const scheduleMatch = routePath.match(/^\/interview\/(?:schedule\/([^/]+)|([^/]+)\/schedule)$/);
+  if (scheduleMatch) {
+    const sessionToken = scheduleMatch[1] || scheduleMatch[2];
+    return <InterviewSchedulePage token={sessionToken} onNavigate={handleNavigate} />;
   }
 
-  // Candidate Interview Prep: /interview/:token/prep
-  const interviewPrepMatch = currentRoute.match(/^\/interview\/([^/]+)\/prep$/);
-  if (interviewPrepMatch) {
-    return <InterviewPrepPage token={interviewPrepMatch[1]} onNavigate={handleNavigate} />;
+  // Candidate Interview Prep: /interview/prep/:token or /interview/:token/prep
+  const prepMatch = routePath.match(/^\/interview\/(?:prep\/([^/]+)|([^/]+)\/prep)$/);
+  if (prepMatch) {
+    const sessionToken = prepMatch[1] || prepMatch[2];
+    return <InterviewPrepPage token={sessionToken} onNavigate={handleNavigate} />;
   }
 
-  // Candidate Voice Interview Room: /interview/:token/room
-  const interviewRoomMatch = currentRoute.match(/^\/interview\/([^/]+)\/room$/);
-  if (interviewRoomMatch) {
-    return <VoiceInterviewRoomPage token={interviewRoomMatch[1]} onNavigate={handleNavigate} />;
+  // Voice Interview Room: /interview/room/:token or /interview/:token/room or /interview/room
+  const roomMatch = routePath.match(/^\/interview\/(?:room\/([^/]+)|([^/]+)\/room|room)$/);
+  if (roomMatch) {
+    const sessionToken = roomMatch[1] || roomMatch[2] || 'demo-token';
+    return <VoiceInterviewRoomPage token={sessionToken} autoStart={isAutoStart} onNavigate={handleNavigate} />;
+  }
+
+  // Candidate Interview Entry: /interview or /interview/:token
+  const interviewMatch = routePath.match(/^\/interview(?:\/([^/]+))?$/);
+  if (interviewMatch) {
+    const sessionToken = interviewMatch[1] || '';
+    return <InterviewEntryPage token={sessionToken} onNavigate={handleNavigate} />;
   }
 
   // Candidate Job Detail: /candidate/jobs/:id
-  const candidateJobDetailMatch = currentRoute.match(/^\/candidate\/jobs\/(.+)$/);
-  if (candidateJobDetailMatch) {
-    return <CandidateJobDetailPage jobId={candidateJobDetailMatch[1]} onNavigate={handleNavigate} />;
+  const jobDetailMatch = currentRoute.match(/^\/candidate\/jobs\/(.+)$/);
+  if (jobDetailMatch) {
+    return <CandidateJobDetailPage jobId={jobDetailMatch[1]} onNavigate={handleNavigate} />;
   }
 
-  // Candidate Jobs List: /candidate/jobs
+  // Candidate Jobs Feed
   if (currentRoute === '/candidate/jobs') {
     return <CandidateJobsPage onNavigate={handleNavigate} />;
   }
 
-  // Candidate Applications: /candidate/applications
+  // Candidate Applications
   if (currentRoute === '/candidate/applications') {
     return <MyApplicationsPage onNavigate={handleNavigate} />;
   }
 
-  // Candidate Portal Home: /candidate
+  // Candidate Home
   if (currentRoute === '/candidate') {
     return <CandidateHomePage onNavigate={handleNavigate} />;
   }
 
-  // Job Workspace: /recruiter/jobs/:id (must be before /recruiter/jobs)
-  const jobWorkspaceMatch = currentRoute.match(/^\/recruiter\/jobs\/(.+)$/);
-  if (jobWorkspaceMatch) {
-    return <JobWorkspacePage jobId={jobWorkspaceMatch[1]} onNavigate={handleNavigate} />;
+  // Recruiter Job Workspace: /recruiter/jobs/:id
+  const recruiterJobMatch = currentRoute.match(/^\/recruiter\/jobs\/(.+)$/);
+  if (recruiterJobMatch) {
+    return <JobWorkspacePage jobId={recruiterJobMatch[1]} onNavigate={handleNavigate} />;
   }
 
-  // Jobs list
+  // Recruiter Jobs Management
   if (currentRoute === '/recruiter/jobs') {
     return <RecruiterJobsPage onNavigate={handleNavigate} />;
   }
 
-  // Candidates
+  // Recruiter Candidates Pipeline
   if (currentRoute === '/recruiter/candidates') {
     return <CandidatesPage onNavigate={handleNavigate} />;
   }
@@ -213,7 +242,9 @@ export function AppContent() {
 export function App() {
   return (
     <ThemeProvider>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </ThemeProvider>
   );
 }

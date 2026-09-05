@@ -10,6 +10,7 @@ from app.db.session import get_db
 from app.models.models import User, UserRole
 
 security = HTTPBearer()
+security_optional = HTTPBearer(auto_error=False)
 
 
 def get_current_user(
@@ -38,6 +39,19 @@ def get_current_user(
         )
 
     return user
+
+
+def get_current_user_optional(
+    credentials: HTTPAuthorizationCredentials = Depends(security_optional),
+    db: Session = Depends(get_db),
+):
+    """Optionally extract user without throwing HTTP 401 if unauthenticated."""
+    if not credentials or not credentials.credentials:
+        return None
+    payload = decode_access_token(credentials.credentials)
+    if not payload:
+        return None
+    return db.query(User).filter(User.email == payload.get("sub")).first()
 
 
 def get_current_active_user(

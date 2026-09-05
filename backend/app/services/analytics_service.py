@@ -191,13 +191,26 @@ class AnalyticsService:
         }
 
     @staticmethod
-    def get_summary_telemetry(db: Session) -> Dict[str, Any]:
-        """Get top-level system telemetry for Recruiter Dashboard from real SQLite data."""
-        total_jobs = db.query(Job).count()
-        open_jobs = db.query(Job).filter(Job.status == "OPEN").count()
-        closed_jobs = db.query(Job).filter(Job.status == "CLOSED").count()
+    def get_summary_telemetry(db: Session, user_id: Optional[int] = None) -> Dict[str, Any]:
+        """Get top-level system telemetry for Recruiter Dashboard from real PostgreSQL database."""
+        jobs_query = db.query(Job)
+        if user_id:
+            jobs_query = jobs_query.filter(Job.created_by == user_id)
+        
+        my_jobs = jobs_query.all()
+        total_jobs = len(my_jobs)
+        open_jobs = len([j for j in my_jobs if (j.status or "").upper() == "OPEN"])
+        closed_jobs = len([j for j in my_jobs if (j.status or "").upper() == "CLOSED"])
+        my_job_ids = [j.id for j in my_jobs]
 
-        applications = db.query(CandidateApplication).all()
+        apps_query = db.query(CandidateApplication)
+        if user_id:
+            if my_job_ids:
+                apps_query = apps_query.filter(CandidateApplication.job_id.in_(my_job_ids))
+            else:
+                apps_query = apps_query.filter(CandidateApplication.id == -1)
+
+        applications = apps_query.all()
         total_applications = len(applications)
 
         status_counts: Dict[str, int] = {}
@@ -305,23 +318,30 @@ class AnalyticsService:
                 "offers": offer_count,
                 "hired": hired_count,
                 "rejected": rejected_count,
-                "avgTimeToHireDays": 0  # 0 when no historical hires exist
+                "avgTimeToHireDays": 0
             },
             "agent_telemetry": agent_telemetry,
             "recent_activity": recent_activity
         }
 
     @staticmethod
-    def get_real_insights(db: Session) -> Dict[str, Any]:
-        """Get strictly calculated Insights metrics from SQLite database without fake values."""
-        applications = db.query(CandidateApplication).all()
+    def get_real_insights(db: Session, user_id: Optional[int] = None) -> Dict[str, Any]:
+        """Get strictly calculated Insights metrics from PostgreSQL database without fake values."""
+        apps_query = db.query(CandidateApplication)
+        if user_id:
+            my_job_ids = [j.id for j in db.query(Job).filter(Job.created_by == user_id).all()]
+            if my_job_ids:
+                apps_query = apps_query.filter(CandidateApplication.job_id.in_(my_job_ids))
+            else:
+                apps_query = apps_query.filter(CandidateApplication.id == -1)
+
+        applications = apps_query.all()
         total_apps = len(applications)
 
         hires = [a for a in applications if getattr(a.status, 'value', str(a.status)) == 'HIRED']
         shortlisted = [a for a in applications if getattr(a.status, 'value', str(a.status)) == 'SHORTLISTED']
         offers = [a for a in applications if getattr(a.status, 'value', str(a.status)) in ('OFFERED', 'OFFER_SENT')]
 
-        # Calculated accuracy based on shortlisted candidates who achieved >= 80 score
         scored_apps = [a for a in applications if a.overall_match_score is not None]
         avg_score = round(sum(a.overall_match_score for a in scored_apps) / len(scored_apps), 1) if scored_apps else None
 
@@ -336,6 +356,6 @@ class AnalyticsService:
             "avg_time_to_hire": "N/A — insufficient data",
             "cost_per_hire": "N/A — insufficient data",
             "nps_score": "N/A — insufficient data",
-            "message": "Metrics calculated from live database records."
+            "message": "Metrics calculated directly from live PostgreSQL database records."
         }
 

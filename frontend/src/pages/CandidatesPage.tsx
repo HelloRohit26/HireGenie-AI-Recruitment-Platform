@@ -214,7 +214,7 @@ export const CandidatesPage: React.FC<CandidatesPageProps> = ({ onNavigate }) =>
             <div className="bg-[var(--surface)] rounded-xl p-12 border border-[var(--border)] text-center">
               <span className="material-symbols-outlined text-4xl text-[var(--text-secondary)] opacity-50 block mb-3">person_off</span>
               <p className="text-sm font-bold text-[var(--text-primary)]">No candidates yet</p>
-              <p className="text-xs text-[var(--text-secondary)] font-mono mt-1">No candidate applications have been submitted to SQLite database.</p>
+              <p className="text-xs text-[var(--text-secondary)] font-mono mt-1">No candidate applications have been submitted to PostgreSQL database.</p>
             </div>
           )}
 
