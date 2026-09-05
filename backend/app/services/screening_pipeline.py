@@ -4,6 +4,7 @@ Integrates Canonical Skill Normalization, Strict Disjoint Invariants, and Real G
 import os
 import re
 import json
+from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime
 from sqlalchemy import text
 from sqlalchemy.orm import Session
